@@ -1,0 +1,15 @@
+@import "./common.scss";
+
+#wrap {
+
+  header {
+    a {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 30px;
+      }
+    }
+  }
+}
