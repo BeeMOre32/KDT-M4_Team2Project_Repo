@@ -1,7 +1,7 @@
 # X조 프로젝트 계획안
 
-- 프로젝트명: X조 프로젝트
-- 팀원: 최환석, 
+- 프로젝트명: 2조 프로젝트
+- 팀원: 최환석, 장화현, 조승혜, 정윤조, 정소진, 김민기
 - 프로젝트 기간: 2023. 01. 30 ~ 미정
 
 ## 프로젝트 소개
@@ -9,7 +9,11 @@
 ### 팀원 프로필
 
 최환석(BeeMOre32): [Github](https://github.com/BeeMOre32)
-...
+장화현 : [github](https://github.com/janghwahyun)
+조승혜 : [github](https://github.com/tmdgp0212)
+정윤조 : [github](https://github.com/jyj1111)
+정소진 : [github](https://github.com/thwls475)
+김민기 : [github](https://github.com/minki-dev)
 
 ### 프로젝트의 기능구현 사항
 
@@ -39,3 +43,18 @@
 ### 프로젝트 구조
 
 ### 프로젝트 기능
+
+## 프로젝트 실행 방법
+
+- 먼저 패키지를 모두 다운로드 받습니다 `npm install`
+- 그 다음 vercel Cli를 설치합니다 `npm i -g vercel`
+- vercel Cli를 통해 설정한 후 `vercel dev` 명령어를 통해 실행합니다.
+
+## 프로젝트 작업한 목록
+
+- 최환석: 관리자 페이지, 서버리스 환경 설정
+- 장화현: 로그인 페이지 및 로그인 관련
+- 조승혜: 메인페이지
+- 정윤조: 장바구니 및 결제 페이지
+- 정소진: 검색 페이지, 상세 페이지
+- 김민기: 자산 목록, 마이 페이지
