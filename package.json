@@ -1,0 +1,26 @@
+{
+  "name": "kdt-m4",
+  "version": "1.0.0",
+  "description": "- 프로젝트명: X조 프로젝트\r - 팀원: 최환석, \r - 프로젝트 기간: 2023. 01. 30 ~ 미정",
+  "source": "index.html",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeeMOre32/KDT-M4_TeamProject_Repo.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BeeMOre32/KDT-M4_TeamProject_Repo/issues"
+  },
+  "homepage": "https://github.com/BeeMOre32/KDT-M4_TeamProject_Repo#readme",
+  "dependencies": {
+    "@vercel/node": "^2.8.17",
+    "dotenv": "^16.0.3",
+    "node-fetch": "^2.6.7",
+    "parcel": "^2.8.3"
+  }
+}
