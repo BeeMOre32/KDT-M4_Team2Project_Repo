@@ -1,0 +1,38 @@
+/* 변수 */
+
+$max-width: 1420px;
+$dark-gray: #292C43;
+$primary-color: #8083A3;
+$light-gray: #E4E6E8;
+
+@mixin init-btn {
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+
+/* 디자인 */
+
+button {
+  @include init-btn();
+  
+  // 기본버튼
+  &.common-btn {
+    padding: 8px 20px;
+    font-family: 'Pretendard-Regular';
+    background-color: $light-gray;
+    border-radius: 3px;
+  }
+
+  // 진한 버튼
+  &.darken-btn {
+    padding: 8px 20px;
+    font-family: 'Pretendard-Regular';
+    color: #fff;
+    background-color: $primary-color;
+    border-radius: 3px;
+  }
+}

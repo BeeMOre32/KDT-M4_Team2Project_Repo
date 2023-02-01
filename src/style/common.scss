@@ -1,0 +1,29 @@
+/* 추가 RESET설정 */
+
+@font-face { //기본폰트
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  color: #222; //기본색상인 #000의 경우 약간 촌스러움이 있어 최근엔 살짝 연한 검은색을 선호
+  font-family: 'Pretendard-Regular';
+  box-sizing: border-box;
+}
+
+a, a:hover, a:active, a:link {
+  font-family: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+input {
+  border: none;
+  outline: none;
+  padding: 3px 8px;
+  font-family: 'Pretendard-Regular';
+  border-bottom: 1px solid #222;
+}
+

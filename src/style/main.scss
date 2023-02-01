@@ -1,13 +1,91 @@
+@import "./common.scss";
+@import "./variables.scss";
+
+
 #wrap {
 
   header {
-    a {
-      display: flex;
-      align-items: center;
+    width: 100vw;
+    border-bottom: 1px solid $light-gray;
 
-      img {
-        width: 30px;
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: $max-width;
+      margin: 0 auto;
+      padding: 20px;
+  
+  
+      a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 600;
+  
+        img {
+          width: 30px;
+        }
+      }//a
+  
+      nav {
+        ul {
+          display: flex;
+          gap: 40px;
+  
+          li a {
+            display: block;
+            color: $dark-gray;
+            font-size: 15px;
+            transition: .2s;
+
+            &:hover {
+              color: $primary-color
+            }
+          }
+        }
       }
+  
+      .side {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        form {
+          display: flex;
+          align-items: center;
+          margin-right: 20px;
+    
+          input {
+            width: 150px;
+          }
+    
+          button {
+            @include init-btn();
+            font-size: 20px;
+          }
+        }
+
+        >span {
+          font-size: 24px;
+          color: #222;
+          cursor: pointer;
+        }
+      }
+    }//.container
+  }//header
+  
+  section {
+    width: $max-width;
+    margin: 0 auto;
+
+    .visual {
+      width: 100%;
+      height: 80vh;
+      background-image: url("../images/main_visual.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
     }
   }
-}
+}//#wrap
