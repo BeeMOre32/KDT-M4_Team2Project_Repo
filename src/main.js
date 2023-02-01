@@ -1,12 +1,19 @@
-import { logIn, userAuth, userInfoEdit, userLogOut } from "./utilities/api";
+import {
+  addBankAccount,
+  deleteBankAccount,
+  getBankAccount,
+  getCurrentAccount,
+  logIn,
+} from "./utilities/api";
 
-const btn = document.querySelector(".login");
-const authEl = document.querySelector(".auth");
-const logoutEl = document.querySelector(".logout");
-const uesrInfoEl = document.querySelector(".userinfo");
+const loginEl = document.querySelector(".login");
+const getBankEl = document.querySelector(".get-bank");
+const bankAccountEl = document.querySelector(".get-bank-account");
+const addBankEl = document.querySelector(".add-bank");
+const delBankEl = document.querySelector(".del-bank");
 let access = "";
 
-btn.addEventListener("click", async () => {
+loginEl.addEventListener("click", async () => {
   const email = "abc@gmail.com";
   const password = "123456789";
 
@@ -17,23 +24,39 @@ btn.addEventListener("click", async () => {
   console.log(res);
 });
 
-async function userAuths() {
-  const res = await userAuth(access);
-  console.log(res);
-}
-
-authEl.addEventListener("click", userAuths);
-logoutEl.addEventListener("click", async () => {
-  const res = await userLogOut(access);
+getBankEl.addEventListener("click", async () => {
+  const res = await getBankAccount(access);
   console.log(res);
 });
-uesrInfoEl.addEventListener("click", async () => {
+
+bankAccountEl.addEventListener("click", async () => {
+  const res = await getCurrentAccount(access);
+  console.log(res);
+});
+
+addBankEl.addEventListener("click", async () => {
   const data = {
     userToken: access,
-    user: {
-      displayName: "abc",
+    account: {
+      bankCode: "088",
+      accountNumber: "123456789012",
+      phoneNumber: "01012345678",
+      signature: true,
     },
   };
-  const res = await userInfoEdit(data);
+
+  const res = await addBankAccount(data);
+  console.log(res);
+});
+
+delBankEl.addEventListener("click", async () => {
+  const data = {
+    userToken: access,
+    account: {
+      accountId: "JwIyOuc2u5jiofrAp8bW",
+      signature: true,
+    },
+  };
+  const res = await deleteBankAccount(data);
   console.log(res);
 });
