@@ -80,17 +80,30 @@
     }//.container
   }//header
   
+  .visual {
+    width: 100vw;
+    height: 600px;
+    min-height: 90vh;
+    height: 100vh;
+    background-image: url("../images/main_visual.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  
   section {
     width: $max-width;
     margin: 0 auto;
 
-    .visual {
-      width: 100%;
-      height: 90vh;
-      background-image: url("../images/main_visual.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+    h2 {
+      @include title-font();
+      text-align: center;
+      margin: 100px 0;
+    }
+
+    .new-items {
+      text-align: center;
     }
 
     .recommand {
@@ -98,11 +111,6 @@
       flex-direction: column;
       margin: 150px 0;
 
-      h2 {
-        @include title-font();
-        text-align: center;
-        margin-bottom: 100px;
-      }
 
       .recommand-item {
         display: grid;
