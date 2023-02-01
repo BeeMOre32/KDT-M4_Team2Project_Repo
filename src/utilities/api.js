@@ -8,7 +8,7 @@ export async function signIn(data) {
 }
 // Data는 반드시 객체 형태이고, api 문서 그대로 보내주어야 한다.
 export async function logIn(data) {
-  const res = await fetch("api/account" + "/login", {
+  const res = await fetch("api/account/login", {
     method: "POST",
     body: JSON.stringify(data),
   });
