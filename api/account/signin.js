@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { basicHeaders, basicUrl } from "./api";
+import { basicHeaders, basicUrl } from "../api";
 
 export default async function handler(request, response) {
   const res = await fetch(basicUrl + "/auth/signup", {
