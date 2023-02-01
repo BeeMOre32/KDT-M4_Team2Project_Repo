@@ -9,10 +9,15 @@
 ### 팀원 프로필
 
 최환석(BeeMOre32): [Github](https://github.com/BeeMOre32)
+
 장화현 : [github](https://github.com/janghwahyun)
+
 조승혜 : [github](https://github.com/tmdgp0212)
+
 정윤조 : [github](https://github.com/jyj1111)
+
 정소진 : [github](https://github.com/thwls475)
+
 김민기 : [github](https://github.com/minki-dev)
 
 ### 프로젝트의 기능구현 사항
@@ -54,7 +59,7 @@
 
 - 최환석: 관리자 페이지, 서버리스 환경 설정
 - 장화현: 로그인 페이지 및 로그인 관련
-- 조승혜: 메인페이지, 상세 페이지
+- 조승혜: 메인페이지
 - 정윤조: 장바구니 및 결제 페이지
-- 정소진: 검색 페이지, 카테고리 별 제품목록 페이지
+- 정소진: 검색 페이지, 상세 페이지
 - 김민기: 자산 목록, 마이 페이지
