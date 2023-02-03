@@ -12,6 +12,15 @@ import {
   getMasterProductList,
   postMasterProduct,
 } from "./utilities/masterapi";
+import {
+  buyProduct,
+  cancelBuy,
+  confirmBuy,
+  getBuyDetail,
+  getBuyList,
+  getProductDetail,
+  searchProduct,
+} from "./utilities/productapi";
 const loginEl = document.querySelector(".login");
 const getBankEl = document.querySelector(".get-bank");
 const bankAccountEl = document.querySelector(".get-bank-account");
@@ -22,9 +31,17 @@ const getMasterSoldList = document.querySelector(".master-get-sold-list");
 const postMasterProductEl = document.querySelector(".master-post-product");
 const editMasterProductEl = document.querySelector(".master-edit-product");
 const deleteMasterProductEl = document.querySelector(".master-delete-product");
+const getProductDetailEL = document.querySelector(".get-product-details");
+const searchProductEl = document.querySelector(".search-product");
+const buyProductEl = document.querySelector(".buy-product");
+const getBuyListEl = document.querySelector(".get-buy-list");
+const cancelBuyEl = document.querySelector(".cancel-buy");
+const confirmBuyEl = document.querySelector(".confirm-buy");
+const getBuyDetailEl = document.querySelector(".get-buy-detail");
 
 let access = "";
 let products = [];
+let buyList = [];
 loginEl.addEventListener("click", async () => {
   const email = "abc@gmail.com";
   const password = "123456789";
@@ -85,7 +102,7 @@ getMasterSoldList.addEventListener("click", async () => {
 });
 
 postMasterProductEl.addEventListener("click", async () => {
-  const data = { title: "test", price: 1000, description: "test" };
+  const data = { title: "abc", price: 1000, description: "test" };
 
   const res = await postMasterProduct(data);
   console.log(res);
@@ -93,7 +110,7 @@ postMasterProductEl.addEventListener("click", async () => {
 
 editMasterProductEl.addEventListener("click", async () => {
   const data = {
-    id: "3p8jrxf83BClbeUyC1HA",
+    id: "3fxhvQ3ilU5LXIbkjGfp",
     product: {
       title: "test",
       price: 1500,
@@ -107,5 +124,54 @@ editMasterProductEl.addEventListener("click", async () => {
 deleteMasterProductEl.addEventListener("click", async () => {
   console.log(products[0].id);
   const res = await deleteMasterProduct(products[0].id);
+  console.log(res);
+});
+
+getProductDetailEL.addEventListener("click", async () => {
+  const res = await getProductDetail(products[0].id);
+  console.log(res);
+});
+
+searchProductEl.addEventListener("click", async () => {
+  const data = {
+    searchText: "abc",
+  };
+  const res = await searchProduct(data);
+  console.log(res);
+});
+
+buyProductEl.addEventListener("click", async () => {
+  const data = {
+    userToken: access,
+    info: {
+      productId: "3fxhvQ3ilU5LXIbkjGfp",
+      accountId: "U9tTlCcON8ZuRmEdV8jJ",
+    },
+  };
+
+  const res = await buyProduct(data);
+  console.log(res);
+});
+
+getBuyListEl.addEventListener("click", async () => {
+  const res = await getBuyList(access);
+  buyList = res;
+  console.log(res);
+});
+
+cancelBuyEl.addEventListener("click", async () => {
+  const userToken = access;
+  const buyId = buyList[0].detailId;
+  const res = await cancelBuy(userToken, buyId);
+  console.log(res);
+});
+
+confirmBuyEl.addEventListener("click", async () => {
+  const res = await confirmBuy(access, buyList[1].detailId);
+  console.log(res);
+});
+
+getBuyDetailEl.addEventListener("click", async () => {
+  const res = await getBuyDetail(access, buyList[1].detailId);
   console.log(res);
 });
