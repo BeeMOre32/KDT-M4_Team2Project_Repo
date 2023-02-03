@@ -4,6 +4,7 @@ import {
   getBankAccount,
   getCurrentAccount,
   logIn,
+  userLogOut,
 } from "./utilities/userapi";
 import {
   deleteMasterProduct,
@@ -21,7 +22,9 @@ import {
   getProductDetail,
   searchProduct,
 } from "./utilities/productapi";
+import { afterLoadUserAuth, userToken } from "./utilities/userAuth";
 const loginEl = document.querySelector(".login");
+const logoutEl = document.querySelector(".logout");
 const getBankEl = document.querySelector(".get-bank");
 const bankAccountEl = document.querySelector(".get-bank-account");
 const addBankEl = document.querySelector(".add-bank");
@@ -42,6 +45,9 @@ const getBuyDetailEl = document.querySelector(".get-buy-detail");
 let access = "";
 let products = [];
 let buyList = [];
+
+afterLoadUserAuth().then((r) => console.log(r));
+
 loginEl.addEventListener("click", async () => {
   const email = "abc@gmail.com";
   const password = "123456789";
@@ -49,10 +55,14 @@ loginEl.addEventListener("click", async () => {
   const data = { email, password };
 
   const res = await logIn(data);
-  access = res.accessToken;
+  userToken.token = res.accessToken;
   console.log(res);
 });
 
+logoutEl.addEventListener("click", async () => {
+  const res = await userLogOut(userToken.token);
+  console.log(res);
+});
 getBankEl.addEventListener("click", async () => {
   const res = await getBankAccount(access);
   console.log(res);
