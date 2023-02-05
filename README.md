@@ -492,6 +492,7 @@ interface Product { // 제품 정보
   tags: string[] // 제품 태그
   thumbnail: string | null // 제품 썸네일 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부
+  discountRate?: number // 제품 할인율
 }
 ```
 
@@ -564,6 +565,7 @@ interface TransactionDetail { // 거래 내역 정보
     description: string
     tags: string[]
     thumbnail: string | null
+    discountRate?: number
   }
   reservation: Reservation | null // 거래한 제품의 예약 정보
   timePaid: string // 제품을 거래한 시간
@@ -685,6 +687,7 @@ interface RequestBody {
   tags?: string[] // 제품 태그
   thumbnailBase64?: string // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
   photoBase64?: string // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
+  discountRate?: number // 제품 할인율
 }
 ```
 
@@ -714,6 +717,7 @@ interface ResponseValue { // 추가한 제품의 상세 내용
   thumbnail: string | null // 제품 썸네일 이미지(URL)
   photo: string | null // 제품 상세 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부
+  discountRate?: number // 제품 할인율
 }
 ```
 
@@ -757,6 +761,7 @@ interface RequestBody {
   thumbnailBase64?: string // 제품 썸네일(대표) 사진(base64) - jpg, jpeg, webp, png, gif, svg
   photoBase64?: string // 제품 상세 사진(base64) - jpg, jpeg, webp, png, gif, svg
   isSoldOut?: boolean // 제품 매진 여부
+  discountRate?: number // 제품 할인율
 }
 ```
 
@@ -778,6 +783,7 @@ interface ResponseValue { // 수정한 제품의 상세 내용
   thumbnail: string | null // 제품 썸네일 이미지(URL)
   photo: string | null // 제품 상세 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부 
+  discountRate?: number // 제품 할인율
 }
 ```
 
@@ -844,6 +850,7 @@ interface ResponseValue { // 제품의 상세 내용
   photo: string | null // 제품 상세 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부 
   reservations: Reservation[] // 제품의 모든 예약 정보 목록
+  discountRate?: number // 제품 할인율
 }
 
 interface Reservation {
@@ -930,6 +937,7 @@ interface Product { // 제품 정보
   description: string // 제품 설명(최대 100자)
   tags: string[] // 제품 태그
   thumbnail: string | null // 제품 썸네일 이미지(URL)
+  discountRate?: number // 제품 할인율
 }
 ```
 
@@ -1088,6 +1096,7 @@ interface TransactionDetail { // 거래 내역 정보
     description: string
     tags: string[]
     thumbnail: string | null
+    discountRate?: number // 제품 할인율
   }
   reservation: Reservation | null // 거래한 제품의 예약 정보
   timePaid: string // 제품을 거래한 시간
@@ -1193,6 +1202,7 @@ interface TransactionDetail { // 상세 거래 정보
     tags: string[]
     thumbnail: string | null
     photo: string | null
+    discountRate?: number // 제품 할인율
   }
   reservation: Reservation | null // 거래한 제품의 예약 정보
   timePaid: string // 제품을 거래한 시간
