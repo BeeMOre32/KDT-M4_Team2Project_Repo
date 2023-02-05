@@ -20,6 +20,7 @@
   "dependencies": {
     "@vercel/node": "^2.8.17",
     "dotenv": "^16.0.3",
+    "navigo": "^8.11.1",
     "node-fetch": "^2.6.7",
     "parcel": "^2.8.3",
     "swiper": "^9.0.1"
