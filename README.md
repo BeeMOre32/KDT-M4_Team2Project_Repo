@@ -468,6 +468,8 @@ type ResponseValue = true  // 계좌 해지 처리 상태
 - 관리자 전용 API입니다.
 - 상세 정보가 아닌 기본 정보의 제품 설명은 100자까지만 포함됩니다.
 - 상세 정보가 아닌 기본 정보의 제품 상세 사진은 포함되지 않습니다.
+- 제품 할인율(`discountRate`)은 제품 가격과 직접 관계가 없는 단순 메모 속성입니다. 
+- 제품 할인율이 없는 경우, `0`으로 표시됩니다.
 
 ```curl
 curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products 
@@ -492,7 +494,7 @@ interface Product { // 제품 정보
   tags: string[] // 제품 태그
   thumbnail: string | null // 제품 썸네일 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부
-  discountRate?: number // 제품 할인율
+  discountRate: number // 제품 할인율
 }
 ```
 
@@ -509,7 +511,8 @@ interface Product { // 제품 정보
       "컴퓨터"
     ],
     "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png",
-    "isSoldOut": false
+    "isSoldOut": false,
+    "discountRate": 20
   },
   {
     "id": "nbqtQvEivYwEXTDet7YM",
@@ -522,7 +525,8 @@ interface Product { // 제품 정보
       "컴퓨터"
     ],
     "thumbnail": "https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png",
-    "isSoldOut": false
+    "isSoldOut": false,
+    "discountRate": 0
   }
 ]
 ```
@@ -565,7 +569,7 @@ interface TransactionDetail { // 거래 내역 정보
     description: string
     tags: string[]
     thumbnail: string | null
-    discountRate?: number
+    discountRate: number
   }
   reservation: Reservation | null // 거래한 제품의 예약 정보
   timePaid: string // 제품을 거래한 시간
@@ -605,7 +609,8 @@ interface Reservation {
         "모니터",
         "컴퓨터"
       ],
-      "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png"
+      "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png",
+      "discountRate": 0
     },
     "reservation": null,
     "timePaid": "2021-11-07T20:01:49.100Z",
@@ -670,6 +675,8 @@ type ResponseValue = true // 거래 내역 완료/취소 및 해제 처리 상�
 - 파일(사진)은 Base64로 요청해야 합니다.
 - 제품 썸네일 사진은 1MB 이하여야 합니다.
 - 제품 상세 사진은 4MB 이하여야 합니다.
+- 제품 할인율(`discountRate`)은 제품 가격과 직접 관계가 없는 단순 메모 속성입니다.
+- 제품 할인율이 '20%'인 경우, `20`으로 입력해야 합니다.
 
 ```curl
 curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products 
@@ -717,7 +724,7 @@ interface ResponseValue { // 추가한 제품의 상세 내용
   thumbnail: string | null // 제품 썸네일 이미지(URL)
   photo: string | null // 제품 상세 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부
-  discountRate?: number // 제품 할인율
+  discountRate: number // 제품 할인율
 }
 ```
 
@@ -734,7 +741,8 @@ interface ResponseValue { // 추가한 제품의 상세 내용
   ],
   "thumbnail": "https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png",
   "photo": "https://storage.googleapis.com/heropy-api/voihKb3NLGcv195257.png",
-  "isSoldOut": false
+  "isSoldOut": false,
+  "discountRate": 0
 }
 ```
 
@@ -783,7 +791,7 @@ interface ResponseValue { // 수정한 제품의 상세 내용
   thumbnail: string | null // 제품 썸네일 이미지(URL)
   photo: string | null // 제품 상세 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부 
-  discountRate?: number // 제품 할인율
+  discountRate: number // 제품 할인율
 }
 ```
 
@@ -800,7 +808,8 @@ interface ResponseValue { // 수정한 제품의 상세 내용
   ],
   "thumbnail": "https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png",
   "photo": "https://storage.googleapis.com/heropy-api/voihKb3NLGcv195257.png",
-  "isSoldOut": false
+  "isSoldOut": false,
+  "discountRate": 0
 }
 ```
 
@@ -850,7 +859,7 @@ interface ResponseValue { // 제품의 상세 내용
   photo: string | null // 제품 상세 이미지(URL)
   isSoldOut: boolean // 제품 매진 여부 
   reservations: Reservation[] // 제품의 모든 예약 정보 목록
-  discountRate?: number // 제품 할인율
+  discountRate: number // 제품 할인율
 }
 
 interface Reservation {
@@ -875,7 +884,8 @@ interface Reservation {
   "thumbnail": "https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png",
   "photo": "https://storage.googleapis.com/heropy-api/voihKb3NLGcv195257.png",
   "isSoldOut": false,
-  "reservations": []
+  "reservations": [],
+  "discountRate": 0
 }
 ```
 
@@ -937,7 +947,7 @@ interface Product { // 제품 정보
   description: string // 제품 설명(최대 100자)
   tags: string[] // 제품 태그
   thumbnail: string | null // 제품 썸네일 이미지(URL)
-  discountRate?: number // 제품 할인율
+  discountRate: number // 제품 할인율
 }
 ```
 
@@ -953,7 +963,8 @@ interface Product { // 제품 정보
       "모니터",
       "컴퓨터"
     ],
-    "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png"
+    "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png",
+    "discountRate": 0
   }
 ]
 ```
@@ -1096,7 +1107,7 @@ interface TransactionDetail { // 거래 내역 정보
     description: string
     tags: string[]
     thumbnail: string | null
-    discountRate?: number // 제품 할인율
+    discountRate: number // 제품 할인율
   }
   reservation: Reservation | null // 거래한 제품의 예약 정보
   timePaid: string // 제품을 거래한 시간
@@ -1126,7 +1137,8 @@ interface Reservation {
         "노트북",
         "컴퓨터"
       ],
-      "thumbnail": "https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png"
+      "thumbnail": "https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png",
+      "discountRate": 0
     },
     "reservation": null,
     "timePaid": "2021-11-07T20:17:32.112Z",
@@ -1145,7 +1157,8 @@ interface Reservation {
         "모니터",
         "컴퓨터"
       ],
-      "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png"
+      "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png",
+      "discountRate": 0
     },
     "reservation": {
       "start": "2021-11-12T06:00:00.000Z",
@@ -1202,7 +1215,7 @@ interface TransactionDetail { // 상세 거래 정보
     tags: string[]
     thumbnail: string | null
     photo: string | null
-    discountRate?: number // 제품 할인율
+    discountRate: number // 제품 할인율
   }
   reservation: Reservation | null // 거래한 제품의 예약 정보
   timePaid: string // 제품을 거래한 시간
@@ -1237,7 +1250,8 @@ interface Reservation {
       "컴퓨터"
     ],
     "thumbnail": "https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png",
-    "photo": "https://storage.googleapis.com/heropy-api/vVLP-ox_zSDv195712.jpg"
+    "photo": "https://storage.googleapis.com/heropy-api/vVLP-ox_zSDv195712.jpg",
+    "discountRate": 0
   },
   "reservation": null,
   "timePaid": "2021-11-07T20:01:49.100Z",
