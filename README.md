@@ -676,7 +676,13 @@ type ResponseValue = true // 거래 내역 완료/취소 및 해제 처리 상�
 - 제품 썸네일 사진은 1MB 이하여야 합니다.
 - 제품 상세 사진은 4MB 이하여야 합니다.
 - 제품 할인율(`discountRate`)은 제품 가격과 직접 관계가 없는 단순 메모 속성입니다.
-- 제품 할인율이 '20%'인 경우, `20`으로 입력해야 합니다.
+- 제품 할인율은 `0`~`99` 사이 숫자를 입력하세요. 만약 할인율이 '20%'인 경우, `20`으로 입력해야 합니다.
+- 제품 할인율을 입력하지 않으면, `0`으로 적용됩니다.
+
+```js
+// 할인 전 가격을 계산!
+const priceBeforeDiscount = price * 100 / (100 - discountRate)
+```
 
 ```curl
 curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products 
