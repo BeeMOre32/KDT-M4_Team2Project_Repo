@@ -23,6 +23,7 @@ import {
   searchProduct,
 } from "./utilities/productapi";
 import { afterLoadUserAuth, userToken } from "./utilities/userAuth";
+
 const loginEl = document.querySelector(".login");
 const logoutEl = document.querySelector(".logout");
 const getBankEl = document.querySelector(".get-bank");
@@ -101,13 +102,13 @@ delBankEl.addEventListener("click", async () => {
 });
 
 getMasterProduct.addEventListener("click", async () => {
-  const res = await getMasterProductList(access);
+  const res = await getMasterProductList();
   products = res;
   console.log(res);
 });
 
 getMasterSoldList.addEventListener("click", async () => {
-  const res = await getMasterAllSoldList(access);
+  const res = await getMasterAllSoldList();
   console.log(res);
 });
 
