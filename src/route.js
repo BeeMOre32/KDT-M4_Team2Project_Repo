@@ -1,6 +1,8 @@
 import Navigo from "navigo";
+import { renderMasterPage } from "./page/master";
+import { renderAddProduct } from "./page/massteraddproduct";
 
-const router = new Navigo("/");
+export const router = new Navigo("/");
 const app = document.querySelector("#app");
 
 router.on("/", function () {
@@ -36,5 +38,11 @@ router.on("/login", function () {
 });
 
 router.on("/master", function () {
-  console.log("master");
+  renderMasterPage();
 });
+
+router.on("/master/product/add", function () {
+  renderAddProduct();
+});
+
+router.resolve();

@@ -1,0 +1,56 @@
+@import "common";
+@import "variables.scss";
+
+.master-page {
+  h1 {
+    @include title-font;
+  }
+
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    height: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    .product {
+      width: 300px;
+      flex-grow: 1;
+      display: flex;
+      .product-wrapper {
+        width: 100%;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background-position: center;
+        background-size: cover;
+        border-radius: 15px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.07);
+        overflow: hidden;
+        div {
+          width: 100%;
+          height: 20%;
+          display: flex;
+          color: $light-gray;
+          background-color: $dark-gray;
+          justify-content: center;
+          align-items: center;
+          transform: translateY(100%);
+          opacity: 0;
+          transition: 0.3s ease;
+        }
+        &:hover {
+          div {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+    }
+  }
+}
