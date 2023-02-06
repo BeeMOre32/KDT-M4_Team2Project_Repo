@@ -13,7 +13,9 @@
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"
     />
     <link rel="stylesheet" href="./src/style/main.scss" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script defer type="module" src="./src/main.js"></script>
+    <script defer type="module" src="./src/js/main.js"></script>
   </head>
   <body>
     <div id="wrap">
@@ -28,8 +30,9 @@
 
           <nav>
             <ul>
-              <li><a href="#">PRODUCTS</a></li>
-              <li><a href="#">BEST ITEM</a></li>
+              <li><a href="#">ALL PRODUCTS</a></li>
+              <li><a href="#">BEST</a></li>
+              <li><a href="#">NEW</a></li>
               <li><a href="#">SEARCH</a></li>
             </ul>
           </nav>
@@ -50,14 +53,31 @@
       </header>
 
       <div class="visual">
-        <!-- swiper js -->
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"></div>
+            <div class="swiper-slide"></div>
+            <div class="swiper-slide"></div>
+            <div class="swiper-slide"></div>
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
       </div>
 
       <section>
         <div class="new-items">
           <h2>새로 나왔어요</h2>
 
-          <div class="item-slider">이미지 슬라이드 ㅁㅁㅁㅁㅁ 형태</div>
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <!-- items -->
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
         </div>
 
         <div class="recommand">
