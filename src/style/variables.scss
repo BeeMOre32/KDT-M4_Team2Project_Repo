@@ -169,6 +169,24 @@ button {
           color: #222;
           cursor: pointer;
         }
+
+        .cart {
+          position: relative;
+
+          .cart-count {
+            position: absolute;
+            top: -3px;
+            right: -5px;
+            width: 14px;
+            height: 14px;
+            color: #fff;
+            font-size: 10px;
+            text-align: center;
+            line-height: 14px;
+            background-color: #e84118;
+            border-radius: 50%;
+          }
+        }
       }
     }//.container
   }//header

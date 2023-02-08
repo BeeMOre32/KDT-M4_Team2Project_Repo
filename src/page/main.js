@@ -185,7 +185,7 @@ export function renderMainPage() {
     },
     pagination: {
       el : '.swiper-pagination',
-    }
+    },
   });
       
   new Swiper(newItemSliderEl, {

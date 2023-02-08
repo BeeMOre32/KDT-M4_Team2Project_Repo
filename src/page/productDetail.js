@@ -5,8 +5,13 @@ import { getProductDetail } from "../utilities/productapi";
 import { router } from "../route"
 
 import Swiper, {Navigation} from 'swiper';
+import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper.min.css';
+import 'swiper/modules/navigation/navigation-element.min.css';
 
 export async function renderDetailPage(params) {
+  window.scrollTo({top: 0, behavior: "smooth"})
+
   const app = document.getElementById('app');
   const product = await getProductDetail(params.data.productId)
 
@@ -48,8 +53,8 @@ export async function renderDetailPage(params) {
           </div>
 
           <div class="buy-product">
-            <button class="darken-btn">바로구매</button>
-            <button class="common-btn">장바구니</button>
+            <button class="darken-btn buy-now">바로구매</button>
+            <button class="common-btn cart">장바구니</button>
           </div>
         </div>
       </div>
@@ -58,35 +63,48 @@ export async function renderDetailPage(params) {
     <div class="recommend">
       <h2>같은 카테고리 제품 둘러보기</h2>
 
+      <div class="no-item" style="text-align: center;"></div>
       <div class="swiper ">
           <div class="swiper-wrapper">
             <!-- 제품추가 -->
           </div>
-          <!-- <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div> -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
         <span class="loading">loading</span>
       </div>
     <div>
   `;
 
-
-  const swiperEl = document.querySelector('.recommend .swiper')
-  const swiperWrapper = document.querySelector('.recommend .swiper-wrapper')
+  const noItemEl = document.querySelector('.recommend .no-item');
+  const swiperEl = document.querySelector('.recommend .swiper');
+  const swiperWrapper = document.querySelector('.recommend .swiper-wrapper');
+  const cartEl = document.querySelector('.buy-product .cart');
 
   ;(
     async function () {
       const res = await getMasterProductList();
       console.log(res);
 
-      renderRecommendItems(res)
+      renderRecommendItems(res);
     }
   )();
+
+  cartEl.addEventListener('click', () => {
+    putInCart(params.data.productId);
+  })
   
   function renderRecommendItems(items) {
+    const loadingEl = document.querySelector('.recommend .loading')
     items = items.filter((item) =>  item.tags[0] === product.tags[0] && item.id !== product.id);
 
-    const loadingEl = document.querySelector('.recommend .loading')
+    if(items.length === 0) {
+      noItemEl.textContent ="일치하는 제품이 없습니다"
+      loadingEl.remove();
+      return;
+    }
+
+    noItemEl.remove();
   
     items.forEach((item) => {
       const divEl = document.createElement('div');
@@ -128,6 +146,26 @@ export async function renderDetailPage(params) {
     });
   
     loadingEl.remove();
+  }
+
+  function putInCart(id) {
+    const savedCart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+    
+    if (savedCart.includes(id)) {
+      // 모달제작예정
+      alert("해당상품이 장바구니에 이미 담겨있습니다");
+      return;
+    }
+    
+    
+    savedCart.push(id);
+    localStorage.setItem("cart", JSON.stringify(savedCart));
+    
+    const cartCountEl =  document.querySelector('header .cart .cart-count');
+    cartCountEl.textContent = savedCart.length;
+
+    // 모달제작예정
+    alert("해당상품이 장바구니에 추가되었습니다");
   }
 
   new Swiper(swiperEl, {
