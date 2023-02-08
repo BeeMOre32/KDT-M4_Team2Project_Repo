@@ -1,16 +1,6 @@
 @import "./common.scss";
 @import "./variables.scss";
 
-.loading {
-  display: block;
-  margin: 0 auto;
-  width: 48px;
-  height: 48px;
-  text-indent: -9999px;
-  background-image: url("../images/dots-loading.gif");
-  background-position: center;
-}
-
 .fade-item {
   opacity: 0;
   transform: translate(-5px, 15px);

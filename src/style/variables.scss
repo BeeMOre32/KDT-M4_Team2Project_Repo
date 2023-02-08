@@ -53,6 +53,17 @@ button {
   }
 }
 
+//로딩아이콘
+.loading {
+  display: block;
+  margin: 0 auto;
+  width: 48px;
+  height: 48px;
+  text-indent: -9999px;
+  background-image: url("../images/dots-loading.gif");
+  background-position: center;
+}
+
 /* 헤더, 푸터 */
 #wrap {
   font-family: 'Pretendard-Regular';
