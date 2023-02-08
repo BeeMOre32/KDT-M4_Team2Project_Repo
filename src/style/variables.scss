@@ -54,5 +54,6 @@ button {
 
 // 숨김 처리 할때
 .hidden {
-  display: none;
+  display: none !important;
+  overflow: hidden;
 }

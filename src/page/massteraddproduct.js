@@ -1,9 +1,12 @@
 import "../style/masteraddproduct.scss";
 import { router } from "../route";
 import { renderMasterPage } from "./master";
+import { postMasterProduct } from "../utilities/masterapi";
+
 export function renderAddProduct() {
   const app = document.querySelector("#app");
   const $ = (selector) => app.querySelector(selector);
+  const $$ = (selector) => app.querySelectorAll(selector);
   app.innerHTML = ``;
 
   const addProductPage = document.createElement("div");
@@ -18,6 +21,8 @@ export function renderAddProduct() {
   let productTags;
   let productPrice;
   let productDescription;
+  let productThumbnail = "";
+  let productDetail = "";
 
   $(".show-product-cancel-btn").addEventListener("click", async () => {
     router.navigate("/master");
@@ -32,12 +37,35 @@ export function renderAddProduct() {
     $(".show-product-tags").innerText = productTags;
   });
   $(".form-input-description").addEventListener("change", (e) => {
-    productPrice = e.target.value;
-    $(".show-product-price").innerText = productPrice;
-  });
-  $(".form-input-price").addEventListener("change", (e) => {
     productDescription = e.target.value;
     $(".show-product-description").innerText = productDescription;
+  });
+  $(".form-input-price").addEventListener("change", (e) => {
+    productPrice = e.target.value;
+    $(".show-product-price").innerText = productPrice + "원";
+  });
+
+  $(".form-input-img__thumbnail").addEventListener(
+    "change",
+    imgSubmitHandler(productThumbnail, thumbnailLoadHandler, $, $$)
+  );
+  $(".form-input-img__detail").addEventListener(
+    "change",
+    imgSubmitHandler(productDetail, detailLoadHandler, $, $$)
+  );
+
+  $(".show-product-submit-btn").addEventListener("click", async () => {
+    const data = {
+      title: productTitle,
+      price: Number(productPrice),
+      description: productDescription,
+      tags: productTags.split(",").map((tag) => tag.trim()),
+      thumbnailBase64: productThumbnail,
+      photoBase64: productDetail,
+    };
+    console.log(data);
+    const res = await postMasterProduct(data);
+    console.log(res);
   });
 }
 
@@ -48,13 +76,14 @@ function renderAddProductForm() {
   const showProductEl = document.createElement("div");
   showProductEl.classList.add("show-product");
   showProductEl.innerHTML = `
-        <div class="show-product-img">
-          <img src="" alt="" />
+        <div class="show-product-img hidden">
+          <img src="" alt="" class="thumbnail" />
+          <img src="" alt="" class="detail" />
         </div>
         <div class="show-product-title"></div>
         <div class="show-product-tags"></div>
-        <div class="show-product-price"></div>
         <div class="show-product-description"></div>
+        <div class="show-product-price"></div>
         <button class="show-product-submit-btn darken-btn">상품 추가</button>
         <button class="show-product-cancel-btn darken-btn">취소</button>
   `;
@@ -64,33 +93,60 @@ function renderAddProductForm() {
   addProductForm.innerHTML = `
         <div class="add-product-form-title">상품 정보 입력</div>
         <div class="form-input-img">
-        <div class="form-input-img__sumnail">클릭하여 상품 썸네일 업로드 하기
-          <input
+          <div class="form-input-img__thumbnail">
+   
+           <input
           type="file"
-          class="form-input-img__sumnail"
+          class="form-input-img__thumbnail"
           placeholder="상품 썸네일"/>
+          <span>상품 썸네일 추가</span>
           </div>
          
-          <div class="form-input-img__sumnail">클릭하여 상품 상세사진 업로드 하기
+          <div class="form-input-img__detail">
             <input
-          type="file"
-          class="form-input-img__detail"
-          placeholder="상품 상세 이미지"/>
+            type="file"
+            class="form-input-img__detail"
+            placeholder="상품 상세 이미지"/>
+            <span>상세 이미지 추가</span>
           </div>
         
-          
-          <img src="https://picsum.photos/200" alt="" class="sumnail">
-      
-         </div>
-        
+          <img src="" alt="" class="thumbnail">
+        </div>
         <input class="form-input-title" placeholder="상품 이름" />
         <input
           class="form-input-tags"
           placeholder="상품 태그 (쉼표로 구분)"/>
-          <input type="text" class="form-input-description" placeholder="설명">
+         <input type="text" class="form-input-description" placeholder="설명">
         <input class="form-input-price" placeholder="상품 가격" />
   `;
 
   addProductFormWrapper.append(showProductEl, addProductForm);
   return addProductFormWrapper;
+}
+
+function detailLoadHandler(productDetail, $) {
+  return (e) => {
+    e.target.result = productDetail;
+    $(".show-product-img").classList.remove("hidden");
+    $(".detail").setAttribute("src", e.target.result);
+  };
+}
+
+function thumbnailLoadHandler(productThumbnail, $, $$) {
+  return (e) => {
+    e.target.result = productThumbnail;
+    $(".show-product-img").classList.remove("hidden");
+    $$(".thumbnail").forEach((thumbnail) => {
+      thumbnail.setAttribute("src", e.target.result);
+    });
+  };
+}
+
+function imgSubmitHandler(imgUrl, loadHandler, $, $$) {
+  return (e) => {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = loadHandler(imgUrl, $, $$);
+  };
 }
