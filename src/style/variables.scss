@@ -16,6 +16,30 @@ $light-gray: #E4E6E8;
 }
 
 
+
+/* 스크롤 커스텀 */
+
+@mixin scroll-custom {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary-color;
+    background-color: $dark-gray;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $light-gray;
+  }
+}
+
+body {
+  @include scroll-custom();
+}
+
+
 /* 디자인 */
 
 button {

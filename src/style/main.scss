@@ -63,6 +63,7 @@
 
           .swiper-slide {
             width: 380px;
+            cursor: pointer;
             
             &:hover .thumbnail {
               transition: .5s;
@@ -101,7 +102,7 @@
                 white-space: nowrap;
                 font-family: 'Pretendard-Regular';
                 font-weight: 600;
-                cursor: default;
+                cursor: pointer;
               }
 
               .price {
