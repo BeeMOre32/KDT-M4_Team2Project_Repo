@@ -21,7 +21,7 @@ $light-gray: #E4E6E8;
 
 @mixin scroll-custom {
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 8px; 
   }
 
   &::-webkit-scrollbar-thumb {
