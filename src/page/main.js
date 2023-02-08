@@ -8,6 +8,7 @@ import 'swiper/modules/pagination/pagination-element.min.css';
 
 import { getMasterProductList } from "../utilities/masterapi";
 import { getProductDetail } from "../utilities/productapi";
+import { router } from "../route"
 
 export function renderMainPage() {
   const app = document.querySelector("#app");
@@ -123,7 +124,11 @@ export function renderMainPage() {
       newItemSliderWrapperEl.append(divEl);
       divEl.append(thumbnailEl, descEl);
       descEl.append(tagsEl, itemNameEl, priceEl);
-    })
+
+      divEl.addEventListener('click', () => {
+        routeDetailPage(item.id)
+      });
+    });
   
     loadingEl.remove();
   }
@@ -161,9 +166,16 @@ export function renderMainPage() {
     
     io.observe(recommendItemEl);
     loadingEl ? loadingEl.remove() : null;
+
+    seeMoreBtnEl.addEventListener('click', () => {
+      routeDetailPage(item.id)
+    });
   }
 
-  
+  function routeDetailPage(id) {
+    router.navigate(`/detail/${id}`);
+  }
+
   new Swiper(visualSliderEl, {
     modules: [Pagination, Autoplay],
     slidesPerView: 1,
