@@ -88,7 +88,11 @@ export function renderAddProduct() {
     };
 
     const res = await postMasterProduct(data);
-    console.log(res);
+    if (res === 200) {
+      router.navigate("/master");
+    } else {
+      alert("상품 추가에 실패했습니다. 항목란이 비어있는지 확인해주세요.");
+    }
   });
 }
 

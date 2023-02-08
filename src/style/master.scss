@@ -2,6 +2,9 @@
 @import "variables.scss";
 
 .master-page {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
   h1 {
     @include title-font;
   }
@@ -17,6 +20,7 @@
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
+    position: relative;
     .product {
       width: 300px;
       flex-grow: 1;
@@ -53,5 +57,24 @@
         }
       }
     }
+  }
+}
+.page-nation {
+  position: absolute;
+  bottom: -60px;
+  left: 5%;
+  display: flex;
+  width: 90%;
+  gap: 40px;
+  .page-nation-btn {
+    padding: 5px 10px;
+    font-size: 20px;
+    border-radius: 6px;
+    border: 1px solid $dark-gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
   }
 }

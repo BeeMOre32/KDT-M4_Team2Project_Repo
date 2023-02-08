@@ -21,7 +21,7 @@ export async function renderMasterPage() {
     router.navigate("/master/product/add");
   });
 
-  masterPage.append(masterPageTitle, await renderProductList(), addProductBtn);
+  masterPage.append(masterPageTitle, await renderProductList(1), addProductBtn);
   app.appendChild(masterPage);
 
   $$(".product").forEach((product) => {
@@ -35,12 +35,33 @@ export async function renderMasterPage() {
   console.log(data);
 }
 
-async function renderProductList() {
+async function renderProductList(page) {
   const data = await getMasterProductList();
   const ProductList = document.createElement("div");
   ProductList.classList.add("product-list");
+  let dataArr = data.slice(page * 8 - 8, page * 8);
 
-  data.forEach((product) => {
+  console.log(dataArr);
+
+  const dataLength = data.length;
+  const remainder = dataLength % 8;
+  const quotient = Math.floor(dataLength / 8);
+
+  function pageNation(pageNumber) {
+    const pageNation = document.createElement("div");
+    pageNation.classList.add("page-nation");
+
+    for (let i = 0; i < pageNumber; i++) {
+      const pageNationBtn = document.createElement("button");
+      pageNationBtn.classList.add("page-nation-btn");
+      pageNationBtn.innerText = String(i + 1);
+      pageNation.appendChild(pageNationBtn);
+    }
+    return pageNation;
+  }
+  ProductList.appendChild(pageNation(quotient + 1));
+
+  dataArr.forEach((product) => {
     const productEl = document.createElement("div");
     productEl.classList.add("product");
     productEl.id = product.id;
@@ -49,7 +70,6 @@ async function renderProductList() {
       <div>${product.title}</div>
     </div>
     `;
-
     ProductList.appendChild(productEl);
   });
 
