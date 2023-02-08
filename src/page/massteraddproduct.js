@@ -126,7 +126,7 @@ function renderAddProductForm() {
 
 function detailLoadHandler(productDetail, $) {
   return (e) => {
-    e.target.result = productDetail;
+    productDetail = e.target.result;
     $(".show-product-img").classList.remove("hidden");
     $(".detail").setAttribute("src", e.target.result);
   };
@@ -134,7 +134,7 @@ function detailLoadHandler(productDetail, $) {
 
 function thumbnailLoadHandler(productThumbnail, $, $$) {
   return (e) => {
-    e.target.result = productThumbnail;
+    productThumbnail = e.target.result;
     $(".show-product-img").classList.remove("hidden");
     $$(".thumbnail").forEach((thumbnail) => {
       thumbnail.setAttribute("src", e.target.result);
