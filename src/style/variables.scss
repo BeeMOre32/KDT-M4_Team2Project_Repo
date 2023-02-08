@@ -1,12 +1,12 @@
 /* 변수 */
 
 // 페이지의 최대너비지정
-$max-width: 1420px; 
+$max-width: 1420px;
 
 // 테마색상
-$dark-gray: #292C43;
-$primary-color: #8083A3;
-$light-gray: #E4E6E8;
+$dark-gray: #292c43;
+$primary-color: #8083a3;
+$light-gray: #e4e6e8;
 
 //폰트크기
 @mixin title-font {
@@ -14,31 +14,6 @@ $light-gray: #E4E6E8;
   font-weight: 600;
   line-height: 1.5;
 }
-
-
-
-/* 스크롤 커스텀 */
-
-@mixin scroll-custom {
-  &::-webkit-scrollbar {
-    width: 8px; 
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $primary-color;
-    background-color: $dark-gray;
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: $light-gray;
-  }
-}
-
-body {
-  @include scroll-custom();
-}
-
 
 /* 디자인 */
 
@@ -48,14 +23,14 @@ button {
   border: none;
   padding: 0;
   cursor: pointer;
-  
+
   // 기본버튼
   &.common-btn {
     padding: 8px 20px;
-    font-family: 'Pretendard-Regular';
+    font-family: "Pretendard-Regular";
     background-color: $light-gray;
     border-radius: 3px;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background-color: darken($light-gray, 5%);
@@ -65,11 +40,11 @@ button {
   // 진한 버튼
   &.darken-btn {
     padding: 8px 20px;
-    font-family: 'Pretendard-Regular';
+    font-family: "Pretendard-Regular";
     color: #fff;
     background-color: $primary-color;
     border-radius: 3px;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background-color: darken($primary-color, 5%);
@@ -77,125 +52,7 @@ button {
   }
 }
 
-//로딩아이콘
-.loading {
-  display: block;
-  margin: 0 auto;
-  width: 48px;
-  height: 48px;
-  text-indent: -9999px;
-  background-image: url("../images/dots-loading.gif");
-  background-position: center;
+// 숨김 처리 할때
+.hidden {
+  display: none;
 }
-
-/* 헤더, 푸터 */
-#wrap {
-  font-family: 'Pretendard-Regular';
-  padding-top: 70px;
-  max-width: 100vw;
-  overflow: hidden;
-
-  header {
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    background-color: #fff;
-    border-bottom: 1px solid $light-gray;
-    z-index: 10;
-
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: $max-width;
-      margin: 0 auto;
-      padding: 20px;
-  
-      h1 {
-
-        a {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          font-size: 16px;
-          font-weight: 600;
-    
-          img {
-            width: 30px;
-          }
-        }//a
-      }
-  
-      nav {
-        ul {
-          display: flex;
-  
-          li a {
-            display: block;
-            padding: 0 30px;
-            color: $dark-gray;
-            font-size: 15px;
-            font-weight: 600;
-            transition: color .3s;
-
-            &.blur {
-              color: $primary-color
-            }
-          }
-        }
-      }
-  
-      .side {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-
-        form {
-          display: flex;
-          align-items: center;
-          margin-right: 20px;
-    
-          input {
-            width: 150px;
-          }
-    
-          button {
-            font-size: 20px;
-          }
-        }
-
-        >span {
-          font-size: 24px;
-          color: #222;
-          cursor: pointer;
-        }
-      }
-    }//.container
-  }//header
-
-  
-  footer {
-    padding: 40px;
-    border-top: 1px solid $light-gray;
-
-    .logo {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-      font-size: 20px;
-      font-weight: 600;
-      text-align: center;
-
-      img {
-        display: block;
-        width: 50px;
-        height: 50px;
-      }
-    }
-
-    address {
-      text-align: center;
-    }
-  }//footer
-}//#app
