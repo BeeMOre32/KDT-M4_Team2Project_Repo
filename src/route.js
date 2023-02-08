@@ -3,6 +3,9 @@ import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main"
 import { renderDetailPage } from "./page/productDetail"; 
+import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+import { renderOrderHisory } from "./page/mypage";
+
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -15,12 +18,8 @@ router.on("/search/:query", function (params) {
   console.log(params.query);
 });
 
-router.on("/detail/:productId", function (params) {
+router.on("/product/detail/:productId", function (params) {
   renderDetailPage(params);
-});
-
-router.on("/product/:productId", function (params) {
-  console.log(params.query);
 });
 
 router.on("/product/cart", function () {
@@ -31,8 +30,8 @@ router.on("/product/checkout", function () {
   console.log("checkout");
 });
 
-router.on("/mypage", function () {
-  app.innerHTML = `<h1>My Page</h1>`;
+router.on("/mypage/orderhistory", function (params) {
+  renderOrderHisory(params);
 });
 
 router.on("/mypage/bank", function () {
@@ -45,6 +44,10 @@ router.on("/login", function () {
 
 router.on("/master", function () {
   renderMasterPage();
+});
+
+router.on("/master/product/detail/:id", function (match) {
+  renderMasterProductDetailPage(match.data.id);
 });
 
 router.on("/master/product/add", function () {
