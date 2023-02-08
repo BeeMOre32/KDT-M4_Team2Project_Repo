@@ -39,7 +39,7 @@
       .card {
         position: sticky;
         top: 85px;
-        padding: 20px;
+        padding: 25px;
         box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
         border: 1px solid $light-gray;
         border-radius: 5px;
@@ -125,4 +125,78 @@
       }//.card
     }//.side
   }//.container
+
+  .recommend {
+    width: $max-width;
+    margin: 100px auto 30px;
+    padding: 20px;
+
+    h2 {
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 22px;
+    }
+
+    .swiper {
+
+      .swiper-wrapper {
+        gap: 20px;
+
+        .swiper-slide {
+          width: 380px;
+          cursor: pointer;
+          
+          &:hover .thumbnail {
+            transition: .5s;
+            background-size: 105%;
+          }
+
+          .thumbnail {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+            background-size: 100%;
+            background-position: center;
+          }//.thumbnail
+
+          .desc {
+
+            .tags {
+              display: flex;
+              flex-direction: row;
+              gap: 8px;
+
+              span {
+                display: block;
+                padding: 2px 4px;
+
+                color: #fff;
+                background-color: $primary-color;
+                cursor: default;
+              }
+            }
+
+            h3 {
+              margin: 10px 0;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-family: 'Pretendard-Regular';
+              font-weight: 600;
+              cursor: pointer;
+            }
+
+            .price {
+              color: $dark-gray;
+            }
+          }
+        }//.swiper-slide
+      }//.swiper-wrapper
+
+      .swiper-button-prev, .swiper-button-next {
+        color: $dark-gray;
+      }
+
+    }//.swiper
+  }
 }//#app

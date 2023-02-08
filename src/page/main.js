@@ -78,7 +78,6 @@ export function renderMainPage() {
   ;(
     async function () {
       const res = await getMasterProductList();
-      products = res;
       console.log(res);
   
       renderNewItems(res)
