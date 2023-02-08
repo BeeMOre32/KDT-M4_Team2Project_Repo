@@ -47,3 +47,14 @@ router.on("/master/product/add", function () {
 });
 
 router.resolve();
+
+
+// 공통JS
+const searchEl = document.querySelector('header form');
+const inputEl = document.querySelector('header input');
+
+searchEl.addEventListener('submit', evt => {
+  evt.preventDefault();
+  if(inputEl.value === "") return ;
+  router.navigate(`/search/${inputEl.value}`);
+})
