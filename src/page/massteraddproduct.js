@@ -47,23 +47,46 @@ export function renderAddProduct() {
 
   $(".form-input-img__thumbnail").addEventListener(
     "change",
-    imgSubmitHandler(productThumbnail, thumbnailLoadHandler, $, $$)
+    imgSubmitHandler(productThumbnail, true, $, $$)
   );
   $(".form-input-img__detail").addEventListener(
     "change",
-    imgSubmitHandler(productDetail, detailLoadHandler, $, $$)
+    imgSubmitHandler(productDetail, false, $, $$)
   );
+
+  function imgSubmitHandler(imgUrl, thumbnail, $, $$) {
+    return (e) => {
+      let file = e.target.files[0];
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.addEventListener("load", (e) => {
+        if (thumbnail) {
+          productThumbnail = e.target.result;
+          console.log(productThumbnail);
+          $(".show-product-img").classList.remove("hidden");
+          $$(".thumbnail").forEach((thumbnail) => {
+            thumbnail.setAttribute("src", e.target.result);
+          });
+        } else {
+          productDetail = e.target.result;
+          console.log(productDetail);
+          $(".show-product-img").classList.remove("hidden");
+          $(".detail").setAttribute("src", e.target.result);
+        }
+      });
+    };
+  }
 
   $(".show-product-submit-btn").addEventListener("click", async () => {
     const data = {
       title: productTitle,
       price: Number(productPrice),
       description: productDescription,
-      tags: productTags.split(",").map((tag) => tag.trim()),
+      tags: productTags?.split(",").map((tag) => tag.trim()),
       thumbnailBase64: productThumbnail,
       photoBase64: productDetail,
     };
-    console.log(data);
+
     const res = await postMasterProduct(data);
     console.log(res);
   });
@@ -122,31 +145,4 @@ function renderAddProductForm() {
 
   addProductFormWrapper.append(showProductEl, addProductForm);
   return addProductFormWrapper;
-}
-
-function detailLoadHandler(productDetail, $) {
-  return (e) => {
-    productDetail = e.target.result;
-    $(".show-product-img").classList.remove("hidden");
-    $(".detail").setAttribute("src", e.target.result);
-  };
-}
-
-function thumbnailLoadHandler(productThumbnail, $, $$) {
-  return (e) => {
-    productThumbnail = e.target.result;
-    $(".show-product-img").classList.remove("hidden");
-    $$(".thumbnail").forEach((thumbnail) => {
-      thumbnail.setAttribute("src", e.target.result);
-    });
-  };
-}
-
-function imgSubmitHandler(imgUrl, loadHandler, $, $$) {
-  return (e) => {
-    let file = e.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = loadHandler(imgUrl, $, $$);
-  };
 }
