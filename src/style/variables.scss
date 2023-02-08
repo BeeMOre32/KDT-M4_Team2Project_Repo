@@ -52,3 +52,115 @@ button {
     }
   }
 }
+
+/* 헤더, 푸터 */
+#wrap {
+  font-family: 'Pretendard-Regular';
+  padding-top: 70px;
+  max-width: 100vw;
+  overflow: hidden;
+
+  header {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color: #fff;
+    border-bottom: 1px solid $light-gray;
+    z-index: 10;
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: $max-width;
+      margin: 0 auto;
+      padding: 20px;
+  
+      h1 {
+
+        a {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          font-size: 16px;
+          font-weight: 600;
+    
+          img {
+            width: 30px;
+          }
+        }//a
+      }
+  
+      nav {
+        ul {
+          display: flex;
+  
+          li a {
+            display: block;
+            padding: 0 30px;
+            color: $dark-gray;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color .3s;
+
+            &.blur {
+              color: $primary-color
+            }
+          }
+        }
+      }
+  
+      .side {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        form {
+          display: flex;
+          align-items: center;
+          margin-right: 20px;
+    
+          input {
+            width: 150px;
+          }
+    
+          button {
+            font-size: 20px;
+          }
+        }
+
+        >span {
+          font-size: 24px;
+          color: #222;
+          cursor: pointer;
+        }
+      }
+    }//.container
+  }//header
+
+  
+  footer {
+    padding: 40px;
+    border-top: 1px solid $light-gray;
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+
+      img {
+        display: block;
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    address {
+      text-align: center;
+    }
+  }//footer
+}//#app

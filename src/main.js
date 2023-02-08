@@ -113,7 +113,19 @@ getMasterSoldList.addEventListener("click", async () => {
 });
 
 postMasterProductEl.addEventListener("click", async () => {
-  const data = { title: "abc", price: 1000, description: "test" };
+  const data = {
+    title: "",
+    price: 10000,
+    description: "",
+    tags: ["bed", "new" , "best" , "sale"],
+    humbnailBase64: "",
+    hotoBase64: ""
+  };
+
+  if (data.title === "") {
+    console.log("empty title")
+    return
+  }
 
   const res = await postMasterProduct(data);
   console.log(res);

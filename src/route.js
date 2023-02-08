@@ -1,12 +1,13 @@
 import Navigo from "navigo";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
+import { renderMainPage } from "./page/main"
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
 
 router.on("/", function () {
-  app.innerHTML = `<h1>Home</h1>`;
+  renderMainPage();
 });
 
 router.on("/search/:query", function (params) {
