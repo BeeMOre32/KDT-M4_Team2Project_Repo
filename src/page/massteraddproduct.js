@@ -48,6 +48,9 @@ function renderAddProductForm() {
   const showProductEl = document.createElement("div");
   showProductEl.classList.add("show-product");
   showProductEl.innerHTML = `
+        <div class="show-product-img">
+          <img src="" alt="" />
+        </div>
         <div class="show-product-title"></div>
         <div class="show-product-tags"></div>
         <div class="show-product-price"></div>
@@ -60,10 +63,26 @@ function renderAddProductForm() {
   addProductForm.classList.add("add-product-form");
   addProductForm.innerHTML = `
         <div class="add-product-form-title">상품 정보 입력</div>
-        <input
+        <div class="form-input-img">
+        <div class="form-input-img__sumnail">클릭하여 상품 썸네일 업로드 하기
+          <input
           type="file"
-          class="form-input-img"
-          placeholder="상품 이미지"/>
+          class="form-input-img__sumnail"
+          placeholder="상품 썸네일"/>
+          </div>
+         
+          <div class="form-input-img__sumnail">클릭하여 상품 상세사진 업로드 하기
+            <input
+          type="file"
+          class="form-input-img__detail"
+          placeholder="상품 상세 이미지"/>
+          </div>
+        
+          
+          <img src="https://picsum.photos/200" alt="" class="sumnail">
+      
+         </div>
+        
         <input class="form-input-title" placeholder="상품 이름" />
         <input
           class="form-input-tags"

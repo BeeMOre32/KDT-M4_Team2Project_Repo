@@ -33,7 +33,10 @@ export async function renderMasterProductDetailPage(productId) {
       e.target.innerText = "매진으로 설정";
 
       try {
-        await editMasterProduct({ id: productId, isSoldOut: false });
+        await editMasterProduct({
+          id: productId,
+          product: { isSoldOut: false },
+        });
       } catch (error) {
         alert("판매중으로 설정하는데 실패했습니다." + error);
       }
@@ -47,7 +50,10 @@ export async function renderMasterProductDetailPage(productId) {
       e.target.innerText = "판매중으로 설정";
 
       try {
-        await editMasterProduct({ id: productId, isSoldOut: true });
+        await editMasterProduct({
+          id: productId,
+          product: { isSoldOut: true },
+        });
       } catch (error) {
         alert("매진으로 설정하는데 실패했습니다." + error);
       }
@@ -71,13 +77,16 @@ export async function renderMasterProductDetailPage(productId) {
 function renderProductDetail(data) {
   const productDetail = document.createElement("div");
   productDetail.classList.add("product-detail");
+
+  let soldOutBtn = data.isSoldOut ? "판매중으로 설정" : "매진으로 설정";
   let tagSpan = data.tags;
   tagSpan = tagSpan.map((tag) => `<span>${tag}</span>`).join("");
-  if (data.soldout) {
+  if (data.isSoldOut === true) {
     tagSpan += `<span class="sale soldout">매진</span>`;
   } else {
     tagSpan += `<span class="sale onsale">판매중</span>`;
   }
+
   productDetail.innerHTML = `
   <div class="product-detail__img">
     <img src="${data.thumbnail}" alt="${data.title}" />
@@ -92,7 +101,7 @@ function renderProductDetail(data) {
   <div class="product-detail__btns">
     <button class="edit-btn common-btn">상품 정보 수정</button>
     <button class="save-btn darken-btn hidden">변경사항 저장</button>
-    <button class="set-btn__soldout common-btn">매진으로 설정</button>
+    <button class="set-btn__soldout common-btn">${soldOutBtn}</button>
     <button class="delete-btn common-btn">이 상품삭제</button>
 </div>
   `;

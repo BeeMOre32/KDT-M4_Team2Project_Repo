@@ -85,7 +85,7 @@ export async function userInfoEdit(data) {
  * @returns {Promise<Array[Object]>} - 계좌 목록
  *  */
 export async function getBankAccount(access) {
-  const res = await fetch("api/bank/getbankaccount", {
+  const res = await fetch("/api/bank/getbankaccount", {
     method: "GET",
     headers: {
       authorization: "Bearer " + access,
@@ -100,7 +100,7 @@ export async function getBankAccount(access) {
  * @returns {Promise<Array[Object]>} - 현재 계좌
  * */
 export async function getCurrentAccount(access) {
-  const res = await fetch("api/bank/getcurrentaccount", {
+  const res = await fetch("/api/bank/getcurrentaccount", {
     method: "GET",
     headers: {
       authorization: "Bearer " + access,
@@ -121,7 +121,7 @@ export async function getCurrentAccount(access) {
  * @returns {Promise<Object>} - 생성된 계좌의 정보
  * */
 export async function addBankAccount(data) {
-  const res = await fetch("api/bank/addbankaccount", {
+  const res = await fetch("/api/bank/addbankaccount", {
     method: "POST",
     headers: {
       authorization: "Bearer " + data.userToken,
@@ -141,7 +141,7 @@ export async function addBankAccount(data) {
  * @returns {Promise<Boolean>} - 삭제 결과
  * */
 export async function deleteBankAccount(data) {
-  const res = await fetch("api/bank/deletebankaccount", {
+  const res = await fetch("/api/bank/deletebankaccount", {
     method: "DELETE",
     headers: {
       authorization: "Bearer " + data.userToken,
