@@ -1,2 +1,69 @@
 @import "common";
 @import "variables.scss";
+
+$img: 100px;
+$profileHeight: 130px;
+
+.myPage {
+  display: flex;
+  padding: 20px 0;
+  nav{
+    width: calc($max-width/5);
+    display: flex;
+    flex-direction: column;
+    gap: 180px;
+    .profile{
+      width: inherit;
+      height: $profileHeight;
+      background-color: rgb(143, 203, 255);
+      border-radius: 15px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &__list{
+        position: absolute;
+        z-index: 1;
+        top: calc($profileHeight - $img/2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        &--img{
+          width: $img;
+          height: $img;
+          background-color: rgb(83, 83, 83);
+          border-radius: 50%;
+        }
+        &--displayName{
+          font-size: 24px;
+          font-weight: 900;
+        }
+        &--email{
+
+        }
+      }
+    }
+    .myPageBtns {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      a {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover{
+          background-color: $light-gray;
+        }
+      }
+    }
+  }
+  article{
+    min-width: calc($max-width*(4/5)); 
+  }
+}
