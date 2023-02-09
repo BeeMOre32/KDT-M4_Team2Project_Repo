@@ -6,6 +6,8 @@ searchEl.addEventListener('submit', evt => {
   evt.preventDefault();
   if(inputEl.value === "") return ;
   router.navigate(`/search/${inputEl.value}`);
-})
+});
 
-cartCountEl.textContent = JSON.parse(localStorage.getItem('cart')).length;
+if ( localStorage.getItem('cart') ) {
+  cartCountEl.textContent = JSON.parse(localStorage.getItem('cart')).length;
+}

@@ -10,10 +10,10 @@ import 'swiper/swiper.min.css';
 import 'swiper/modules/navigation/navigation-element.min.css';
 
 export async function renderDetailPage(params) {
-  window.scrollTo({top: 0, behavior: "smooth"})
-
   const app = document.getElementById('app');
-  const product = await getProductDetail(params.data.productId)
+  const product = await getProductDetail(params.data.productId);
+  
+  window.scrollTo({top: 0, behavior: "smooth"});
 
   app.innerHTML = /* html */`
     <div class="container">
@@ -35,7 +35,7 @@ export async function renderDetailPage(params) {
 
           <div class="category-card">
             <span class="material-symbols-outlined icon">
-              dresser 
+                dresser 
             </span>
             <div>
               <span class="category-title">Category</span>
@@ -47,8 +47,6 @@ export async function renderDetailPage(params) {
             <span class="tag-title">Tags</span>
             <div class="tags">
               <!-- tag추가 -->
-              <span>best</span>
-              <span>new</span>
             </div>
           </div>
 
@@ -73,13 +71,36 @@ export async function renderDetailPage(params) {
         </div>
         <span class="loading">loading</span>
       </div>
-    <div>
+    </div>
+
+    <div class="modal-bg">
+      <div class="modal">
+        <div class="icon">
+          <span class="material-symbols-outlined cart-icon">
+            shopping_cart
+          </span>
+          <span class="material-symbols-outlined already-in-icon">
+            production_quantity_limits
+          </span>
+        </div>
+        <h2>상품이 장바구니에 추가되었습니다</h2>
+        <div class="btns">
+          <button class="common-btn keep">쇼핑 계속하기</button>
+          <button class="darken-btn go-cart">장바구니로 이동</button>
+        </div>
+      </div>
+    </div>
   `;
 
+  const tagsEl = document.querySelector('.card .tag .tags');
   const noItemEl = document.querySelector('.recommend .no-item');
   const swiperEl = document.querySelector('.recommend .swiper');
   const swiperWrapper = document.querySelector('.recommend .swiper-wrapper');
-  const cartEl = document.querySelector('.buy-product .cart');
+  const mainCartBtnEl = document.querySelector('.buy-product .cart');
+  const modalBgEl = document.querySelector('.modal-bg');
+  const modalKeepBtnEl = modalBgEl.querySelector('.keep');
+  const modalCartBtnEl = modalBgEl.querySelector('.go-cart');
+
 
   ;(
     async function () {
@@ -90,9 +111,35 @@ export async function renderDetailPage(params) {
     }
   )();
 
-  cartEl.addEventListener('click', () => {
-    putInCart(params.data.productId);
-  })
+  mainCartBtnEl.addEventListener('click', () => {
+    ProductCartIn(params.data.productId);
+  });
+
+  modalCartBtnEl.addEventListener('click', () => {
+    router.navigate('/product/cart');
+  });
+
+  modalKeepBtnEl.addEventListener('click', () => {
+    modalBgEl.classList.remove('show');
+    document.body.style.overflow = 'unset'
+  });
+  
+  modalBgEl.addEventListener('click', e => {
+    if(e.target === e.currentTarget) {
+      modalKeepBtnEl.click();
+    }
+  });
+
+
+  (function renderTags() {
+    product.tags.forEach((tag) => {
+      if(tag !== 'best' && tag !== 'new') return;
+      const spanEl = document.createElement('span');
+
+      spanEl.textContent = tag;
+      tagsEl.append(spanEl);
+    })
+  })();
   
   function renderRecommendItems(items) {
     const loadingEl = document.querySelector('.recommend .loading')
@@ -148,15 +195,13 @@ export async function renderDetailPage(params) {
     loadingEl.remove();
   }
 
-  function putInCart(id) {
+  function ProductCartIn(id) {
     const savedCart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
     
     if (savedCart.includes(id)) {
-      // 모달제작예정
-      alert("해당상품이 장바구니에 이미 담겨있습니다");
+      showModal(true);
       return;
     }
-    
     
     savedCart.push(id);
     localStorage.setItem("cart", JSON.stringify(savedCart));
@@ -164,8 +209,18 @@ export async function renderDetailPage(params) {
     const cartCountEl =  document.querySelector('header .cart .cart-count');
     cartCountEl.textContent = savedCart.length;
 
-    // 모달제작예정
-    alert("해당상품이 장바구니에 추가되었습니다");
+    showModal();
+  }
+
+  function showModal(isAlreadyIn) {
+    const h2El = modalBgEl.querySelector('h2');
+    const iconEl = modalBgEl.querySelector('.icon');
+
+    modalBgEl.classList.add('show');
+    isAlreadyIn ? iconEl.classList.add('already-in') : "";
+
+    document.body.style.overflow = 'hidden'
+    h2El.textContent = isAlreadyIn ? "해당상품이 장바구니에 이미 담겨있습니다" : "해당상품이 장바구니에 추가되었습니다";
   }
 
   new Swiper(swiperEl, {
