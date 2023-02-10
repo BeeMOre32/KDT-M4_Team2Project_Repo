@@ -17,11 +17,12 @@ export function renderAddProduct() {
   app.appendChild(addProductPage);
 
   let productTitle;
-  let productTags;
+  let productTags = [];
   let productPrice;
   let productDescription;
   let productThumbnail = "";
   let productDetail = "";
+  let productType = ["chair", "table", "bed", "closet"];
 
   $(".show-product-cancel-btn").addEventListener("click", async () => {
     router.navigate("/master");
@@ -30,10 +31,7 @@ export function renderAddProduct() {
     productTitle = e.target.value;
     $(".show-product-title").innerText = productTitle;
   });
-  $(".form-input-tags").addEventListener("change", (e) => {
-    productTags = e.target.value;
-    $(".show-product-tags").innerText = productTags;
-  });
+
   $(".form-input-description").addEventListener("change", (e) => {
     productDescription = e.target.value;
     $(".show-product-description").innerText = productDescription;
@@ -41,6 +39,41 @@ export function renderAddProduct() {
   $(".form-input-price").addEventListener("change", (e) => {
     productPrice = e.target.value;
     $(".show-product-price").innerText = productPrice + "원";
+  });
+
+  $(".form-input-tags__type")
+    .querySelectorAll("input")
+    .forEach((input) => {
+      input.addEventListener("change", onTagSaleHandler(productTags, $, $$));
+    });
+
+  $(".tags__type").addEventListener("change", (e) => {
+    let duplicatedValue = productTags.filter((element) => {
+      return productType.includes(element);
+    });
+    console.log(duplicatedValue, "duplicatedValue");
+    if (productTags.includes(e.target.value)) {
+      productTags = productTags.filter((tag) => tag !== e.target.value);
+      $$(".tags__show .tag").forEach((tag) => {
+        if (tag.innerText === e.target.value) {
+          tag.remove();
+        }
+      });
+    }
+    if (duplicatedValue.length === 0) {
+      productTags.push(e.target.value);
+      renderTags(e, $$);
+    } else {
+      productTags = productTags.filter((tag) => tag !== duplicatedValue[0]);
+      $$(".tags__show .tag").forEach((tag) => {
+        if (tag.innerText === duplicatedValue[0]) {
+          tag.remove();
+        }
+      });
+
+      productTags.push(e.target.value);
+      renderTags(e, $$);
+    }
   });
 
   $(".form-input-img__thumbnail").addEventListener(
@@ -60,14 +93,12 @@ export function renderAddProduct() {
       reader.addEventListener("load", (e) => {
         if (thumbnail) {
           productThumbnail = e.target.result;
-          console.log(productThumbnail);
           $(".show-product-img").classList.remove("hidden");
           $$(".thumbnail").forEach((thumbnail) => {
             thumbnail.setAttribute("src", e.target.result);
           });
         } else {
           productDetail = e.target.result;
-          console.log(productDetail);
           $(".show-product-img").classList.remove("hidden");
           $(".detail").setAttribute("src", e.target.result);
         }
@@ -80,10 +111,11 @@ export function renderAddProduct() {
       title: productTitle,
       price: Number(productPrice),
       description: productDescription,
-      tags: productTags?.split(",").map((tag) => tag.trim()),
+      tags: productTags,
       thumbnailBase64: productThumbnail,
       photoBase64: productDetail,
     };
+    console.log(data);
     const res = await postMasterProduct(data);
     if (typeof res === "string") {
       alert("상품 추가에 실패했습니다.");
@@ -105,7 +137,9 @@ function renderAddProductForm() {
           <img src="" alt="" class="detail" />
         </div>
         <div class="show-product-title"></div>
-        <div class="show-product-tags"></div>
+        <div class="form-input-tags__input">
+          <div class="tags__show"></div>
+         </div>
         <div class="show-product-description"></div>
         <div class="show-product-price"></div>
         <button class="show-product-submit-btn darken-btn">상품 추가</button>
@@ -136,14 +170,57 @@ function renderAddProductForm() {
         
           <img src="" alt="" class="thumbnail">
         </div>
-        <input class="form-input-title" placeholder="상품 이름" />
-        <input
-          class="form-input-tags"
-          placeholder="상품 태그 (쉼표로 구분)"/>
-         <input type="text" class="form-input-description" placeholder="설명">
-        <input class="form-input-price" placeholder="상품 가격" />
-  `;
+        <div class="form-input-wrapper">
+         <div>
+          <input class="form-input-title" placeholder="상품 이름" />
+          <input class="form-input-description" placeholder="상품 설명" />
+          <input class="form-input-price" placeholder="상품 가격" />
+         </div>
+        <div class="form-input-tags">
+         <div class="form-input-tags__input">
+          <h1>아래에 있는 선택자를 활용하여 태그를 입력해주세요</h1>
+          <div class="tags__show"></div>
+         </div>
+         <div class="form-input-tags__type">
+          <input type="checkbox" id="sale" value="sale"> <label for="sale">할인상품</label> 
+          <input type="checkbox" id="new"  value="new"> <label for="new">신상품</label> 
+          <input type="checkbox" id="best"  value="best"> <label for="best">최고의 상품</label> 
+         </div>
+         <select  class="tags__type">
+           <option value="chair">의자</option>
+           <option value="bed">침대</option>
+           <option value="table">테이블</option>
+           <option value="closet">수납장</option>
+         </select>
+         </div>
+       </div>
+         `;
 
   addProductFormWrapper.append(showProductEl, addProductForm);
   return addProductFormWrapper;
+}
+
+function onTagSaleHandler(productTags, $, $$) {
+  return (e) => {
+    if (e.target.checked) {
+      productTags.push(e.target.value);
+      renderTags(e, $$);
+    } else {
+      productTags = productTags.filter((tag) => tag !== e.target.value);
+      $$(".tags__show .tag").forEach((tag) => {
+        if (tag.innerText === e.target.value) {
+          tag.remove();
+        }
+      });
+    }
+  };
+}
+
+function renderTags(e, $$) {
+  $$(".tags__show").forEach((tags) => {
+    const tag = document.createElement("span");
+    tag.classList.add("tag");
+    tag.innerText = e.target.value;
+    tags.appendChild(tag);
+  });
 }
