@@ -1,6 +1,5 @@
 import "../style/masteraddproduct.scss";
 import { router } from "../route";
-import { renderMasterPage } from "./master";
 import { postMasterProduct } from "../utilities/masterapi";
 
 export function renderAddProduct() {
@@ -26,7 +25,6 @@ export function renderAddProduct() {
 
   $(".show-product-cancel-btn").addEventListener("click", async () => {
     router.navigate("/master");
-    await renderMasterPage();
   });
   $(".form-input-title").addEventListener("change", (e) => {
     productTitle = e.target.value;
@@ -86,12 +84,11 @@ export function renderAddProduct() {
       thumbnailBase64: productThumbnail,
       photoBase64: productDetail,
     };
-
     const res = await postMasterProduct(data);
-    if (res === 200) {
-      router.navigate("/master");
+    if (typeof res === "string") {
+      alert("상품 추가에 실패했습니다.");
     } else {
-      alert("상품 추가에 실패했습니다. 항목란이 비어있는지 확인해주세요.");
+      router.navigate("/master");
     }
   });
 }

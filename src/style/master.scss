@@ -11,7 +11,7 @@
     margin-bottom: 20px;
     text-align: center;
   }
-
+  position: relative;
   .product-list {
     display: flex;
     flex-wrap: wrap;
@@ -62,13 +62,25 @@
     }
   }
 }
+
+.add-product-btn {
+  position: absolute;
+  bottom: -50px;
+  right: 160px;
+}
+
+.sold-product-btn {
+  position: absolute;
+  bottom: -50px;
+  right: 280px;
+}
+
 .page-nation {
   position: absolute;
-  bottom: -60px;
-  left: 5%;
+  bottom: -50px;
+  left: 10%;
   display: flex;
-  width: 90%;
-  gap: 40px;
+  gap: 20px;
   .page-nation-btn {
     padding: 5px 10px;
     font-size: 20px;
@@ -79,5 +91,13 @@
     align-items: center;
     cursor: pointer;
     transition: 0.3s;
+    &:hover {
+      background-color: $dark-gray;
+      color: $light-gray;
+    }
+    &.active {
+      background-color: $dark-gray;
+      color: $light-gray;
+    }
   }
 }

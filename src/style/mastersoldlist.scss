@@ -1,0 +1,75 @@
+@import "variables";
+@import "common";
+.sold-product-page {
+  width: 100%;
+  height: 100%;
+  padding: 20px 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  h1 {
+    @include title-font;
+    text-align: center;
+  }
+  .sold-title {
+    padding: 10px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    .sold-product-name {
+      flex-grow: 3.5;
+      font-size: 18px;
+    }
+    .sold-product-sold-date {
+      flex-grow: 1;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .sold-product-price {
+      flex-grow: 1;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+  .sold-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    .sold-product {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+      border: 1px solid $light-gray;
+      border-radius: 15px;
+      padding: 15px;
+      transition: 0.3s ease;
+      &:hover {
+        background-color: $light-gray;
+      }
+    }
+    .sold-product-name {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 18px;
+      flex-grow: 4;
+    }
+    .sold-product-sold-date {
+      font-size: 18px;
+      flex-grow: 1;
+    }
+    .sold-product-price {
+      font-size: 18px;
+      color: $dark-gray;
+      flex-grow: 1;
+    }
+  }
+}

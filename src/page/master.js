@@ -4,6 +4,7 @@ import { router } from "../route";
 
 export async function renderMasterPage() {
   const app = document.querySelector("#app");
+  let page = 1;
   app.innerHTML = "";
   const $ = (selector) => app.querySelector(selector);
   const $$ = (selector) => app.querySelectorAll(selector);
@@ -11,7 +12,7 @@ export async function renderMasterPage() {
   const masterPage = document.createElement("div");
   masterPage.classList.add("master-page");
   const masterPageTitle = document.createElement("h1");
-  masterPageTitle.innerText = "관리자 페이지";
+  masterPageTitle.innerText = "현재 팔고 있는 상품 목록";
 
   const addProductBtn = document.createElement("button");
   addProductBtn.classList.add("add-product-btn");
@@ -21,33 +22,61 @@ export async function renderMasterPage() {
     router.navigate("/master/product/add");
   });
 
-  masterPage.append(masterPageTitle, await renderProductList(1), addProductBtn);
+  const soldProductBtn = document.createElement("button");
+  soldProductBtn.classList.add("sold-product-btn");
+  soldProductBtn.classList.add("common-btn");
+  soldProductBtn.innerText = "팔린 상품 목록";
+  soldProductBtn.addEventListener("click", () => {
+    router.navigate("/master/sold");
+  });
+
+  masterPage.append(
+    masterPageTitle,
+    await renderProductList(page, true, masterPage),
+    addProductBtn,
+    soldProductBtn
+  );
   app.appendChild(masterPage);
 
+  $$(".page-nation-btn").forEach((pageNationBtn) => {
+    pageNationBtn.addEventListener("click", async () => {
+      $$(".page-nation-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      pageNationBtn.classList.add("active");
+      page = pageNationBtn.innerText;
+      masterPage.replaceChild(
+        await renderProductList(page, false, masterPage),
+        $$(".product-list")[0]
+      );
+      productClickHandle($$);
+    });
+  });
+
+  productClickHandle($$);
+}
+
+function productClickHandle($$) {
   $$(".product").forEach((product) => {
-    console.log(product);
     product.addEventListener("click", () => {
       router.navigate(`/master/product/detail/${product.id}`);
     });
   });
-  const data = await getMasterProductList();
-
-  console.log(data);
 }
 
-async function renderProductList(page, isFirst = true) {
+async function renderProductList(page, isFirst = true, parentNode) {
   const data = await getMasterProductList();
-  const ProductList = document.createElement("div");
-  ProductList.classList.add("product-list");
+  const productList = document.createElement("div");
+  productList.classList.add("product-list");
   let dataArr = data.slice(page * 8 - 8, page * 8);
 
-  console.log(dataArr);
-
   const dataLength = data.length;
-  const remainder = dataLength % 8;
   const quotient = Math.floor(dataLength / 8);
 
-  if (isFirst) ProductList.appendChild(pageNation(quotient + 1));
+  if (isFirst) {
+    parentNode.appendChild(pageNation(quotient + 1));
+  } else {
+  }
 
   dataArr.forEach((product) => {
     const productEl = document.createElement("div");
@@ -58,10 +87,9 @@ async function renderProductList(page, isFirst = true) {
       <div>${product.title}</div>
     </div>
     `;
-    ProductList.appendChild(productEl);
+    productList.appendChild(productEl);
   });
-
-  return ProductList;
+  return productList;
 }
 function pageNation(pageNumber) {
   const pageNation = document.createElement("div");
