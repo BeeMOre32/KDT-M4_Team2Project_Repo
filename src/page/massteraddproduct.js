@@ -61,7 +61,7 @@ export function renderAddProduct() {
       });
     }
     if (duplicatedValue.length === 0) {
-      productTags.push(e.target.value);
+      productTags.splice(0, 0, e.target.value);
       renderTags(e, $$);
     } else {
       productTags = productTags.filter((tag) => tag !== duplicatedValue[0]);
@@ -71,7 +71,7 @@ export function renderAddProduct() {
         }
       });
 
-      productTags.push(e.target.value);
+      productTags.splice(0, 0, e.target.value);
       renderTags(e, $$);
     }
   });
@@ -115,7 +115,7 @@ export function renderAddProduct() {
       thumbnailBase64: productThumbnail,
       photoBase64: productDetail,
     };
-    console.log(data);
+    console.log(data.tags);
     const res = await postMasterProduct(data);
     if (typeof res === "string") {
       alert("상품 추가에 실패했습니다.");
