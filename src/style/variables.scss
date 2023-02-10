@@ -1,12 +1,13 @@
 /* 변수 */
 
 // 페이지의 최대너비지정
-$max-width: 1420px; 
+$max-width: 1420px;
 
 // 테마색상
-$dark-gray: #292C43;
-$primary-color: #8083A3;
-$light-gray: #F5F5FA;
+$dark-gray: #292c43;
+$primary-color: #8083a3;
+$light-gray: #e4e6e8;
+$soft-red: #ED544E;
 
 //폰트크기
 @mixin title-font {
@@ -21,7 +22,7 @@ $light-gray: #F5F5FA;
 
 @mixin scroll-custom {
   &::-webkit-scrollbar {
-    width: 8px; 
+    width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -48,15 +49,15 @@ button {
   border: none;
   padding: 0;
   cursor: pointer;
-  
+
   // 기본버튼
   &.common-btn {
     padding: 8px 20px;
-    font-family: 'Pretendard-Regular';
+    font-family: "Pretendard-Regular";
     background-color: $light-gray;
     color: $dark-gray;
     border-radius: 3px;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background-color: darken($light-gray, 5%);
@@ -66,14 +67,27 @@ button {
   // 진한 버튼
   &.darken-btn {
     padding: 8px 20px;
-    font-family: 'Pretendard-Regular';
+    font-family: "Pretendard-Regular";
     color: #fff;
     background-color: $primary-color;
     border-radius: 3px;
-    transition: .2s;
+    transition: 0.2s;
 
     &:hover {
       background-color: darken($primary-color, 5%);
+    }
+  }
+
+  &.red-btn {
+    padding: 8px 20px;
+    font-family: "Pretendard-Regular";
+    color: #fff;
+    background-color: $soft-red;
+    border-radius: 3px;
+    transition: 0.2s;
+
+    &:hover{
+      background-color: darken($soft-red, 5%);
     }
   }
 }
@@ -110,7 +124,7 @@ button {
       width: $max-width;
       margin: 0 auto;
       padding: 20px;
-  
+
       h1 {
 
         a {
@@ -119,17 +133,17 @@ button {
           gap: 5px;
           font-size: 16px;
           font-weight: 600;
-    
+
           img {
             width: 30px;
           }
         }//a
       }
-  
+
       nav {
         ul {
           display: flex;
-  
+
           li a {
             display: block;
             padding: 0 30px;
@@ -144,7 +158,7 @@ button {
           }
         }
       }
-  
+
       .side {
         display: flex;
         align-items: center;
@@ -154,11 +168,11 @@ button {
           display: flex;
           align-items: center;
           margin-right: 20px;
-    
+
           input {
             width: 150px;
           }
-    
+
           button {
             font-size: 20px;
           }
@@ -191,7 +205,7 @@ button {
     }//.container
   }//header
 
-  
+
   footer {
     padding: 40px;
     border-top: 1px solid $light-gray;
@@ -217,3 +231,19 @@ button {
     }
   }//footer
 }//#app
+// 숨김 처리 할때
+.hidden {
+  display: none !important;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.alert-message {
+  position: fixed;
+  top: 70%;
+  padding: 14px;
+  border: 1px solid $dark-gray;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+}

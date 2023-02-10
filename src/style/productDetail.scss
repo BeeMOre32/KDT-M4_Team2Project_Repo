@@ -117,9 +117,25 @@
           grid-template-columns: 1fr 1fr;
           gap: 10px;
           margin-top: 50px;
+          
+          &.soldout {
+            grid-template-columns: 1fr;
+
+            button {
+              &.buy-now {display: none;}
+              &.cart {display: none;}
+              &.soldout-btn {
+                display: block;
+              }
+            }
+          }
 
           button {
             padding: 14px 20px;
+
+            &.soldout-btn {
+              display: none;
+            }
           }
         }
       }//.card

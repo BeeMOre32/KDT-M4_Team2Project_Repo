@@ -19,13 +19,45 @@ export async function renderMasterProductDetailPage(productId) {
   const saveBtn = $(".save-btn");
   const setBtnSoldout = $(".set-btn__soldout");
   const deleteBtn = $(".delete-btn");
+  const categorySelect = $("select");
+  const tagSelect = $("form");
+  const checkboxes = tagSelect.querySelectorAll("input[type=checkbox]");
+
+  let newTags = [...data.tags];
+
+  renderTags(newTags)
+  categorySelect.value = data.tags[0];
+  checkboxes.forEach((checkbox) => {
+    if(newTags.includes(checkbox.value)) {
+      checkbox.checked = true;
+    }
+  })
+
+  categorySelect.addEventListener("change", () => {
+    newTags[0] = categorySelect.value;
+    renderTags(newTags)
+  });
+
+  tagSelect.addEventListener('change', (e) => {
+    const inputEl = e.target;
+
+    if(inputEl.checked && !newTags.includes(e.target.value)) {
+      newTags.push(e.target.value)
+    }
+    if(!inputEl.checked && newTags.includes(e.target.value)) {
+      newTags = newTags.filter((tag) => tag !== e.target.value)
+    }
+
+    renderTags(newTags)
+  })
 
   setBtnSoldout.addEventListener("click", soldOutBtnHandler($, productId));
 
   editBtn.addEventListener("click", editHandler(editBtn, saveBtn, $));
   saveBtn.addEventListener(
-    "click",
-    saveBtnHandler(editBtn, saveBtn, $, productId)
+    "click", () => {
+      saveBtnHandler(editBtn, saveBtn, $, newTags, productId)
+    }
   );
   deleteBtn.addEventListener("click", async () => {
     function confirmDelete() {
@@ -59,33 +91,62 @@ function renderProductDetail(data) {
   productDetail.classList.add("product-detail");
 
   let soldOutBtn = data.isSoldOut ? "판매중으로 설정" : "매진으로 설정";
-  let tagSpan = data.tags;
-  tagSpan = tagSpan.map((tag) => `<span>${tag}</span>`).join("");
-  if (data.isSoldOut === true) {
-    tagSpan += `<span class="sale soldout">매진</span>`;
-  } else {
-    tagSpan += `<span class="sale onsale">판매중</span>`;
-  }
+  const onSale =  data.isSoldOut ? "매진" : "판매중"
 
-  productDetail.innerHTML = `
+  productDetail.innerHTML = /* html */`
   <div class="product-detail__img">
+    <span>썸네일 이미지<span>
     <img src="${data.thumbnail}" alt="${data.title}" />
+    <span>상세정보 이미지<span>
     <img src="${data.photo}" alt="${data.title}" />
   </div>
   <div class="product-detail__info">
+    <div class="product-detail__info__sale">
+      <span class="sale soldout">${onSale}</span>
+    </div>
     <div class="product-detail__info__title">${data.title}</div>
     <div class="product-detail__info__price">${data.price}원</div>
-    <div class="product-detail__info__tags">${tagSpan}</div>
+    <div class="product-detail__info__tags">
+      <div class="tags"></div>
+      <div class="edit__tags hidden">
+        <select name="category" id="category">
+          <option value="bed">침대</option>
+          <option value="table">테이블</option>
+          <option value="chair">의자</option>
+          <option value="closet">수납</option>
+        </select>
+        <form class="select-tag">
+          <label>
+            <input type="checkbox" name="tag" value="new" />
+            <span>new</span>
+          </label>
+          <label>
+            <input type="checkbox" name="tag" value="best" />
+            <span>best</span>
+          </label>
+          <label>
+            <input type="checkbox" name="tag" value="sale" />
+            <span>sale</span>
+          </label>
+        </form>
+      </div>
+    </div>
     <div class="product-detail__info__description">${data.description}</div>
+    <div class="product-detail__btns">
+      <button class="edit-btn common-btn">상품 정보 수정</button>
+      <button class="save-btn darken-btn hidden">변경사항 저장</button>
+      <button class="set-btn__soldout common-btn">${soldOutBtn}</button>
+      <button class="delete-btn common-btn">이 상품삭제</button>
+    </div>
   </div>
-  <div class="product-detail__btns">
-    <button class="edit-btn common-btn">상품 정보 수정</button>
-    <button class="save-btn darken-btn hidden">변경사항 저장</button>
-    <button class="set-btn__soldout common-btn">${soldOutBtn}</button>
-    <button class="delete-btn common-btn">이 상품삭제</button>
-</div>
   `;
+
   return productDetail;
+}
+
+function renderTags(tags) {
+  const tagsEl = document.querySelector(".product-detail__info__tags .tags");
+  tagsEl.innerHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join("")
 }
 
 function soldOutBtnHandler($, productId) {
@@ -134,6 +195,7 @@ function editHandler(editBtn, saveBtn, $) {
   return () => {
     editBtn.classList.add("hidden");
     saveBtn.classList.remove("hidden");
+    $(".edit__tags").classList.remove("hidden");
 
     alertMessageEl(
       $(".product-detail"),
@@ -150,27 +212,28 @@ function editHandler(editBtn, saveBtn, $) {
   };
 }
 
-function saveBtnHandler(editBtn, saveBtn, $, productId) {
-  return async () => {
-    editBtn.classList.remove("hidden");
-    saveBtn.classList.add("hidden");
-    const title = $(".product-detail__info__title");
-    const price = $(".product-detail__info__price");
-    const description = $(".product-detail__info__description");
+async function saveBtnHandler(editBtn, saveBtn, $, newTags, productId) {
+  editBtn.classList.remove("hidden");
+  saveBtn.classList.add("hidden");
+  $(".edit__tags").classList.add("hidden");
 
-    title.setAttribute("contenteditable", "false");
-    price.setAttribute("contenteditable", "false");
-    description.setAttribute("contenteditable", "false");
+  const title = $(".product-detail__info__title");
+  const price = $(".product-detail__info__price");
+  const description = $(".product-detail__info__description");
 
-    const editedData = {
-      id: productId,
-      product: {
-        title: title.innerText,
-        price: price.innerText,
-        description: description.innerText,
-      },
-    };
+  title.setAttribute("contenteditable", "false");
+  price.setAttribute("contenteditable", "false");
+  description.setAttribute("contenteditable", "false");
 
-    await editMasterProduct(editedData);
+  const editedData = {
+    id: productId,
+    product: {
+      title: title.innerText,
+      price: price.innerText,
+      description: description.innerText,
+      tags: newTags
+    },
   };
+
+  await editMasterProduct(editedData);
 }

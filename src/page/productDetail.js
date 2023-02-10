@@ -1,5 +1,6 @@
 import "../style/productDetail.scss"
 
+import { afterLoadUserAuth } from "../utilities/userAuth";
 import { getMasterProductList } from "../utilities/masterapi";
 import { getProductDetail } from "../utilities/productapi";
 import { router } from "../route"
@@ -53,6 +54,7 @@ export async function renderDetailPage(params) {
           <div class="buy-product">
             <button class="darken-btn buy-now">바로구매</button>
             <button class="common-btn cart">장바구니</button>
+            <button class="red-btn soldout-btn">품절되었습니다</button>
           </div>
         </div>
       </div>
@@ -93,25 +95,43 @@ export async function renderDetailPage(params) {
   `;
 
   const tagsEl = document.querySelector('.card .tag .tags');
+  const buyBtns = document.querySelector('.card .buy-product')
   const noItemEl = document.querySelector('.recommend .no-item');
   const swiperEl = document.querySelector('.recommend .swiper');
   const swiperWrapper = document.querySelector('.recommend .swiper-wrapper');
-  const mainCartBtnEl = document.querySelector('.buy-product .cart');
+  const buyNowBtnEl = buyBtns.querySelector('.buy-now')
+  const mainCartBtnEl = buyBtns.querySelector('.cart');
   const modalBgEl = document.querySelector('.modal-bg');
   const modalKeepBtnEl = modalBgEl.querySelector('.keep');
   const modalCartBtnEl = modalBgEl.querySelector('.go-cart');
 
+  const userAuth = await afterLoadUserAuth();
+
+  ;(
+    function () {
+     product.isSoldOut ? buyBtns.classList.add('soldout') : buyBtns.classList.remove('soldout');
+    }
+  )();
 
   ;(
     async function () {
       const res = await getMasterProductList();
-      console.log(res);
-
       renderRecommendItems(res);
     }
   )();
 
+  buyNowBtnEl.addEventListener('click', () => {
+    if (typeof userAuth === "string") {
+      return router.navigate('/login');
+    } else {
+      //결제페이지로 바로이동
+    }
+  });
+
   mainCartBtnEl.addEventListener('click', () => {
+    if (typeof userAuth === "string") {
+      return router.navigate('/login');
+    }
     ProductCartIn(params.data.productId);
   });
 
@@ -132,8 +152,8 @@ export async function renderDetailPage(params) {
 
 
   (function renderTags() {
-    product.tags.forEach((tag) => {
-      if(tag !== 'best' && tag !== 'new') return;
+    product.tags.forEach((tag,idx) => {
+      if(idx === 0) return;
       const spanEl = document.createElement('span');
 
       spanEl.textContent = tag;
@@ -162,7 +182,7 @@ export async function renderDetailPage(params) {
       const priceEl = document.createElement('span');
   
       itemNameEl.textContent = item.title;
-      priceEl.textContent = `￦ ${item.price.toLocaleString()}`;
+      priceEl.textContent = item.isSoldOut ? '￦ 품절되었습니다' : `￦ ${item.price.toLocaleString()}`;
     
       thumbnailEl.style.backgroundImage = `url(${item.thumbnail})`;
   
@@ -170,7 +190,7 @@ export async function renderDetailPage(params) {
       thumbnailEl.classList.add('thumbnail');
       descEl.classList.add('desc');
       tagsEl.classList.add('tags');
-      priceEl.classList.add('price')
+      priceEl.classList.add('price');
     
       item.tags.map((tag, idx) => {
         if ( idx === 0 ) return
