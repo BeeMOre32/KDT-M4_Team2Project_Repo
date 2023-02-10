@@ -4,7 +4,6 @@ import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main"
 import { renderDetailPage } from "./page/productDetail"; 
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
-import { renderLoginPage } from "./page/login";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -38,7 +37,7 @@ router.on("/mypage/bank", function () {
 });
 
 router.on("/login", function () {
-  renderLoginPage()
+  console.log("login");
 });
 
 router.on("/master", function () {
