@@ -30,7 +30,6 @@ async function renderSoldList() {
     soldProduct.classList.add("sold-product");
     const soldDate = product.timePaid.slice(0, 10);
 
-    console.log(typeof soldDate);
     soldProduct.innerHTML = `
         <div class="sold-product-name">${product.product.title}</div>
         <div class="sold-product-price">${product.product.price}원</div>

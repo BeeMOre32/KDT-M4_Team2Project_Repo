@@ -29,10 +29,14 @@ export async function renderMasterPage() {
   soldProductBtn.addEventListener("click", () => {
     router.navigate("/master/sold");
   });
+  const loading = document.createElement("span");
+  loading.classList.add("loading");
+  loading.innerText = "loading...";
+  app.append(loading);
 
   masterPage.append(
     masterPageTitle,
-    await renderProductList(page, true, masterPage),
+    await renderProductList(page, true, masterPage, $),
     addProductBtn,
     soldProductBtn
   );
@@ -45,6 +49,10 @@ export async function renderMasterPage() {
       });
       pageNationBtn.classList.add("active");
       page = pageNationBtn.innerText;
+      const loading = document.createElement("span");
+      loading.classList.add("loading");
+      loading.innerText = "loading...";
+      app.append(loading);
       masterPage.replaceChild(
         await renderProductList(page, false, masterPage),
         $$(".product-list")[0]
@@ -69,7 +77,6 @@ async function renderProductList(page, isFirst = true, parentNode) {
   const productList = document.createElement("div");
   productList.classList.add("product-list");
   let dataArr = data.slice(page * 8 - 8, page * 8);
-
   const dataLength = data.length;
   const quotient = Math.floor(dataLength / 8);
 
@@ -77,6 +84,9 @@ async function renderProductList(page, isFirst = true, parentNode) {
     parentNode.appendChild(pageNation(quotient + 1));
   } else {
   }
+
+  const loading = document.querySelector(".loading");
+  loading.remove();
 
   dataArr.forEach((product) => {
     const productEl = document.createElement("div");
