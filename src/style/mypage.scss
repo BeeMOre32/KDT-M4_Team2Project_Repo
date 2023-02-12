@@ -3,17 +3,20 @@
 
 $img: 100px;
 $profileHeight: 130px;
+$padding: 20px;
 
 .myPage {
-  display: flex;
-  padding: 20px 0;
-  nav{
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  .leftSideMenu {
     width: calc($max-width/5);
     display: flex;
     flex-direction: column;
     gap: 180px;
+    padding: $padding;
+    border-right: 1px solid $light-gray;
     .profile{
-      width: inherit;
+      width: calc($max-width/5 - $padding*2);
       height: $profileHeight;
       background-color: rgb(143, 203, 255);
       border-radius: 15px;
@@ -39,9 +42,9 @@ $profileHeight: 130px;
           font-size: 24px;
           font-weight: 900;
         }
-        &--email{
+        // &--email{
 
-        }
+        // }
       }
     }
     .myPageBtns {
@@ -49,11 +52,36 @@ $profileHeight: 130px;
       flex-direction: column;
       justify-content: center;
       gap: 10px;
+      .myPageSummary {
+        display: flex;
+        gap: 10px;
+        &__btns {
+          border: 1px solid $light-gray;
+          border-radius: 15px;
+          padding: 10px 15px;
+          width: calc(($max-width/5 - $padding*2 - 10px)/2);
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          font-size: 14px;
+          &__name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          &__value {
+            display: flex;
+            justify-content: end;
+            font-weight: 900;
+            cursor: pointer;
+          }
+        }
+      }
       a {
         display: flex;
         align-items: center;
         gap: 20px;
-        padding: 20px;
+        padding: 20px 15px;
         border-radius: 15px;
         cursor: pointer;
         transition: 0.3s;
@@ -64,6 +92,7 @@ $profileHeight: 130px;
     }
   }
   article{
-    min-width: calc($max-width*(4/5)); 
+    min-width: calc($max-width*(4/5));
+
   }
 }
