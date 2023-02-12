@@ -35,8 +35,12 @@ $padding: 20px;
         &--img{
           width: $img;
           height: $img;
-          background-color: rgb(83, 83, 83);
+          background-color: $light-gray;
           border-radius: 50%;
+          background-image: url('../images/profile_alternate_img.svg');
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: cover;
         }
         &--displayName{
           font-size: 24px;

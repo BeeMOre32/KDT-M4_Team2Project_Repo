@@ -4,6 +4,8 @@ import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+import { renderOrderHisory } from "./page/mypage";
+
 import { renderSoldProduct } from "./page/mastersoldlist";
 
 export const router = new Navigo("/");
@@ -29,8 +31,8 @@ router.on("/product/checkout", function () {
   console.log("checkout");
 });
 
-router.on("/mypage", function () {
-  app.innerHTML = `<h1>My Page</h1>`;
+router.on("/mypage/orderHistory", function (params) {
+  renderOrderHisory(params);
 });
 
 router.on("/mypage/bank", function () {

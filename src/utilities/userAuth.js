@@ -34,7 +34,7 @@ export async function afterLoadUserAuth() {
   let authResult;
 
   if (token === "" || token === null) {
-    return "토큰이 없습니다. 로그인을 해주세요.";
+    return null; //"토큰이 없습니다. 로그인을 해주세요.";
   } else {
     authResult = await userAuth(token);
     return checkUserAuth(authResult);
@@ -51,7 +51,7 @@ function checkUserAuth(authResult) {
   if (typeof authResult === "object") {
     return authResult;
   } else {
-    return "유효하지 않은 토큰입니다. 로그인을 해주세요.";
+    return null; //"유효하지 않은 토큰입니다. 로그인을 해주세요.";
   }
 }
 
