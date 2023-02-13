@@ -1,0 +1,51 @@
+@import "./common.scss";
+@import "./variables.scss";
+
+.cart-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+  .item-container {
+    border: 1px solid red;
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid red;
+      margin: 10px;
+      img {
+        height: 100px;
+        width: 100px;
+        margin: 5px;
+      }
+      div {
+        margin: 5px;
+        border: 1px solid red;
+      }
+      button {
+        margin: 5px;
+        background-color: pink;
+        border-radius: 5px;
+      }
+    }
+  }
+  .price-container {
+    width: 200px;
+    height: 180px;
+    border: 1px solid red;
+    margin: 15px;
+    text-align: center;
+    div {
+      display: flex;
+      justify-content: space-between;
+      //border: 1px solid red;
+      padding: 5px;
+    }
+    .order-button {
+      border: 1px solid red;
+      display: flex;
+      justify-content: center;
+      background-color: rgb(120, 79, 159);
+    }
+  }
+}

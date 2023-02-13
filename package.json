@@ -23,7 +23,7 @@
     "navigo": "^8.11.1",
     "node-fetch": "^2.6.7",
     "parcel": "^2.8.3",
-    "swiper": "^9.0.1"
+    "swiper": "^9.0.3"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3"

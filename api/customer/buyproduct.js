@@ -7,6 +7,7 @@ export default async function handler(request, response) {
     headers: { ...basicHeaders, authorization: request.headers.authorization },
     body: request.body,
   });
+  console.log(res);
   const data = await res.json();
 
   return response.status(200).json(data);

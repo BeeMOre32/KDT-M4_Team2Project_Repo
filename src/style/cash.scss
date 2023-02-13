@@ -1,0 +1,28 @@
+@import "./common.scss";
+@import "./variables.scss";
+
+.cash-container {
+  border: 1px solid red;
+  .item-container {
+    border: 1px solid red;
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid red;
+      margin: 10px;
+      img {
+        height: 100px;
+        width: 100px;
+        margin: 5px;
+      }
+      div {
+        margin: 5px;
+        border: 1px solid red;
+      }
+    }
+  }
+  .userInfo-container {
+    border: 1px solid red;
+  }
+}

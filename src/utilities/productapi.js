@@ -35,6 +35,7 @@ export async function buyProduct(data) {
     headers: { authorization: data.userToken },
     body: JSON.stringify(data.info),
   });
+  console.log(res);
   return await res.json();
 }
 
