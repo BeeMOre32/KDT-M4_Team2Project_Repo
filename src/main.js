@@ -77,10 +77,10 @@ bankAccountEl.addEventListener("click", async () => {
 
 addBankEl.addEventListener("click", async () => {
   const data = {
-    userToken: access,
+    userToken: userToken._token,
     account: {
-      bankCode: "088",
-      accountNumber: "123456789012",
+      bankCode: "081",
+      accountNumber: "51912345612345",
       phoneNumber: "01012345678",
       signature: true,
     },

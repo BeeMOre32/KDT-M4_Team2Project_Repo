@@ -4,7 +4,7 @@ import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
-import { renderOrderHisory } from "./page/mypage";
+import { renderOrderHisory, renderMyAccount } from "./page/mypage";
 
 import { renderSoldProduct } from "./page/mastersoldlist";
 
@@ -35,8 +35,8 @@ router.on("/mypage/orderHistory", function (params) {
   renderOrderHisory(params);
 });
 
-router.on("/mypage/bank", function () {
-  console.log("mypage/bank");
+router.on("/mypage/account", function (params) {
+  renderMyAccount(params);
 });
 
 router.on("/login", function () {
