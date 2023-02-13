@@ -31,6 +31,7 @@ export async function renderMasterPage() {
   });
   const loading = document.createElement("span");
   loading.classList.add("loading");
+  loading.classList.add("loading--master");
   loading.innerText = "loading...";
   app.append(loading);
 
@@ -51,6 +52,7 @@ export async function renderMasterPage() {
       page = pageNationBtn.innerText;
       const loading = document.createElement("span");
       loading.classList.add("loading");
+      loading.classList.add("loading--master");
       loading.innerText = "loading...";
       app.append(loading);
       masterPage.replaceChild(

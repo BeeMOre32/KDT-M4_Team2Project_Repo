@@ -4,7 +4,7 @@
 #app {
   min-height: 100vh;
 
-  .container {
+  .container.product-detail-page {
     display: grid;
     grid-template-columns: 1fr 400px;
     gap: 30px;

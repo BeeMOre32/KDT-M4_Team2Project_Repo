@@ -7,6 +7,7 @@ $max-width: 1420px;
 $dark-gray: #292c43;
 $primary-color: #8083a3;
 $light-gray: #e4e6e8;
+$blue-white: #F5F5FA;
 $soft-red: #ED544E;
 
 //폰트크기
@@ -208,6 +209,7 @@ button {
 
   footer {
     padding: 40px;
+    background-color: $light-gray;
     border-top: 1px solid $light-gray;
 
     .logo {
@@ -227,6 +229,7 @@ button {
     }
 
     address {
+      font-size: 14px;
       text-align: center;
     }
   }//footer
