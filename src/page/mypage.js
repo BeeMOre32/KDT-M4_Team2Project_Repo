@@ -8,6 +8,11 @@ export async function renderOrderHisory() {
   const app = document.querySelector("#app");
   app.innerHTML = "";
 
+  const loading = document.createElement("span");
+  loading.classList.add("loading");
+  loading.innerText = "loading...";
+  app.append(loading);
+
   const loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
   if(!loginState) {
     const loginMessageEl = document.createElement('div');
@@ -22,10 +27,107 @@ export async function renderOrderHisory() {
     const articleEl = document.createElement('article');
     
     await renderSideMenu(sectionEl, articleEl);
+
+    const titleEl = document.createElement('h1');
+    titleEl.textContent = '나의 주문';
+
+    const buyList = await getBuyList(userToken._token);
+    const buyListSort = buyList.sort((a, b) => new Date(b.timePaid) - new Date(a.timePaid));
+
+    const contentEl = document.createElement('ul');
+    contentEl.className = 'buyListUl';
+
+    await renderBuyList(contentEl, buyListSort);
+
+    articleEl.append(titleEl, contentEl);
   
     app.append(sectionEl);
   }
 }
+async function renderBuyList(contentEl, buyList){
+  const buyItemEl = buyList.map( item => {
+    const buyItemLiEl = document.createElement('li');
+    buyItemLiEl.className = 'buyItemLi';
+
+    const stateEl = document.createElement('div');
+    stateEl.className = 'buyItemLi__state';
+    if((item.isCanceled === false) && (item.done === false)){
+      stateEl.textContent = '결제완료';
+      stateEl.addEventListener('click', () => console.log('잘 동작'));
+      stateEl.style.color = '#000';
+    }
+    else if(item.isCanceled === true){
+      stateEl.textContent = '반품환불완료';
+    }
+    else if(item.done === true){
+      stateEl.textContent = '구매확정완료';
+    }
+
+    const thumbnailEl = document.createElement('div');
+    thumbnailEl.className = 'buyItemLi__thumbnail';
+    
+    if(item.product.thumbnail){
+      thumbnailEl.style.backgroundImage = `url(${item.product.thumbnail})`;
+      thumbnailEl.style.backgroundSize = 'cover';
+    }
+    
+
+    const summaryEl = document.createElement('div');
+    summaryEl.className = 'buyItemLi__summary';
+    
+    const timePaidEl = document.createElement('div');
+    timePaidEl.className = 'buyItemLi__summary__timePaid';
+    const localTime = new Date(item.timePaid);
+
+    timePaidEl.textContent = `${localTime.toLocaleDateString('ko-Kr')} 결제`;
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'buyItemLi__summary__title';
+    titleEl.textContent = `${item.product.title}`;
+
+    const priceEl = document.createElement('div');
+    priceEl.className = 'buyItemLi__summary__price';
+    priceEl.textContent = `${item.product.price.toLocaleString()}원`;
+
+    summaryEl.append(timePaidEl, titleEl, priceEl);
+
+    if((item.isCanceled === false) && (item.done === false)){
+      const btnsEl = document.createElement('div');
+      btnsEl.className = 'buyItemLi__summary__btns';
+
+      const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.textContent = '주문취소';
+      isCanceledBtnEl.classList.add('common-btn');
+      const doneBtnEl = document.createElement('button');
+      doneBtnEl.textContent = '구매확정';
+      doneBtnEl.classList.add('common-btn');
+
+      btnsEl.append(isCanceledBtnEl, doneBtnEl);
+
+      summaryEl.append(btnsEl);
+    }
+    else {
+      const repurchaseBtnEl = document.createElement('button');
+      repurchaseBtnEl.textContent = '재구매';
+      repurchaseBtnEl.classList.add('common-btn');
+
+      summaryEl.append(repurchaseBtnEl);
+    }
+    
+
+    buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
+
+    return buyItemLiEl;
+  })
+  console.log(buyItemEl);
+
+  contentEl.append(...buyItemEl);
+
+  const loading = document.querySelector(".loading");
+  loading.remove();
+}
+
+
 
 async function renderSideMenu(sectionEl, articleEl) {
   // 화면 왼쪽 사이드 메뉴 생성(프로필, 주문•배송, 잔액, 주문, 계좌, 정보)
@@ -52,6 +154,7 @@ async function renderSideMenu(sectionEl, articleEl) {
   // profileImg가 존재 할 경우 해당 이미지를 현재 태그 배경으로 설정
   if(profile.profileImg){
     imgLiEl.style.backgroundImage = `url(${profile.profileImg})`;
+    imgLiEl.style.backgroundSize = 'cover';
   }
 
   // 표시이름
@@ -89,6 +192,8 @@ async function renderSideMenu(sectionEl, articleEl) {
   const orderDeliveryValue = buyList.filter( e => 
     (e.done === false) && (e.isCanceled === false) // 아직 구매취소x, 구매확정x
   ).length;
+
+  console.log(buyList);
   
   // 주문•배송 현황 값 표시
   const orderDeliveryValueEl = document.createElement('div');
@@ -110,6 +215,8 @@ async function renderSideMenu(sectionEl, articleEl) {
   // 나의 잔액 값 가져오기
   const currentAccount = await getCurrentAccount(token);
   const balanceValue = currentAccount.totalBalance.toLocaleString();
+
+  console.log(currentAccount);
   
   // 나의 잔액 값 표시
   const balanceValueEl = document.createElement('div');
@@ -124,11 +231,17 @@ async function renderSideMenu(sectionEl, articleEl) {
   const myOrderBtnEl = document.createElement('a');
   myOrderBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
+  myOrderBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage/orderHistory');
+  });
 
   // 나의 계좌
   const myAccountBtnEl = document.createElement('a');
   myAccountBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">payments</span> 나의 계좌';
+  myAccountBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage/account');
+  });
 
   // 나의 정보
   const myInfoBtnEl = document.createElement('a');

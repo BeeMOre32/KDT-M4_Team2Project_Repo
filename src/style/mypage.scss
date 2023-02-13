@@ -4,6 +4,12 @@
 $img: 100px;
 $profileHeight: 130px;
 $padding: 20px;
+@mixin backgroundImgCenter {
+  background-color: $light-gray;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+};
 
 .myPage {
   display: grid;
@@ -18,7 +24,7 @@ $padding: 20px;
     .profile{
       width: calc($max-width/5 - $padding*2);
       height: $profileHeight;
-      background-color: rgb(143, 203, 255);
+      background-color: $primary-color;
       border-radius: 15px;
       position: relative;
       display: flex;
@@ -35,12 +41,9 @@ $padding: 20px;
         &--img{
           width: $img;
           height: $img;
-          background-color: $light-gray;
           border-radius: 50%;
           background-image: url('../images/profile_alternate_img.svg');
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-size: cover;
+          @include backgroundImgCenter;
         }
         &--displayName{
           font-size: 24px;
@@ -96,7 +99,60 @@ $padding: 20px;
     }
   }
   article{
-    min-width: calc($max-width*(4/5));
+    padding: $padding;
+    h1 {
+      display: flex;
+      align-items: center;
+      padding: $padding;
+      height: $profileHeight;
+      font-weight: 900;
+      font-size: 32px;
+    }
+    .buyListUl {
+      margin: 5px;
+      .buyItemLi {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-template-rows: 1fr 4fr;
+        gap: 20px;
+        padding: $padding;
+        box-shadow: 1px 1px 20px 3px $light-gray;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        &__state {
+          grid-column: 1 / 3;
+          color: $primary-color;
+          font-weight: 900;
+          display: grid;
+          align-items: center;
+        }
+        &__thumbnail {
+          @include backgroundImgCenter;
+          background-image: url('../images/product_alternate_img.svg');
+          border-radius: 3px;
+        }
+        &__summary {
+          display: grid;
+          grid-template-rows: repeat(4, 1fr);
+          &__timePaid {
+            color: $primary-color;
+          }
+          &__title {
+            font-weight: 900;
+          }
+          &__price {
+            font-weight: 900;
+          }
+          &__btns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+          }
+        }
+      }
+    }
+    
 
   }
 }
