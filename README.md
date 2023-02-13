@@ -234,6 +234,52 @@ interface ResponseValue {
 }
 ```
 
+### 사용자 목록 조회
+
+- 관리자 전용 API입니다.
+
+```curl
+curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/users
+  \ -X 'GET'
+  \ -H 'masterKey: true'
+```
+
+요청 데이터 타입 및 예시:
+
+- 없음
+
+응답 데이터 타입 및 예시:
+
+```ts
+type ResponseValue = User[]
+
+interface User {
+  email: string // 사용자 아이디
+  displayName: string // 사용자 표시 이름
+  profileImg: string // 사용자 프로필 이미지 URL
+}
+```
+
+```json
+[
+  {
+    "email": "thesecon@gmail.com",
+    "displayName": "HEROPY",
+    "profileImg": null
+  },
+  {
+    "email": "neo@zillinks.com",
+    "displayName": "박영웅",
+    "profileImg": "https://storage.googleapis.com/heropy-api/Z_una7lyijv074804.png"
+  },
+  {
+    "email": "test@test.com",
+    "displayName": "관리자",
+    "profileImg": "https://storage.googleapis.com/heropy-api/ZXcXjwsB7nv121507.png"
+  }
+]
+```
+
 <hr />
 
 ## 계좌
