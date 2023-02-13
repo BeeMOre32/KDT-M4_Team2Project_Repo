@@ -54,3 +54,17 @@ export async function deleteMasterProduct(id) {
   });
   return await res.json();
 }
+
+/**
+ * @description - 관리자 상품 판매 확정
+ * @param {String} detailId - 상품 아이디
+ * @param {Object} data - 상품 정보
+ * @returns {Promise<boolean>} - 수정된 여부
+ */
+export async function editMasterSold(detailId, data) {
+  const res = await fetch("/api/master/editmastersold?id=" + detailId, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+  return await res.json();
+}
