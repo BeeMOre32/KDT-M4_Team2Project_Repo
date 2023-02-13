@@ -14,21 +14,25 @@
   .sold-title {
     padding: 10px;
     gap: 10px;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
     .sold-product-name {
-      flex-grow: 3.5;
       font-size: 18px;
+      max-width: 480px;
     }
     .sold-product-sold-date {
-      flex-grow: 1;
       font-size: 18px;
       display: flex;
       align-items: center;
       gap: 5px;
     }
     .sold-product-price {
-      flex-grow: 1;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .sold-product-sold {
       font-size: 18px;
       display: flex;
       align-items: center;
@@ -41,11 +45,12 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    height: 100%;
+    height: fit-content;
+    cursor: pointer;
     .sold-product {
-      display: flex;
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
       align-items: center;
-      gap: 30px;
       width: 100%;
       border: 1px solid $light-gray;
       border-radius: 15px;
@@ -60,16 +65,42 @@
       flex-direction: column;
       gap: 10px;
       font-size: 18px;
-      flex-grow: 4;
     }
     .sold-product-sold-date {
       font-size: 18px;
-      flex-grow: 1;
     }
     .sold-product-price {
       font-size: 18px;
       color: $dark-gray;
-      flex-grow: 1;
     }
   }
+  .sold-product-sold {
+    width: fit-content;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: $dark-gray;
+    background-color: $light-gray;
+    padding: 9px;
+    border-radius: 5px;
+    .product-sold-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+      &.sold {
+        background-color: #2ecc71;
+      }
+      &.sale {
+        background-color: #e74c3c;
+      }
+    }
+  }
+}
+
+.sold-product-detail {
+  position: absolute;
+  top: 50%;
+  right: 0;
 }
