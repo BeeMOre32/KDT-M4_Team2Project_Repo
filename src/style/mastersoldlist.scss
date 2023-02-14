@@ -120,7 +120,7 @@ body {
   flex-direction: column;
   gap: 10px;
   transform: translateX(100%);
-  transition: 0.1s ease;
+  transition: 0.3s ease;
   &.active {
     transform: translateX(0);
   }

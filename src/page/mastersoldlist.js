@@ -7,18 +7,26 @@ export async function renderSoldProduct() {
 
   app.innerHTML = "";
 
+  const loading = document.createElement("span");
+  loading.classList.add("loading");
+  loading.innerText = "loading...";
+  app.appendChild(loading);
+
   const soldProductPage = document.createElement("div");
+
   soldProductPage.classList.add("sold-product-page");
   const soldProductPageTitle = document.createElement("h1");
   soldProductPageTitle.innerText = "팔린 상품 목록";
   const soldProductDetail = document.createElement("div");
   soldProductDetail.classList.add("sold-product-detail");
 
+  const data = await getMasterAllSoldList();
+
   soldProductPage.append(
     soldProductPageTitle,
     soldProductDetail,
     renderSoldTitle(),
-    await renderSoldList()
+    await renderSoldList(data)
   );
   app.appendChild(soldProductPage);
 
@@ -26,23 +34,22 @@ export async function renderSoldProduct() {
   soldProduct.forEach((product) => {
     product.addEventListener("click", async (e) => {
       const detailId = e.target.closest(".sold-product").dataset.id;
-      await renderSoldDetail(detailId, $, $$);
+      await renderSoldDetail(detailId, data, $, $$);
     });
   });
 }
 
-async function renderSoldList() {
-  const data = await getMasterAllSoldList();
+async function renderSoldList(data) {
   const soldList = document.createElement("div");
   soldList.classList.add("sold-list");
+
+  document.querySelector(".loading").remove();
 
   data.forEach((product) => {
     const soldProduct = document.createElement("div");
     soldProduct.classList.add("sold-product");
     soldProduct.dataset.id = product.detailId;
     const soldDate = product.timePaid.slice(0, 10);
-
-    console.log(product);
 
     const productSold = document.createElement("div");
     productSold.classList.add("sold-product-sold");
@@ -92,8 +99,7 @@ function renderSoldTitle() {
   return soldTitle;
 }
 
-async function renderSoldDetail(detailId, $, $$) {
-  let data = await getMasterAllSoldList();
+async function renderSoldDetail(detailId, data, $, $$) {
   data = data.find((product) => {
     return product.detailId === detailId;
   });
