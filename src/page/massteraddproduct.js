@@ -186,7 +186,8 @@ function renderAddProductForm() {
           <input type="checkbox" id="new"  value="new"> <label for="new">신상품</label> 
           <input type="checkbox" id="best"  value="best"> <label for="best">최고의 상품</label> 
          </div>
-         <select  class="tags__type">
+         <select  class="tags__type" >
+           <option value="" disabled selected>가구 종류</option>
            <option value="chair">의자</option>
            <option value="bed">침대</option>
            <option value="table">테이블</option>
