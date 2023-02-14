@@ -162,7 +162,7 @@ async function renderSoldDetail(detailId, $, $$) {
     <div class="detail-sold-button">
       <button class="detail-sold-button-cancel sale">판매 취소</button>
       <button class="detail-sold-button-done sold">판매 완료</button>
-     </div>
+    </div>
   </div>
   `;
 
