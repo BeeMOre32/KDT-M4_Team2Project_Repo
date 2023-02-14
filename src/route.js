@@ -1,6 +1,6 @@
 import Navigo from "navigo";
 import { renderCash } from "./page/cash";
-import { renderCart } from "./page/cartpage/cart";
+import { renderCart } from "./page/cart";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";

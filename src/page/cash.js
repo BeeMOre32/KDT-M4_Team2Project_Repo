@@ -9,21 +9,27 @@ let cartIds = localStorage.getItem("cart")
 export async function renderCash() {
   const app = document.querySelector("#app");
   app.innerHTML = ``;
+
   this.element = document.createElement("div");
   this.element.setAttribute("class", "cash-container");
+
   this.state = cartIds;
+
   const userAuth = await afterLoadUserAuth();
   const accessToken = userToken.token;
   const accountInfo = await getCurrentAccount(accessToken);
   const userbanks = accountInfo.accounts;
+
   this.render = async function () {
+    const info = document.createElement("div");
+    info.setAttribute("class", "info-container");
     const items = document.createElement("ul");
     items.setAttribute("class", "item-container");
     const userInfo = document.createElement("div");
     userInfo.setAttribute("class", "userInfo-container");
     const card = document.createElement("div");
     const totalPrice = document.createElement("div");
-    const paybutton = document.createElement("button");
+    totalPrice.setAttribute("class", "price-container");
     let sum = 0;
 
     let itemArr = await Promise.all(
@@ -71,11 +77,33 @@ export async function renderCash() {
     bankarr.append(...currentbanks);
     card.append(bankarr);
 
+    info.append(items, userInfo, card);
+
     totalPrice.innerHTML = /*HTML*/ `
-      <h2>총 결제금액:${sum}원</h2>
+      <div class="price">
+        <div>총 주문 금액:</div>
+        <div>${sum}원</div>
+      </div>
+      <div class="discount">
+        <div>할인 금액:</div>
+        <div>0원</div>
+      </div>
+      <div class="moveprice">
+        <div>배송비:</div>
+        <div>0원</div>
+      </div>
+      <div class="price">
+        <div>총 결제 금액:</div>
+        <div>${sum}원</div>
+      </div>
+      <div class="cash-button">
+        <button class="pay-button">주문하기</button>
+      </div>
+      
     `;
 
-    paybutton.innerText = `총 ${sum}원 결제하기`;
+    const paybutton = totalPrice.querySelector(".pay-button");
+
     paybutton.addEventListener("click", async () => {
       for (let cartId of cartIds) {
         const data = {
@@ -95,8 +123,12 @@ export async function renderCash() {
       alert("결제에 성공했습니다.");
     });
 
-    this.element.append(items, userInfo, card, totalPrice, paybutton);
+    this.element.append(info, totalPrice);
     app.append(this.element);
   };
   this.render();
+  this.setState = function (nextState) {
+    this.state = nextState;
+    this.render();
+  };
 }

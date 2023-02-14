@@ -2,27 +2,51 @@
 @import "./variables.scss";
 
 .cash-container {
+  display: flex;
+  justify-content: space-between;
   border: 1px solid red;
-  .item-container {
+  .info-container {
     border: 1px solid red;
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .item-container {
       border: 1px solid red;
-      margin: 10px;
-      img {
-        height: 100px;
-        width: 100px;
-        margin: 5px;
-      }
-      div {
-        margin: 5px;
+      .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         border: 1px solid red;
+        margin: 10px;
+        img {
+          height: 100px;
+          width: 100px;
+          margin: 5px;
+        }
+        div {
+          margin: 5px;
+          border: 1px solid red;
+        }
       }
     }
+    .userInfo-container {
+      border: 1px solid red;
+    }
   }
-  .userInfo-container {
+  .price-container {
+    width: 200px;
+    height: 180px;
     border: 1px solid red;
+    margin: 15px;
+    text-align: center;
+    div {
+      display: flex;
+      justify-content: space-between;
+      //border: 1px solid red;
+      padding: 5px;
+    }
+    .cash-button {
+      border: 1px solid red;
+      display: flex;
+      justify-content: center;
+      background-color: rgb(120, 79, 159);
+    }
   }
 }
