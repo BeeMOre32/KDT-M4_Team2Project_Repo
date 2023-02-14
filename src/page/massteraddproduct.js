@@ -93,14 +93,16 @@ export function renderAddProduct() {
       reader.addEventListener("load", (e) => {
         if (thumbnail) {
           productThumbnail = e.target.result;
-          $(".show-product-img").classList.remove("hidden");
+          // $(".show-product-img").classList.remove("hidden");
           $$(".thumbnail").forEach((thumbnail) => {
             thumbnail.setAttribute("src", e.target.result);
           });
         } else {
           productDetail = e.target.result;
-          $(".show-product-img").classList.remove("hidden");
-          $(".detail").setAttribute("src", e.target.result);
+          // $(".show-product-img").classList.remove("hidden");
+          $$(".detail").forEach((detail) => {
+            detail.setAttribute("src", e.target.result);
+          });
         }
       });
     };
@@ -131,71 +133,77 @@ function renderAddProductForm() {
 
   const showProductEl = document.createElement("div");
   showProductEl.classList.add("show-product");
-  showProductEl.innerHTML = `
-        <div class="show-product-img hidden">
-          <img src="" alt="" class="thumbnail" />
-          <img src="" alt="" class="detail" />
+  showProductEl.innerHTML = /* html */  `
+        <div class="show-product-img">
+          <span>썸네일</span>
+          <img src="https://img.apti.co.kr/aptHome/images/sub/album_noimg.gif" alt="" class="thumbnail" />
+          <span>상세사진</span>
+          <img src="https://img.apti.co.kr/aptHome/images/sub/album_noimg.gif" alt="" class="detail" />
         </div>
-        <div class="show-product-title"></div>
-        <div class="form-input-tags__input">
+        <div class="show-product-title">상품명</div>
+        <div class="show-product-tags">
           <div class="tags__show"></div>
          </div>
-        <div class="show-product-description"></div>
-        <div class="show-product-price"></div>
+         <div class="show-product-price">상품 가격</div>
+        <div class="show-product-description">상품 설명</div>
         <button class="show-product-submit-btn darken-btn">상품 추가</button>
-        <button class="show-product-cancel-btn darken-btn">취소</button>
+        <button class="show-product-cancel-btn red-btn">취소</button>
   `;
 
   const addProductForm = document.createElement("div");
   addProductForm.classList.add("add-product-form");
-  addProductForm.innerHTML = `
+  addProductForm.innerHTML = /* html */ `
         <div class="add-product-form-title">상품 정보 입력</div>
         <div class="form-input-img">
           <div class="form-input-img__thumbnail">
-   
-           <input
-          type="file"
-          class="form-input-img__thumbnail"
-          placeholder="상품 썸네일"/>
-          <span>상품 썸네일 추가</span>
+            <label>
+              <img src="https://www.youngone.co.kr/static/images/noimage.jpg" alt="" class="thumbnail">
+              <input
+                type="file"
+                class="form-input-img__thumbnail"
+                placeholder="상품 썸네일"/>
+              <span class="darken-btn">상품 썸네일 추가</span>
+            </label>
           </div>
          
           <div class="form-input-img__detail">
-            <input
-            type="file"
-            class="form-input-img__detail"
-            placeholder="상품 상세 이미지"/>
-            <span>상세 이미지 추가</span>
+            <label>
+              <img src="https://www.youngone.co.kr/static/images/noimage.jpg" alt="" class="detail">
+              <input
+                type="file"
+                class="form-input-img__detail"
+                placeholder="상품 상세 이미지"/>
+              <span class="darken-btn">상세 이미지 추가</span>
+            </label>
           </div>
-        
-          <img src="" alt="" class="thumbnail">
         </div>
         <div class="form-input-wrapper">
-         <div>
-          <input class="form-input-title" placeholder="상품 이름" />
-          <input class="form-input-description" placeholder="상품 설명" />
-          <input class="form-input-price" placeholder="상품 가격" />
-         </div>
-        <div class="form-input-tags">
-         <div class="form-input-tags__input">
-          <h1>아래에 있는 선택자를 활용하여 태그를 입력해주세요</h1>
-          <div class="tags__show"></div>
-         </div>
-         <div class="form-input-tags__type">
-          <input type="checkbox" id="sale" value="sale"> <label for="sale">할인상품</label> 
-          <input type="checkbox" id="new"  value="new"> <label for="new">신상품</label> 
-          <input type="checkbox" id="best"  value="best"> <label for="best">최고의 상품</label> 
-         </div>
-         <select  class="tags__type" >
-           <option value="" disabled selected>가구 종류</option>
-           <option value="chair">의자</option>
-           <option value="bed">침대</option>
-           <option value="table">테이블</option>
-           <option value="closet">수납장</option>
-         </select>
-         </div>
-       </div>
-         `;
+          <div class="form-input-info">
+            <input class="form-input-title" placeholder="상품 이름" />
+            <input class="form-input-price" placeholder="상품 가격" />
+            <input class="form-input-description" placeholder="상품 설명" />
+          </div>
+          <div class="form-input-tags">
+          <div class="form-input-tags__input">
+            <h1>아래에 있는 선택자를 활용하여 태그를 입력해주세요</h1>
+            <div class="form-input-tags__type">
+            <input type="checkbox" id="sale" value="sale"> <label for="sale">할인상품</label> 
+            <input type="checkbox" id="new"  value="new"> <label for="new">신상품</label> 
+            <input type="checkbox" id="best"  value="best"> <label for="best">베스트상품</label> 
+            </div>
+            <div class="tags__show"></div>
+          </div>
+          <div class="form-input-category">
+            <h3>제품의 종류를 선택해주세요</h3>
+            <select  class="tags__type">
+              <option value="chair">의자</option>
+              <option value="bed">침대</option>
+              <option value="table">테이블</option>
+              <option value="closet">수납장</option>
+            </select>
+          </div>
+        </div>
+      `;
 
   addProductFormWrapper.append(showProductEl, addProductForm);
   return addProductFormWrapper;

@@ -9,12 +9,14 @@
 
 .master-page {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  margin-bottom: 80px;
   padding: 10px;
   h1 {
     @include title-font;
     font-size: 30px;
     margin-bottom: 20px;
+    line-height: 2;
     text-align: center;
   }
   position: relative;

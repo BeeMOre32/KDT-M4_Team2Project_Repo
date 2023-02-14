@@ -76,9 +76,12 @@ export async function renderAllProducts(headCategory) {
         li.classList.remove('active');
       });
 
+      window.scrollTo({top: 0, behavior: "smooth"});
+
       bodyCategory = liEl.className;
       renderClassifiedItems(items, bodyCategory, sortOption);
       liEl.classList.add('active');
+      
     }
   });
 

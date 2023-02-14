@@ -1,11 +1,12 @@
 import Navigo from "navigo";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
-import { renderMainPage } from "./page/main"
-import { renderDetailPage } from "./page/productDetail"; 
+import { renderMainPage } from "./page/main";
+import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
-import { renderLoginPage } from "./page/login";
-import { renderSignUp } from "./page/signup";
+import { renderSoldProduct } from "./page/mastersoldlist";
+import { renderAllProducts } from "./page/allproducts";
+import { renderSearchPage } from "./page/search";
 
 export const router = new Navigo("/");
 const app = document.querySelector("#app");
@@ -16,10 +17,23 @@ router.on("/", function () {
 
 router.on("/search/:query", function (params) {
   console.log(params.query);
+  renderSearchPage();
 });
 
 router.on("/product/detail/:productId", function (params) {
   renderDetailPage(params);
+});
+
+router.on("/product/all", function () {
+  renderAllProducts("all");
+});
+
+router.on("/product/best", function () {
+  renderAllProducts("best");
+});
+
+router.on("/product/new", function () {
+  renderAllProducts("new");
 });
 
 router.on("/product/cart", function () {
@@ -39,11 +53,7 @@ router.on("/mypage/bank", function () {
 });
 
 router.on("/login", function () {
-  renderLoginPage()
-});
-
-router.on("/signup", function () {
-  renderSignUp()
+  console.log("login");
 });
 
 router.on("/master", function () {
@@ -56,6 +66,10 @@ router.on("/master/product/detail/:id", function (match) {
 
 router.on("/master/product/add", function () {
   renderAddProduct();
+});
+
+router.on("/master/sold", function () {
+  renderSoldProduct();
 });
 
 router.resolve();
