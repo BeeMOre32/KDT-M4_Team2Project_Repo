@@ -1,17 +1,15 @@
 import "../style/login.scss"
+// import {handler} from "./api/login";
 
+// 초기세팅
 // const loginTemplate = <div id="login"></div>
 // document.querySelector('.app').innerHTML = loginTemplate
 
-
-
 export function renderLoginPage() {
-  const app = document.querySelector("#app");
+  const app = document.querySelector("#app")
   app.innerHTML = /* html */ `
   <div class="container">
-  <!-- <img src="./images/chairs.jpeg" alt="No Image" style=/> -->
-    <div class="left">
-      
+    <div class="left">    
     </div>
       <div class="right">
       <h3>Sign In to your account</h3>
@@ -49,10 +47,17 @@ export function renderLoginPage() {
       </form>
     </div>
   `
+
+
 // ADD IMAGE
 const leftEl = document.querySelector('.left')
 const imgEl = document.createElement('img')
 leftEl.append(imgEl)
+
+// // LOGO
+// const rightEl = document.querySelector('.right')
+// rightEl.prepend(imgEl)
+
 
 // INPUT ANIMATION
 const labels = document.querySelectorAll('.form-control label')
@@ -63,7 +68,15 @@ labels.forEach(label => {
         .join('')
 })
 
-
-
+// CHECK EMAIL FORM
+  function CheckEmail(str){ 
+    var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    if(!reg_email.test(str)) {                            
+      return false;         
+    }                            
+    else {                       
+      return true;         
+    }                            
+}             
 }
 

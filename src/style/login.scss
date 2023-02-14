@@ -1,6 +1,5 @@
 @import "./common", "./variables";
 
-
 @mixin center {
   display: flex;
   justify-content: center;
@@ -10,36 +9,37 @@
 #app {
   
 .container {
-  @include center;
-	padding: 100px 0 0 0;
-	border-radius: 5px;
+  // @include center;
+	display: grid;
+	grid-template-columns: 80% 0;
   .left {
-  padding: 0 50px;
     img {
-    background-image: url("../images/chairs.jpeg");
-    background-size: cover;
+    background-image: url("../images/main_visual1.jpg");
+		background-size: cover;
 		border-radius: 5px;
-    width: 350px;
+    width: 80%;
     height: 500px;
-  }
-  }
+  }//img
+  }//left
 .right {
-	margin: 50px 0 0 0;
+	display: grid;
+	grid-template-rows: 0.5fr auto;
+	align-items: center;
+	justify-content: center;
+	// margin: 50px 0 0 0;
 	h3 {
 		text-align: center;
-		margin-bottom: 20px;
-		// font-size: 30px;
-	}
+	}//h3
 	h5 {
 		color: #E4E6E8;
 		text-align: center;
 		font-size: 10px;
 		margin-bottom: 40px;
-	}
+	}//h5
 	a {
 		text-decoration: none;
 		color: #E4E6E8;
-	}
+	}//a
 
 .btn {
 	cursor: pointer;
@@ -53,15 +53,15 @@
 	border-radius: 5px;
 	&:focus {
 		outline: 0;
-	}
+	}//focus
 	&:active {
 		transform: scale(0.98);
-	}
-}
+	}//active
+}//btn
 .text {
 	margin-top: 30px;
-}
-}
+}//text
+
 .form-control {
 	position: relative;
 	margin: 20px 0 20px 0;
@@ -74,7 +74,7 @@
 		padding: 10px 20px;
 		font-size: 15px;
 		color: black;
-	}
+	}//input
 	label {
 		color: #E4E6E8;
 		position: absolute;
@@ -85,10 +85,13 @@
 			font-size: 12px;
 			min-width: 2px;
 			transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-		}
+				}//span
+			}//label
+		}//form-control
 	}
-}
-}
+}//container
+
+
 .form-control input:focus,
 .form-control input:valid {
 	outline: 0;
@@ -98,7 +101,5 @@
 .form-control input:valid + label span {
 	color: #E4E6E8;
 	transform: translateY(-30px);
-} 
 }
-
-
+}

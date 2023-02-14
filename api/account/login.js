@@ -8,6 +8,7 @@ export default async function handler(request, response) {
     body: request.body,
   });
   const data = await res.json();
+  console.log(data)
 
   return response.status(200).json(data);
 }
