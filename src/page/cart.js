@@ -9,18 +9,18 @@ let cartIds = localStorage.getItem("cart")
 export function renderCart() {
   const app = document.querySelector("#app");
   app.innerHTML = ``;
-  this.element = document.createElement("div");
-  this.element.setAttribute("class", "cart-container");
-  this.state = cartIds;
+  const element = document.createElement("div");
+  element.setAttribute("class", "cart-container");
+  const state = cartIds;
 
-  this.render = async function () {
+  const render = async function () {
     const items = document.createElement("ul");
     items.setAttribute("class", "item-container");
     const totalPrice = document.createElement("div");
     totalPrice.setAttribute("class", "price-container");
     let sum = 0;
     let itemArr = await Promise.all(
-      this.state.map(async (cartId) => {
+      state.map(async (cartId) => {
         let cart = await getProductDetail(cartId);
         sum += cart.price;
         let item = document.createElement("li");
@@ -36,10 +36,10 @@ export function renderCart() {
         const deleteButton = item.querySelector(".delete");
         deleteButton.addEventListener("click", (e) => {
           const id = e.target.closest("li").getAttribute("id");
-          const idx = this.state.findIndex((cartId) => cartId === id);
-          this.state.splice(idx, 1);
-          this.setState(this.state);
-          localStorage.setItem("cart", JSON.stringify(this.state));
+          const idx = state.findIndex((cartId) => cartId === id);
+          state.splice(idx, 1);
+          setState(state);
+          localStorage.setItem("cart", JSON.stringify(state));
         });
 
         return item;
@@ -75,16 +75,16 @@ export function renderCart() {
       router.navigate("/product/checkout");
     });
 
-    this.element.innerHTML = "";
-    this.element.append(items, totalPrice);
-    app.append(this.element);
+    element.innerHTML = "";
+    element.append(items, totalPrice);
+    app.append(element);
   };
-  this.render();
+  render();
 
-  this.setState = function (nextState) {
-    this.state = nextState;
+  const setState = function (nextState) {
+    state = nextState;
     const cartCount = document.querySelector(".cart-count");
-    cartCount.textContent = this.state.length;
-    this.render();
+    cartCount.textContent = state.length;
+    render();
   };
 }
