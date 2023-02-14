@@ -52,6 +52,10 @@ body {
     width: 100%;
     height: fit-content;
     cursor: pointer;
+    position: relative;
+    .page-nation {
+      left: 0;
+    }
     .sold-product {
       display: grid;
       grid-template-columns: 2fr repeat(3, 1fr);
@@ -119,6 +123,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 3;
   transform: translateX(100%);
   transition: 0.3s ease;
   &.active {

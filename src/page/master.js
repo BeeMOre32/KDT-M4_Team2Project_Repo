@@ -84,7 +84,6 @@ async function renderProductList(page, isFirst = true, parentNode) {
 
   if (isFirst) {
     parentNode.appendChild(pageNation(quotient + 1));
-  } else {
   }
 
   const loading = document.querySelector(".loading");
