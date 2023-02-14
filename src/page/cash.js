@@ -10,17 +10,17 @@ export async function renderCash() {
   const app = document.querySelector("#app");
   app.innerHTML = ``;
 
-  this.element = document.createElement("div");
-  this.element.setAttribute("class", "cash-container");
+  const element = document.createElement("div");
+  element.setAttribute("class", "cash-container");
 
-  this.state = cartIds;
+  const state = cartIds;
 
   const userAuth = await afterLoadUserAuth();
   const accessToken = userToken.token;
   const accountInfo = await getCurrentAccount(accessToken);
   const userbanks = accountInfo.accounts;
 
-  this.render = async function () {
+  const render = async function () {
     const info = document.createElement("div");
     info.setAttribute("class", "info-container");
     const items = document.createElement("ul");
@@ -33,7 +33,7 @@ export async function renderCash() {
     let sum = 0;
 
     let itemArr = await Promise.all(
-      this.state.map(async (cartId) => {
+      state.map(async (cartId) => {
         let cart = await getProductDetail(cartId);
         sum += cart.price;
         let item = document.createElement("li");
@@ -123,12 +123,12 @@ export async function renderCash() {
       alert("결제에 성공했습니다.");
     });
 
-    this.element.append(info, totalPrice);
-    app.append(this.element);
+    element.append(info, totalPrice);
+    app.append(element);
   };
-  this.render();
-  this.setState = function (nextState) {
-    this.state = nextState;
-    this.render();
+  render();
+  const setState = function (nextState) {
+    state = nextState;
+    render();
   };
 }
