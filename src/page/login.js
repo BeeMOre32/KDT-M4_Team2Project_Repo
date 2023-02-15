@@ -38,6 +38,7 @@ export function renderLoginPage() {
           <span>R</span>
           <span>D</span>
           
+          
         </label>   
       </div>
 
@@ -48,7 +49,6 @@ export function renderLoginPage() {
     </div>
   `
 
-
 // ADD IMAGE
 const leftEl = document.querySelector('.left')
 const imgEl = document.createElement('img')
@@ -57,7 +57,6 @@ leftEl.append(imgEl)
 // // LOGO
 // const rightEl = document.querySelector('.right')
 // rightEl.prepend(imgEl)
-
 
 // INPUT ANIMATION
 const labels = document.querySelectorAll('.form-control label')
