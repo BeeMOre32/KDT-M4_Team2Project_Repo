@@ -179,7 +179,7 @@ button {
           }
         }
 
-        >span {
+        span {
           font-size: 24px;
           color: #222;
           cursor: pointer;
@@ -200,6 +200,34 @@ button {
             line-height: 14px;
             background-color: #e84118;
             border-radius: 50%;
+          }
+        }
+
+        .login {
+          display: flex;
+          align-items: center;
+          
+          .login--text {
+            margin-left: 3px;
+            font-size: 16px;
+          }
+
+          span.icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            width: 26px;
+            height: 26px;
+            font-size: 26px;
+            border-radius: 50%;
+            // border: 1px solid #000;
+
+            &.profile {
+              text-indent: -9999px;
+              background-position: center;
+              background-size: cover;
+            }
           }
         }
       }
