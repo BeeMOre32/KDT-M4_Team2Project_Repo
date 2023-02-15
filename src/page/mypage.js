@@ -13,10 +13,7 @@ export async function renderOrderHisory() {
   const app = document.querySelector("#app");
   app.innerHTML = "";
 
-  const loading = document.createElement("span");
-  loading.classList.add("loading");
-  loading.innerText = "loading...";
-  app.append(loading);
+  app.append(handlingLoading());
 
   const loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
   if (!loginState) {
@@ -49,7 +46,7 @@ export async function renderOrderHisory() {
 
     app.append(sectionEl);
 
-    const loading = document.querySelector(".loading");
+    const loading = document.querySelector(".skeleton");
     loading.remove();
   }
 }
@@ -132,14 +129,11 @@ export async function renderMyAccount() {
   const app = document.querySelector("#app");
   app.innerHTML = "";
 
-  const loading = document.createElement("span");
-  loading.classList.add("loading");
-  loading.innerText = "loading...";
-  app.append(loading);
+  app.append(handlingLoading(true));
 
   const loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
   if (!loginState) {
-    const loading = document.querySelector(".loading");
+    const loading = document.querySelector(".skeleton");
     loading.remove();
 
     const loginMessageEl = document.createElement("div");
@@ -176,7 +170,7 @@ export async function renderMyAccount() {
 
     app.append(sectionEl);
 
-    const loading = document.querySelector(".loading");
+    const loading = document.querySelector(".skeleton");
     loading.remove();
   }
 }
@@ -377,4 +371,70 @@ async function renderSideMenu(sectionEl, articleEl) {
   leftSideMenuEl.append(profileEl, myPageBtnsEl);
 
   sectionEl.append(leftSideMenuEl, articleEl);
+}
+
+function handlingLoading(account = false) {
+  const loadingEl = document.createElement("div");
+
+  loadingEl.classList.add("skeleton");
+  if (account) {
+    loadingEl.innerHTML = `
+   <div class="nav__loading">
+     <div class="nav__loading--img"></div>
+     <div class="nav__loading--text"></div>
+     <div class="nav__loading--text"></div>
+     <div class="nav__loading--current">
+      <div></div>
+      <div></div>
+     </div>
+     <div class="nav__loading--content"></div>
+     <div class="nav__loading--content"></div>
+     <div class="nav__loading--content"></div>
+   </div>
+   <div class="main__loading account">
+    <div class="main__loading--title"></div>
+    <div class="main__loading--content"></div>
+    <div class="main__loading--content"></div>
+    <div class="main__loading--content"></div>
+   </div>
+   `;
+  } else {
+    loadingEl.innerHTML = `
+   <div class="nav__loading">
+     <div class="nav__loading--img"></div>
+     <div class="nav__loading--text"></div>
+     <div class="nav__loading--text"></div>
+     <div class="nav__loading--current">
+      <div></div>
+      <div></div>
+     </div>
+     <div class="nav__loading--content"></div>
+     <div class="nav__loading--content"></div>
+     <div class="nav__loading--content"></div>
+   </div>
+   <div class="main__loading">
+    <div class="main__loading--title"></div>
+    <div class="main__loading--content">
+      <div class="content--img"></div>
+      <div class="content--text"></div>
+      <div class="content--text"></div>
+      <div class="content--btn"></div>
+   </div>
+    <div class="main__loading--content">
+      <div class="content--img"></div>
+      <div class="content--text"></div>
+      <div class="content--text"></div>
+      <div class="content--btn"></div>
+   </div>
+    <div class="main__loading--content">
+      <div class="content--img"></div>
+      <div class="content--text"></div>
+      <div class="content--text"></div>
+      <div class="content--btn"></div>
+   </div>
+   </div>
+   `;
+  }
+
+  return loadingEl;
 }
