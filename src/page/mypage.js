@@ -158,7 +158,6 @@ export async function renderMyAccount() {
     titleEl.textContent = '나의 계좌';
 
     const accountList = await getCurrentAccount(userToken._token);
-    console.log(accountList);
 
     const contentEl = document.createElement('ul');
     contentEl.className = 'accountListUl';
