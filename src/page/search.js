@@ -96,6 +96,10 @@ function renderMatchItems(searchText, matchItems) {
     infoEl.append(titleEl, categoryEl, tagsEl, priceEl, descEl)
     liEl.append(imgEl, infoEl);
     ulEl.append(liEl);
+
+    liEl.addEventListener('click', () => {
+      router.navigate(`/product/detail/${item.id}`);
+    })
   })
 
   loadingEl.remove();
