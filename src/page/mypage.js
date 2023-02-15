@@ -7,7 +7,7 @@ import {
   getBankAccount,
   getCurrentAccount,
 } from "../utilities/userapi";
-import { getBuyList } from "../utilities/productapi";
+import { getBuyList, getBuyDetail, getProductDetail } from "../utilities/productapi";
 
 export async function renderOrderHisory() {
   const app = document.querySelector("#app");
@@ -97,12 +97,12 @@ async function renderBuyList(contentEl, buyList) {
       const btnsEl = document.createElement("div");
       btnsEl.className = "buyItemLi__summary__btns";
 
-      const isCanceledBtnEl = document.createElement("button");
-      isCanceledBtnEl.textContent = "주문취소";
-      isCanceledBtnEl.classList.add("common-btn");
-      const doneBtnEl = document.createElement("button");
-      doneBtnEl.textContent = "구매확정";
-      doneBtnEl.classList.add("common-btn");
+      const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.textContent = '주문취소';
+      isCanceledBtnEl.classList.add('red-btn');
+      const doneBtnEl = document.createElement('button');
+      doneBtnEl.textContent = '구매확정';
+      doneBtnEl.classList.add('darken-btn');
 
       btnsEl.append(isCanceledBtnEl, doneBtnEl);
 
@@ -117,11 +117,128 @@ async function renderBuyList(contentEl, buyList) {
 
     buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
 
-    // buyItemLiEl.addEventListener
+    buyItemLiEl.setAttribute('id', `${item.detailId}`);
+    buyItemLiEl.addEventListener('click', () => {
+      router.navigate(`/mypage/order/detail/${buyItemLiEl.id}`);
+    })
 
     return buyItemLiEl;
   });
   contentEl.append(...buyItemEl);
+}
+
+export async function renderOrderDetail(detailId) {
+  const app = document.querySelector("#app");
+  app.innerHTML = "";
+  app.append(handlingLoading(true));
+
+  const loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
+  if (!loginState) {
+    const loading = document.querySelector(".skeleton");
+    loading.remove();
+
+    const loginMessageEl = document.createElement("div");
+    loginMessageEl.className = "loginMessage";
+    loginMessageEl.innerText = "로그인이 필요합니다!";
+
+    app.append(loginMessageEl);
+  } else {
+    const sectionEl = document.createElement("section");
+    sectionEl.className = "myPage";
+    const articleEl = document.createElement("article");
+    
+    const profile = await userAuth(userToken._token);
+
+    await renderSideMenu(sectionEl, articleEl);
+
+    const orderDetail = await getBuyDetail(userToken._token, detailId);
+    const localTime = new Date(orderDetail.timePaid);
+    console.log(orderDetail);
+
+    articleEl.innerHTML = /*html*/`
+    <h1>주문 상세</h1>
+    <div class="productInfo info">
+      <div class="header">상품 정보</div>
+      <div class="productInfo__img backgroundimg">
+        <img src="${orderDetail.product.thumbnail}" alt="profileImg" class="productInfo__img img">
+      </div>
+      <div class="productInfo__state"></div>
+      <div class="productInfo__title">${orderDetail.product.title}</div>
+      <div class="productInfo__price">${orderDetail.product.price.toLocaleString()}원</div>
+      <div class="productInfo__button"></div>   
+    </div>
+    <div class="ordererInfo info">
+      <div class="header">주문자 정보</div>
+      <div class="ordererInfo__name"><span>이름</span>${profile.displayName}</div>
+      <div class="ordererInfo__email"><span>메일</span>${profile.email}</div>
+    </div>
+    <div class="paymentInfo info">
+      <div class="header">결제 정보</div>
+      <div class="paymentInfo__way">계좌 간편결제</div>
+      <div class="paymentInfo__bankName">${orderDetail.account.bankName}</div>
+      <div class="paymentInfo__accountNumber">${orderDetail.account.accountNumber}</div>
+      <div class="paymentInfo__price">${orderDetail.product.price.toLocaleString()}원</div>
+      <div class="paymentInfo__timePaid">${localTime.toLocaleString('ko-kr')}</div>
+    </div>
+    `
+    app.append(sectionEl);
+
+    const stateEl = document.querySelector('.productInfo__state');
+    if (orderDetail.isCanceled === false && orderDetail.done === false) {
+      stateEl.textContent = "[결제완료]";
+      stateEl.style.color = "#000";
+    } else if (orderDetail.isCanceled === true) {
+      stateEl.textContent = "[반품환불완료]";
+    } else if (orderDetail.done === true) {
+      stateEl.textContent = "[구매확정완료]";
+    }
+
+    const thumbnailEl = document.querySelector('.img');
+
+    if (!orderDetail.product.thumbnail) {
+      thumbnailEl.remove()
+    }
+
+    const productInfoBtns = document.querySelector('.productInfo__button');
+
+    if (orderDetail.isCanceled === false && orderDetail.done === false) {
+      const btnsEl = document.createElement("div");
+      btnsEl.className = "productInfo__button__btns";
+
+      const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.textContent = '주문취소';
+      isCanceledBtnEl.classList.add('red-btn');
+      const doneBtnEl = document.createElement('button');
+      doneBtnEl.textContent = '구매확정';
+      doneBtnEl.classList.add('darken-btn');
+
+      btnsEl.append(isCanceledBtnEl, doneBtnEl);
+
+      productInfoBtns.append(btnsEl);
+    } else {
+      const repurchaseBtnEl = document.createElement("button");
+      repurchaseBtnEl.textContent = "재구매";
+      repurchaseBtnEl.classList.add("common-btn");
+
+      productInfoBtns.append(repurchaseBtnEl);
+    }
+    
+    const isCurrentTrue = await getProductDetail(orderDetail.product.productId);
+
+    const productInfoEl = document.querySelector('.productInfo');
+    productInfoEl.setAttribute('id', `${orderDetail.product.productId}`);
+    productInfoEl.addEventListener('click', () => {
+      if (isCurrentTrue === "유효한 제품 정보가 아닙니다."){
+        window.alert('현재 판매하는 제품이 아닙니다.');
+      }
+      else{
+        router.navigate(`/product/detail/${productInfoEl.id}`);
+      }
+    });
+
+    const loading = document.querySelector(".skeleton");
+    loading.remove();
+  }
 }
 
 export async function renderMyAccount() {
@@ -307,9 +424,11 @@ async function renderSideMenu(sectionEl, articleEl) {
   console.log(buyList);
 
   // 주문•배송 현황 값 표시
-  const orderDeliveryValueEl = document.createElement("div");
+  const orderDeliveryValueEl = document.createElement('a');
   orderDeliveryValueEl.className = "myPageSummary__btns__value";
-  orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`;
+  orderDeliveryValueEl.href = '/mypage/order';
+  orderDeliveryValueEl.setAttribute('data-navigo', '');
+  orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`
 
   orderDeliveryEl.append(orderDeliveryNameEl, orderDeliveryValueEl);
 
@@ -330,8 +449,10 @@ async function renderSideMenu(sectionEl, articleEl) {
   console.log(currentAccount);
 
   // 나의 잔액 값 표시
-  const balanceValueEl = document.createElement("div");
+  const balanceValueEl = document.createElement('a');
   balanceValueEl.className = "myPageSummary__btns__value";
+  balanceValueEl.href = '/mypage/account';
+  balanceValueEl.setAttribute('data-navigo', '');
   balanceValueEl.innerText = `${balanceValue} 원`;
 
   balanceEl.append(balanceNameEl, balanceValueEl);
@@ -339,25 +460,26 @@ async function renderSideMenu(sectionEl, articleEl) {
   myPageSummaryEl.append(orderDeliveryEl, balanceEl);
 
   // 나의 주문
-  const myOrderBtnEl = document.createElement("a");
-  myOrderBtnEl.innerHTML =
-    '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
-  myOrderBtnEl.addEventListener("click", () => {
-    router.navigate("/mypage/orderHistory");
-  });
+  const myOrderBtnEl = document.createElement('a');
+  myOrderBtnEl.className = 'myPageBtns__link';
+  myOrderBtnEl.href = '/mypage/order';
+  myOrderBtnEl.setAttribute('data-navigo', '');
+  myOrderBtnEl.innerHTML = 
+  '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
 
   // 나의 계좌
-  const myAccountBtnEl = document.createElement("a");
-  myAccountBtnEl.innerHTML =
-    '<span class="material-symbols-outlined">payments</span> 나의 계좌';
-  myAccountBtnEl.addEventListener("click", () => {
-    router.navigate("/mypage/account");
-  });
+  const myAccountBtnEl = document.createElement('a');
+  myAccountBtnEl.className = 'myPageBtns__link';
+  myAccountBtnEl.href = '/mypage/account';
+  myAccountBtnEl.setAttribute('data-navigo', '');
+  myAccountBtnEl.innerHTML = 
+  '<span class="material-symbols-outlined">payments</span> 나의 계좌';
 
   // 나의 정보
-  const myInfoBtnEl = document.createElement("a");
-  myInfoBtnEl.innerHTML =
-    '<span class="material-symbols-outlined">person</span> 나의 정보';
+  const myInfoBtnEl = document.createElement('a');
+  myInfoBtnEl.className = 'myPageBtns__link';
+  myInfoBtnEl.innerHTML = 
+  '<span class="material-symbols-outlined">person</span> 나의 정보';
 
   myPageBtnsEl.append(
     myPageSummaryEl,

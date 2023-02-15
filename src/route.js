@@ -1,10 +1,17 @@
 import Navigo from "navigo";
 import { CommonFn } from "./common";
+import { renderCash } from "./page/cash";
+import { renderCart } from "./page/cart";
 import { renderMasterPage } from "./page/master";
 import { renderAddProduct } from "./page/massteraddproduct";
 import { renderMainPage } from "./page/main";
 import { renderDetailPage } from "./page/productDetail";
 import { renderMasterProductDetailPage } from "./page/masterproductdetail";
+
+import { renderLoginPage } from "./page/login";
+import { renderSignUp } from "./page/signup";
+import { renderOrderHisory, renderMyAccount, renderOrderDetail } from "./page/mypage";
+
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
 import { renderSearchPage } from "./page/search";
@@ -44,27 +51,37 @@ router.on("/product/new", function () {
 
 router.on("/product/cart", function () {
   CommonFn();
-  console.log("cart");
+  renderCart();
 });
 
 router.on("/product/checkout", function () {
   CommonFn();
-  console.log("checkout");
+  renderCash();
 });
 
-router.on("/mypage", function () {
+router.on("/mypage/order", function (params) {
   CommonFn();
-  app.innerHTML = `<h1>My Page</h1>`;
+  renderOrderHisory(params);
 });
 
-router.on("/mypage/bank", function () {
+router.on("/mypage/order/detail/:id", function (order) {
   CommonFn();
-  console.log("mypage/bank");
+  renderOrderDetail(order.data.id);
+});
+
+router.on("/mypage/account", function (params) {
+  CommonFn();
+  renderMyAccount(params);
 });
 
 router.on("/login", function () {
   CommonFn();
-  console.log("login");
+  renderLoginPage()
+});
+
+router.on("/signup", function () {
+  CommonFn();
+  renderSignUp()
 });
 
 router.on("/master", function () {
@@ -75,6 +92,7 @@ router.on("/master", function () {
 router.on("/master/product/detail/:id", function (match) {
   CommonFn();
   renderMasterProductDetailPage(match.data.id);
+  console.log(match.data.id);
 });
 
 router.on("/master/product/add", function () {
