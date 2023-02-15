@@ -114,7 +114,7 @@ $margin: 5px;
       font-weight: 900;
       font-size: 32px;
     }
-    .buyListUl {
+    .buyList {
       margin: $margin;
       .buyItemLi {
         display: grid;
@@ -156,8 +156,7 @@ $margin: 5px;
         }
       }
     }
-    .accountListUl {
-      margin: $margin;
+    .accountList {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
@@ -206,5 +205,5 @@ $margin: 5px;
         cursor: pointer;
       }
     }
-  }
+  }  
 }

@@ -37,8 +37,8 @@ export async function renderOrderHisory() {
       (a, b) => new Date(b.timePaid) - new Date(a.timePaid)
     );
 
-    const contentEl = document.createElement("ul");
-    contentEl.className = "buyListUl";
+    const contentEl = document.createElement("div");
+    contentEl.className = "buyList";
 
     await renderBuyList(contentEl, buyListSort);
 
@@ -52,14 +52,13 @@ export async function renderOrderHisory() {
 }
 async function renderBuyList(contentEl, buyList) {
   const buyItemEl = buyList.map((item) => {
-    const buyItemLiEl = document.createElement("li");
+    const buyItemLiEl = document.createElement("a");
     buyItemLiEl.className = "buyItemLi";
 
     const stateEl = document.createElement("div");
     stateEl.className = "buyItemLi__state";
     if (item.isCanceled === false && item.done === false) {
       stateEl.textContent = "결제완료";
-      stateEl.addEventListener("click", () => console.log("잘 동작"));
       stateEl.style.color = "#000";
     } else if (item.isCanceled === true) {
       stateEl.textContent = "반품환불완료";
@@ -118,10 +117,10 @@ async function renderBuyList(contentEl, buyList) {
 
     buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
 
+    // buyItemLiEl.addEventListener
+
     return buyItemLiEl;
   });
-  console.log(buyItemEl);
-
   contentEl.append(...buyItemEl);
 }
 
@@ -153,14 +152,13 @@ export async function renderMyAccount() {
 
     const accountList = await getCurrentAccount(userToken._token);
 
-    const contentEl = document.createElement("ul");
-    contentEl.className = "accountListUl";
+    const contentEl = document.createElement("div");
+    contentEl.className = "accountList";
 
     await renderAccountList(contentEl, accountList);
 
-    const addAccountBtnEl = document.createElement("li");
+    const addAccountBtnEl = document.createElement("a");
     addAccountBtnEl.className = "addAccountBtn";
-    //addAccountBtnEl.classList.add('accountLi');
     addAccountBtnEl.innerHTML =
       '<span class="material-symbols-outlined">add_circle</span> 추가하기';
 
