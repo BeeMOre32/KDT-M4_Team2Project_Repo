@@ -12,6 +12,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  .page-nation {
+    bottom: 70px;
+  }
   h1 {
     @include title-font;
     text-align: center;
@@ -53,9 +56,6 @@ body {
     height: fit-content;
     cursor: pointer;
     position: relative;
-    .page-nation {
-      left: 0;
-    }
     .sold-product {
       display: grid;
       grid-template-columns: 2fr repeat(3, 1fr);

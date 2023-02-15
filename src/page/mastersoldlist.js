@@ -4,7 +4,7 @@ export async function renderSoldProduct() {
   const app = document.querySelector("#app");
   const $ = (selector) => app.querySelector(selector);
   const $$ = (selector) => app.querySelectorAll(selector);
-  const page = 1;
+  let page = 1;
   app.innerHTML = "";
 
   const loading = document.createElement("span");
@@ -26,40 +26,53 @@ export async function renderSoldProduct() {
     soldProductPageTitle,
     soldProductDetail,
     renderSoldTitle(),
-    await renderSoldList(data, page)
+    await renderSoldList(data, page, true, soldProductPage, $, $$)
   );
   app.appendChild(soldProductPage);
 
-  const soldProduct = $$(".sold-product");
-  soldProduct.forEach((product) => {
-    product.addEventListener("click", async (e) => {
-      const detailId = e.target.closest(".sold-product").dataset.id;
-      await renderSoldDetail(detailId, data, $, $$);
+  $$(".page-nation-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      page = e.target.dataset.page;
+      $$(".page-nation-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      e.target.classList.add("active");
+      soldProductPage.replaceChild(
+        await renderSoldList(data, page, false, soldProductPage, $, $$),
+        $$(".sold-list")[0]
+      );
     });
   });
 }
 
-async function renderSoldList(data, page, isFirst = true) {
-  const soldList = document.createElement("div");
-  soldList.classList.add("sold-list");
-  let dataArr = data.slice((page - 1) * 10, page * 10);
-
-  const pageNumber = Math.ceil(data.length / 10);
-
-  if (isFirst) {
-    soldList.append(renderPageNationBtn(1));
-  }
-  dataArr.sort((a, b) => {
+async function renderSoldList(data, page, isFirst = true, parentNode, $, $$) {
+  data = data.sort((a, b) => {
     return new Date(b.timePaid) - new Date(a.timePaid);
   });
+  let dataArr = data.slice((page - 1) * 8, page * 8);
 
-  document.querySelector(".loading").remove();
+  const soldList = document.createElement("div");
+  soldList.classList.add("sold-list");
+
+  const pageNumber = Math.ceil(data.length / 8);
+
+  if (isFirst) {
+    parentNode.append(renderPageNationBtn(pageNumber));
+  } else soldList.innerHTML = "";
+
+  document.querySelector(".loading")?.remove();
 
   dataArr.forEach((product) => {
     const soldProduct = document.createElement("div");
     soldProduct.classList.add("sold-product");
     soldProduct.dataset.id = product.detailId;
     const soldDate = product.timePaid.slice(0, 10);
+
+    soldProduct.addEventListener("click", async (e) => {
+      console.log(e.target.closest(".sold-product").dataset.id);
+      const detailId = e.target.closest(".sold-product").dataset.id;
+      await renderSoldDetail(detailId, data, $, $$);
+    });
 
     const productSold = document.createElement("div");
     productSold.classList.add("sold-product-sold");
@@ -117,6 +130,7 @@ function renderPageNationBtn(totalPage) {
     const pageNation = document.createElement("button");
     pageNation.classList.add("page-nation-btn");
     pageNation.innerText = String(i);
+    pageNation.dataset.page = String(i);
     if (i === 1) pageNation.classList.add("active");
     pageNationBtn.appendChild(pageNation);
   }
