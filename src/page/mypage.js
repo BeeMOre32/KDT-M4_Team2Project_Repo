@@ -100,10 +100,10 @@ async function renderBuyList(contentEl, buyList){
 
       const isCanceledBtnEl = document.createElement('button');
       isCanceledBtnEl.textContent = '주문취소';
-      isCanceledBtnEl.classList.add('common-btn');
+      isCanceledBtnEl.classList.add('red-btn');
       const doneBtnEl = document.createElement('button');
       doneBtnEl.textContent = '구매확정';
-      doneBtnEl.classList.add('common-btn');
+      doneBtnEl.classList.add('darken-btn');
 
       btnsEl.append(isCanceledBtnEl, doneBtnEl);
 
@@ -309,8 +309,10 @@ async function renderSideMenu(sectionEl, articleEl) {
   console.log(buyList);
   
   // 주문•배송 현황 값 표시
-  const orderDeliveryValueEl = document.createElement('div');
+  const orderDeliveryValueEl = document.createElement('a');
   orderDeliveryValueEl.className = "myPageSummary__btns__value";
+  orderDeliveryValueEl.href = '/mypage/orderHistory';
+  orderDeliveryValueEl.setAttribute('data-navigo', '');
   orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`
 
   orderDeliveryEl.append(orderDeliveryNameEl, orderDeliveryValueEl);
@@ -332,8 +334,10 @@ async function renderSideMenu(sectionEl, articleEl) {
   console.log(currentAccount);
   
   // 나의 잔액 값 표시
-  const balanceValueEl = document.createElement('div');
+  const balanceValueEl = document.createElement('a');
   balanceValueEl.className = "myPageSummary__btns__value";
+  balanceValueEl.href = '/mypage/account';
+  balanceValueEl.setAttribute('data-navigo', '');
   balanceValueEl.innerText = `${balanceValue} 원`;
 
   balanceEl.append(balanceNameEl, balanceValueEl);
@@ -342,22 +346,23 @@ async function renderSideMenu(sectionEl, articleEl) {
 
   // 나의 주문
   const myOrderBtnEl = document.createElement('a');
+  myOrderBtnEl.className = 'myPageBtns__link';
+  myOrderBtnEl.href = '/mypage/orderHistory';
+  myOrderBtnEl.setAttribute('data-navigo', '');
   myOrderBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
-  myOrderBtnEl.addEventListener('click', () => {
-    router.navigate('/mypage/orderHistory');
-  });
 
   // 나의 계좌
   const myAccountBtnEl = document.createElement('a');
+  myAccountBtnEl.className = 'myPageBtns__link';
+  myAccountBtnEl.href = '/mypage/account';
+  myAccountBtnEl.setAttribute('data-navigo', '');
   myAccountBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">payments</span> 나의 계좌';
-  myAccountBtnEl.addEventListener('click', () => {
-    router.navigate('/mypage/account');
-  });
 
   // 나의 정보
   const myInfoBtnEl = document.createElement('a');
+  myInfoBtnEl.className = 'myPageBtns__link';
   myInfoBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">person</span> 나의 정보';
 
