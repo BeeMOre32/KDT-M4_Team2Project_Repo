@@ -108,6 +108,13 @@
               color: $primary-color;
               background-color: $light-gray;
               border-radius: 10px;
+
+              &.no-tag {
+                padding: 0;
+                color: $primary-color;
+                font-style: italic;
+                background: none;
+              }
             }
           }
         }//.tag

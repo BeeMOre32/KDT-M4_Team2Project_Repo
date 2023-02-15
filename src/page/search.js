@@ -9,7 +9,7 @@ export async function renderSearchPage(params) {
 
   app.innerHTML = /* html */`
     <div class="container search-page">
-      <h2><span>'${searchText}' <span>로 검색한 결과입니다</h2>
+      <h2><span>'${searchText}' <span>(으)로 검색한 결과입니다</h2>
       
       <div class="search--result">
         <div class="sort--toggle">
