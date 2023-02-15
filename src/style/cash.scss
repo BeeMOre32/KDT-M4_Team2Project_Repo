@@ -28,6 +28,32 @@
     }
     .userInfo-container {
       border: 1px solid red;
+      h2 {
+        text-align: center;
+        border: 1px solid red;
+      }
+    }
+    .card-container {
+      border: 1px solid red;
+      text-align: center;
+      .swiper {
+        margin: 10px;
+        border: 1px solid red;
+        .swiper-wrapper {
+          display: flex;
+          justify-content: space-between;
+          //border: 1px solid red;
+          margin: 10px;
+          .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid red;
+            padding: 10px;
+          }
+        }
+      }
     }
   }
   .price-container {

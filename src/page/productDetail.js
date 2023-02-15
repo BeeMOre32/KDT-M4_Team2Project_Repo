@@ -10,14 +10,14 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "swiper/modules/navigation/navigation-element.min.css";
 
+import { getItems, setItems } from "../utilities/local";
+
 export async function renderDetailPage(params) {
   const app = document.getElementById("app");
   const product = await getProductDetail(params.data.productId);
-
   window.scrollTo({ top: 0, behavior: "smooth" });
-
   app.innerHTML = /* html */ `
-    <div class="container">
+    <div class="container product-detail-page">
       <div class="main">
         <img class="thumbnail" src="${product.thumbnail}" alt="thumbnail">
 
@@ -71,7 +71,7 @@ export async function renderDetailPage(params) {
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
         </div>
-        <span class="loading">loading</span>
+        <span class="loading"></span>
       </div>
     </div>
 
@@ -164,6 +164,7 @@ export async function renderDetailPage(params) {
     items = items.filter(
       (item) => item.tags[0] === product.tags[0] && item.id !== product.id
     );
+    items.splice(12);
 
     if (items.length === 0) {
       noItemEl.textContent = "일치하는 제품이 없습니다";
@@ -218,17 +219,15 @@ export async function renderDetailPage(params) {
   }
 
   function ProductCartIn(id) {
-    const savedCart = localStorage.getItem("cart")
-      ? JSON.parse(localStorage.getItem("cart"))
-      : [];
-
+    const savedCart = getItems("cart");
+    console.log(savedCart);
     if (savedCart.includes(id)) {
       showModal(true);
       return;
     }
 
     savedCart.push(id);
-    localStorage.setItem("cart", JSON.stringify(savedCart));
+    setItems("cart", savedCart);
 
     const cartCountEl = document.querySelector(".cart-count");
     cartCountEl.textContent = savedCart.length;

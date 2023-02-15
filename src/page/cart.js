@@ -1,17 +1,14 @@
 import "../style/cart.scss";
 import { getProductDetail } from "../utilities/productapi";
 import { router } from "../route";
-
-let cartIds = localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : [];
+import { getItems, setItems } from "../utilities/local";
 
 export function renderCart() {
   const app = document.querySelector("#app");
   app.innerHTML = ``;
   const element = document.createElement("div");
   element.setAttribute("class", "cart-container");
-  const state = cartIds;
+  let state = getItems("cart");
 
   const render = async function () {
     const items = document.createElement("ul");
@@ -39,7 +36,6 @@ export function renderCart() {
           const idx = state.findIndex((cartId) => cartId === id);
           state.splice(idx, 1);
           setState(state);
-          localStorage.setItem("cart", JSON.stringify(state));
         });
 
         return item;
@@ -83,6 +79,7 @@ export function renderCart() {
 
   const setState = function (nextState) {
     state = nextState;
+    setItems("cart", state);
     const cartCount = document.querySelector(".cart-count");
     cartCount.textContent = state.length;
     render();

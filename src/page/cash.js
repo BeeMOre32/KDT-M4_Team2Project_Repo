@@ -1,11 +1,16 @@
 import { router } from "../route";
-import { afterLoadUserAuth, userToken } from "../utilities/userAuth";
-import { getBankAccount, getCurrentAccount } from "../utilities/userapi";
-import { buyProduct, getProductDetail } from "../utilities/productapi";
 import "../style/cash.scss";
-let cartIds = localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : [];
+import Swiper, { Pagination } from "swiper";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+import "swiper/modules/pagination/pagination-element.min.css";
+
+import { afterLoadUserAuth, userToken } from "../utilities/userAuth";
+import { getCurrentAccount } from "../utilities/userapi";
+import { buyProduct, getProductDetail } from "../utilities/productapi";
+
+import { getItems, setItems } from "../utilities/local";
+
 export async function renderCash() {
   const app = document.querySelector("#app");
   app.innerHTML = ``;
@@ -13,13 +18,13 @@ export async function renderCash() {
   const element = document.createElement("div");
   element.setAttribute("class", "cash-container");
 
-  const state = cartIds;
+  let state = getItems("cart");
 
   const userAuth = await afterLoadUserAuth();
   const accessToken = userToken.token;
   const accountInfo = await getCurrentAccount(accessToken);
   const userbanks = accountInfo.accounts;
-
+  let selectedbankIdx = 0;
   const render = async function () {
     const info = document.createElement("div");
     info.setAttribute("class", "info-container");
@@ -28,6 +33,7 @@ export async function renderCash() {
     const userInfo = document.createElement("div");
     userInfo.setAttribute("class", "userInfo-container");
     const card = document.createElement("div");
+    card.setAttribute("class", "card-container");
     const totalPrice = document.createElement("div");
     totalPrice.setAttribute("class", "price-container");
     let sum = 0;
@@ -58,24 +64,31 @@ export async function renderCash() {
     `;
 
     card.innerHTML = /*HTML*/ `
-  <h2>결제 수단</h2>
+      <h2>결제 수단 선택</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-pagination"></div>    
+      </div>
+    `;
+    const currentbanks = userbanks.map((userbank, idx) => {
+      const bank = document.createElement("div");
+      bank.setAttribute("class", "swiper-slide");
+      bank.setAttribute("id", `${idx}`);
 
-  `;
-    const bankarr = document.createElement("ul");
-    const currentbanks = userbanks.map((userbank) => {
-      console.log(userbank);
-      const bank = document.createElement("li");
-      bank.setAttribute("class", "bank-container");
       bank.innerHTML = /*HTML*/ `
-    <div>${userbank.bankName}</div>
-    <div>${userbank.accountNumber}</div>
-    <div>${userbank.balance}</div>
-  
-  `;
+        <div>${userbank.bankName}</div>
+        <div>${userbank.accountNumber}</div>
+        <div>${userbank.balance}원</div>
+      `;
+      bank.addEventListener("click", (e) => {
+        selectedbankIdx = e.target.closest(".swiper-slide").getAttribute("id");
+        console.log(userbanks[selectedbankIdx]);
+        alert(`${userbanks[selectedbankIdx].bankName}이 선택되었습니다.`);
+      });
       return bank;
     });
+    const bankarr = card.querySelector(".swiper-wrapper");
     bankarr.append(...currentbanks);
-    card.append(bankarr);
 
     info.append(items, userInfo, card);
 
@@ -97,7 +110,7 @@ export async function renderCash() {
         <div>${sum}원</div>
       </div>
       <div class="cash-button">
-        <button class="pay-button">주문하기</button>
+        <button class="pay-button">결제하기</button>
       </div>
       
     `;
@@ -105,30 +118,51 @@ export async function renderCash() {
     const paybutton = totalPrice.querySelector(".pay-button");
 
     paybutton.addEventListener("click", async () => {
-      for (let cartId of cartIds) {
+      for (let cartId of state) {
         const data = {
           userToken: accessToken,
           info: {
             productId: cartId,
-            accountId: userbanks[0].id,
+            accountId: userbanks[selectedbankIdx].id,
           },
         };
 
         const res = await buyProduct(data);
-        if (!res) {
+        if (!res || userbanks[selectedbankIdx].balance < sum) {
           alert("결제에 실패했습니다.");
           return;
         }
       }
+      setState([]);
       alert("결제에 성공했습니다.");
+      console.log(app);
+      console.log(element);
+      router.navigate("/mypage/orderHistory");
     });
-
+    element.innerHTML = "";
     element.append(info, totalPrice);
     app.append(element);
+    const swiper = card.querySelector(".swiper");
+    new Swiper(swiper, {
+      modules: [Pagination],
+      slidesPerView: "auto",
+      spaceBetween: 15,
+      centeredSlides: true,
+
+      pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+        clickable: true,
+      },
+    });
   };
+
   render();
   const setState = function (nextState) {
     state = nextState;
-    render();
+    setItems("cart", state);
+    const cartCount = document.querySelector(".cart-count");
+    cartCount.textContent = state.length;
+    //render();
   };
 }
