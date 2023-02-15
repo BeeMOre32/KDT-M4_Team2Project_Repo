@@ -12,8 +12,8 @@ $margin: 5px;
   background-size: contain;
 };
 @mixin liStyle {
-  box-shadow: 1px 1px 20px 3px $light-gray;
-  border-radius: 15px;
+  box-shadow: 1px 1px 15px 3px $light-gray;
+  border-radius: 5px;
   margin-bottom: 20px;
 };
 
@@ -31,7 +31,7 @@ $margin: 5px;
       width: calc($max-width/5 - $padding*2);
       height: $profileHeight;
       background-color: $primary-color;
-      border-radius: 15px;
+      border-radius: 5px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -70,7 +70,7 @@ $margin: 5px;
         gap: 10px;
         &__btns {
           border: 1px solid $light-gray;
-          border-radius: 15px;
+          border-radius: 5px;
           padding: 10px 15px;
           width: calc(($max-width/5 - $padding*2 - 10px)/2);
           display: flex;
@@ -95,7 +95,7 @@ $margin: 5px;
         align-items: center;
         gap: 20px;
         padding: 20px 15px;
-        border-radius: 15px;
+        border-radius: 5px;
         cursor: pointer;
         transition: 0.3s;
         &:hover{
