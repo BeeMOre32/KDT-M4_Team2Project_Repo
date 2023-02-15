@@ -8,7 +8,7 @@ import "../style/login.scss"
 export function renderLoginPage() {
   const app = document.querySelector("#app")
   app.innerHTML = /* html */ `
-  <div class="container">
+  <div class="container login">
     <div class="left">    
     </div>
       <div class="right">
