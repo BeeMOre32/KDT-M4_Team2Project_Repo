@@ -1,4 +1,5 @@
 import "../style/signup.scss"
+import { signIn } from "../utilities/userapi"
 
 export function renderSignUp(){
   const app = document.querySelector("#app")
@@ -11,16 +12,16 @@ export function renderSignUp(){
       <h5>Enter your details to proceed futher</h5>
       <form>
       <!-- PROFILE IMAGE -->
-      <div class="button">
+      <!-- <div class="button">
         <label for="chooseFile">
             👉 CLICK HERE! 👈
         </label>
-    </div>
-    <input type="file" id="chooseFile" name="chooseFile" accept="image/*" >
+    </div> -->
+    <!-- <input type="file" id="chooseFile" name="chooseFile" accept="image/*" > -->
 
       <!-- DETAIL -->
         <div class="form-control">
-          <input type="text" required>
+          <input type="text" id="email" required>
           <label>
             <span >E</span>
             <span >M</span>
@@ -31,7 +32,7 @@ export function renderSignUp(){
         </div>
 
         <div class="form-control">
-          <input type="PASSWORD" required>
+          <input type="PASSWORD" id="password" required>
         <label>
           <span>P</span>
           <span>A</span>
@@ -46,7 +47,7 @@ export function renderSignUp(){
       </div>
 
       <div class="form-control">
-          <input type="PASSWORD" required>
+          <input type="PASSWORD" id="confirm-pw"required>
         <label>
           <span>C</span>
           <span>o</span>
@@ -67,7 +68,7 @@ export function renderSignUp(){
       </div>
 
       <div class="form-control">
-          <input type="PASSWORD" required>
+          <input type="text" id="displayNames" required>
         <label>
           <span>N</span>
           <span>A</span>
@@ -75,10 +76,7 @@ export function renderSignUp(){
           <span>E</span>
         </label>   
       </div>
-
-      
-
-        <button class="btn">Continue</button>
+        <button class="btn" id="signUpBtn" type="button">Continue</button>
       </form>
     </div>
   `
@@ -96,8 +94,27 @@ labels.forEach(label => {
         .map((letter, index)=> `<span style="transition-delay:${index * 50}ms"> ${letter} </span>`)
         .join('')
 })
+// SIGNUP API
+const emailEl = document.querySelector("#email")
+const passwordEl = document.querySelector("#password")
+const displayNamesEl = document.querySelector("#displayNames")
+const signUpBtnEl = document.querySelector("#signUpBtn")
+const pwEl =document.querySelector("#password")
+const confirmPwEl = document.querySelector("#confirm-pw")
+const pwValid = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[~,!,@,#,$,*,(,),=,+,_,.,|]).*$/
 
-// // THIS YEAR
-// const thisYear = document.querySelector('.this-year');
-// thisYear.textContent = new Date().getFullYear; 
+
+signUpBtnEl.addEventListener('click', async () => {
+
+const email = emailEl.value
+const password = passwordEl.value
+const username = displayNamesEl.value
+const data ={ email: email, password: password, displayNames: username}
+console.log(email,password,username)
+const res = await signIn(data)
+userToken.token = res.accessToken
+console.log(res)
+})
+
+
 }

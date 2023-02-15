@@ -40,9 +40,9 @@ export function renderLoginPage() {
         </label>   
       </div>
 
-        <button class="btn" id="loginBtn" onclick="checkTheEmail()">Login</button>
+        <button type ="button" id="loginBtn" class="btn" onclick="checkTheEmail()">Login</button>
           
-        <p class="text">Don't have an account? <a href="#">Resister</a></p>
+        <p class="text">Don't have an account? <a data-navigo href="/signup">Resister</a></p>
       </form>
     </div>
   `
@@ -68,28 +68,29 @@ labels.forEach(label => {
 // LOGIN API
 const loginBtnEl = document.querySelector("#loginBtn")
 loginBtnEl.addEventListener("click", async () => {
-  const email = "abc@gmail.com";
-  const password = "123456789";
+  const email = "abc@gmail.com"
+  const password = "123456789"
 
-  const data = { email, password };
+  const data = { email, password }
 
-  const res = await logIn(data);
-  userToken.token = res.accessToken;
-  console.log(res);
+  const res = await logIn(data)
+  userToken.token = res.accessToken
+  console.log(res)
 });
 
-checkTheEmail =function ()                
+// 이메일 유효성 검사 함수
+checkTheEmail = function ()                
   {                                           
-	const emailEl = document.querySelector("#email");
+	const emailEl = document.querySelector("#email")
 	if (!emailEl.value) {             
-		alert("이메일을 입력하세요!");
-		emailEl.focus();	
-		return;
+		alert("이메일을 입력하세요!")
+		emailEl.focus()
+		return
 	}              
 	else   {          
 		if(!CheckEmail(emailEl.value))	{
-			alert("이메일 형식이 잘못되었습니다");
-			emailEl.focus();
+			alert("이메일 형식이 잘못되었습니다")
+			emailEl.focus()
 			return;
 		}                
 	}                      
@@ -97,7 +98,7 @@ checkTheEmail =function ()
 
 // CHECK EMAIL FORM
 function CheckEmail(str){ 
-  var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
+  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
   if(!reg_email.test(str)) {                            
     return false         
   }                            
