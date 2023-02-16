@@ -426,9 +426,10 @@ async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountLis
   // 주문•배송 현황 값 표시
   const orderDeliveryValueEl = document.createElement('a');
   orderDeliveryValueEl.className = "myPageSummary__btns__value";
-  orderDeliveryValueEl.href = '/mypage/order';
-  orderDeliveryValueEl.setAttribute('data-navigo', '');
   orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`
+  orderDeliveryValueEl.addEventListener('click', () => {
+    router.navigate('/mypage/order');
+  })
 
   orderDeliveryEl.append(orderDeliveryNameEl, orderDeliveryValueEl);
 
@@ -448,9 +449,10 @@ async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountLis
   // 나의 잔액 값 표시
   const balanceValueEl = document.createElement('a');
   balanceValueEl.className = "myPageSummary__btns__value";
-  balanceValueEl.href = '/mypage/account';
-  balanceValueEl.setAttribute('data-navigo', '');
   balanceValueEl.innerText = `${balanceValue} 원`;
+  balanceValueEl.addEventListener('click', () => {
+    router.navigate('/mypage/account');
+  })
 
   balanceEl.append(balanceNameEl, balanceValueEl);
 
@@ -459,18 +461,20 @@ async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountLis
   // 나의 주문
   const myOrderBtnEl = document.createElement('a');
   myOrderBtnEl.className = 'myPageBtns__link';
-  myOrderBtnEl.href = '/mypage/order';
-  myOrderBtnEl.setAttribute('data-navigo', '');
   myOrderBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
+  myOrderBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage/order');
+  });
 
   // 나의 계좌
   const myAccountBtnEl = document.createElement('a');
   myAccountBtnEl.className = 'myPageBtns__link';
-  myAccountBtnEl.href = '/mypage/account';
-  myAccountBtnEl.setAttribute('data-navigo', '');
   myAccountBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">payments</span> 나의 계좌';
+  myAccountBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage/account');
+  });
 
   // 나의 정보
   const myInfoBtnEl = document.createElement('a');
