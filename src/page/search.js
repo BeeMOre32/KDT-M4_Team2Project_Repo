@@ -4,6 +4,8 @@ import { searchProduct } from "../utilities/productapi";
 import { router } from "../route";
 
 export async function renderSearchPage(params) {
+  window.scrollTo({top: 0, behavior: "smooth"});
+  
   const app = document.querySelector('#app');
   const searchText = params.data.query;
 

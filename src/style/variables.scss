@@ -206,9 +206,18 @@ button {
         .login {
           display: flex;
           align-items: center;
+          position: relative;
+
+          &.show-context {
+            .login--context {
+              display: block;
+            }
+          }
           
           .login--text {
-            margin-left: 3px;
+            display: flex;
+            align-items: center;
+            margin-left: 6px;
             font-size: 16px;
           }
 
@@ -229,8 +238,36 @@ button {
               background-size: cover;
             }
           }
-        }
-      }
+
+          .login--context {
+            display: none;
+            position: absolute;
+            top: 32px;
+            left: 0px;
+            background-color: #fff;
+            border: 1px solid $light-gray;
+            box-shadow: 1px 1px 10px rgba(0,0,0,0.07);
+            border-radius: 4px;
+            
+            li {
+              padding: 10px 28px;
+              white-space: nowrap;
+              border-bottom: 1px solid $light-gray;
+              transition: background-color .2s;
+              cursor: pointer;
+              
+              &.logout {
+                color: $soft-red;
+                border-bottom: none;
+              }
+              
+              &:hover {
+                background-color: $blue-white;
+              }
+            }
+          }
+        }//.login
+      }//.side
     }//.container
   }//header
 

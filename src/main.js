@@ -25,8 +25,8 @@ import {
 } from "./utilities/productapi";
 import { afterLoadUserAuth, userToken } from "./utilities/userAuth";
 
-const loginEl = document.querySelector(".login");
-const logoutEl = document.querySelector(".logout");
+const loginEl = document.querySelector(".test .login");
+const logoutEl = document.querySelector(".test .logout");
 const getBankEl = document.querySelector(".get-bank");
 const bankAccountEl = document.querySelector(".get-bank-account");
 const addBankEl = document.querySelector(".add-bank");

@@ -12,8 +12,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"
     />
-    <script defer type="module" src="./src/main.js"></script>
-    <!-- <script defer type="module" src="./src/common.js"></script> -->
+    <!-- <script defer type="module" src="./src/main.js"></script> -->
     <script defer type="module" src="./src/route.js"></script>
   </head>
   <body>
@@ -46,12 +45,18 @@
               <span class="cart-count">0</span>
             </a>
 
-            <a class="login" data-navigo>
+            <div class="login">
               <span class="profile material-symbols-outlined icon">
                 account_circle
               </span>
               <span class="login--text">Login</span>
-            </a>
+              <ul class="login--context">
+                <li data-href="/mypage">내 프로필</li>
+                <li data-href="/mypage/orderHistory">주문/결제</li>
+                <li data-href="/mypage/account">자산목록</li>
+                <li class="logout" data-href="/">로그아웃</li>
+              </ul>
+            </div>
           </div>
         </div>
       </header>
