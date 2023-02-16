@@ -27,18 +27,21 @@ export async function renderOrderHisory() {
     sectionEl.className = "myPage";
     const articleEl = document.createElement("article");
 
-    await renderSideMenu(sectionEl, articleEl);
+    const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
+
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const titleEl = document.createElement("h1");
     titleEl.textContent = "나의 주문";
 
-    const buyList = await getBuyList(userToken._token);
+    const contentEl = document.createElement("div");
+    contentEl.className = "buyList";
+
     const buyListSort = buyList.sort(
       (a, b) => new Date(b.timePaid) - new Date(a.timePaid)
     );
-
-    const contentEl = document.createElement("div");
-    contentEl.className = "buyList";
 
     await renderBuyList(contentEl, buyListSort);
 
@@ -148,8 +151,10 @@ export async function renderOrderDetail(detailId) {
     const articleEl = document.createElement("article");
     
     const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
 
-    await renderSideMenu(sectionEl, articleEl);
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const orderDetail = await getBuyDetail(userToken._token, detailId);
     const localTime = new Date(orderDetail.timePaid);
@@ -262,12 +267,14 @@ export async function renderMyAccount() {
     sectionEl.className = "myPage";
     const articleEl = document.createElement("article");
 
-    await renderSideMenu(sectionEl, articleEl);
+    const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
+
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const titleEl = document.createElement("h1");
     titleEl.textContent = "나의 계좌";
-
-    const accountList = await getCurrentAccount(userToken._token);
 
     const contentEl = document.createElement("div");
     contentEl.className = "accountList";
@@ -357,7 +364,7 @@ async function renderAccountList(contentEl, accountList) {
   contentEl.append(...accountEl);
 }
 
-async function renderSideMenu(sectionEl, articleEl) {
+async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountList) {
   // 화면 왼쪽 사이드 메뉴 생성(프로필, 주문•배송, 잔액, 주문, 계좌, 정보)
   const leftSideMenuEl = document.createElement("nav");
   leftSideMenuEl.className = "leftSideMenu";
@@ -365,10 +372,6 @@ async function renderSideMenu(sectionEl, articleEl) {
   // 프로필 표시
   const profileEl = document.createElement("div");
   profileEl.className = "profile";
-
-  // 토큰을 변수에 저장, 사용자 정보 가져오기
-  const token = userToken._token;
-  const profile = await userAuth(token);
 
   // 프로필 표시할 항목(이미지, 표시이름, 이메일)
   const profileUlEl = document.createElement("ul");
@@ -416,12 +419,9 @@ async function renderSideMenu(sectionEl, articleEl) {
     '<span class="material-symbols-outlined">local_shipping</span> 주문•배송';
 
   // 주문•배송 현황 값 가져오기
-  const buyList = await getBuyList(token);
   const orderDeliveryValue = buyList.filter(
     (e) => e.done === false && e.isCanceled === false // 아직 구매취소x, 구매확정x
   ).length;
-
-  console.log(buyList);
 
   // 주문•배송 현황 값 표시
   const orderDeliveryValueEl = document.createElement('a');
@@ -443,10 +443,7 @@ async function renderSideMenu(sectionEl, articleEl) {
     '<span class="material-symbols-outlined">local_atm</span> 나의 잔액';
 
   // 나의 잔액 값 가져오기
-  const currentAccount = await getCurrentAccount(token);
-  const balanceValue = currentAccount.totalBalance.toLocaleString();
-
-  console.log(currentAccount);
+  const balanceValue = accountList.totalBalance.toLocaleString();
 
   // 나의 잔액 값 표시
   const balanceValueEl = document.createElement('a');
