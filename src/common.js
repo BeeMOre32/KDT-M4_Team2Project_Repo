@@ -12,7 +12,7 @@ export async function CommonFn() {
   const logoutEl = document.querySelector('header .login .login--context .logout');
   const cartCountEl =  document.querySelector('header .cart .cart-count');
   
-  const userAuth = await afterLoadUserAuth();
+  let userAuth = await afterLoadUserAuth();
   console.log(userAuth)
 
   searchEl.addEventListener('submit', evt => {
@@ -22,17 +22,17 @@ export async function CommonFn() {
   });
   
   contextEl.addEventListener('click', event => {
-    loginEl.classList.remove('show-context');
     router.navigate(event.target.dataset.href);
-  })
+  });
 
-  loginEl.addEventListener('click', () => {
+  loginEl.addEventListener('click', (e) => {
     if(userAuth === null) {
       router.navigate('/login');
-    } else {
-      loginEl.classList.toggle('show-context');
+      return;
     }
-  })
+    
+    contextEl.classList.toggle('hidden');
+  });
 
   logoutEl.addEventListener('click', async () => {
     const res = await userLogOut(localStorage.getItem('userToken'));
@@ -41,10 +41,17 @@ export async function CommonFn() {
       loginIconEl.classList.remove('profile');
       loginTextEl.textContent = "Login";
       loginIconEl.backgroungImage = "";
+
+      userAuth = await afterLoadUserAuth();
     }
+  });
+
+  document.addEventListener('click', (e) => {
+    console.log(e.target.closest('.login'))
+    if(e.target.closest('.login')) return;
+
+    contextEl.classList.add('hidden');
   })
-
-
 
   ;(function() {
     //로그인 시 헤더에 이름 노출

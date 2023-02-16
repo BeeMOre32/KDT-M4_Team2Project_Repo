@@ -207,12 +207,6 @@ button {
           display: flex;
           align-items: center;
           position: relative;
-
-          &.show-context {
-            .login--context {
-              display: block;
-            }
-          }
           
           .login--text {
             display: flex;
@@ -240,7 +234,6 @@ button {
           }
 
           .login--context {
-            display: none;
             position: absolute;
             top: 32px;
             left: 0px;
