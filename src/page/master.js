@@ -29,11 +29,8 @@ export async function renderMasterPage() {
   soldProductBtn.addEventListener("click", () => {
     router.navigate("/master/sold");
   });
-  const loading = document.createElement("span");
-  loading.classList.add("loading");
-  loading.classList.add("loading--master");
-  loading.innerText = "loading...";
-  app.append(loading);
+
+  app.append(handleLoading());
 
   masterPage.append(
     masterPageTitle,
@@ -50,15 +47,9 @@ export async function renderMasterPage() {
       });
       pageNationBtn.classList.add("active");
       page = pageNationBtn.innerText;
-      const loading = document.createElement("span");
-      loading.classList.add("loading");
-      loading.classList.add("loading--master");
-      loading.innerText = "loading...";
-      app.append(loading);
-      masterPage.replaceChild(
-        await renderProductList(page, false, masterPage),
-        $$(".product-list")[0]
-      );
+      masterPage.replaceChild(handleLoading(false), $$(".product-list")[0]);
+
+      masterPage.appendChild(await renderProductList(page, false, masterPage));
       productClickHandle($$);
     });
   });
@@ -86,7 +77,7 @@ async function renderProductList(page, isFirst = true, parentNode) {
     parentNode.appendChild(pageNation(quotient + 1));
   }
 
-  const loading = document.querySelector(".loading");
+  const loading = document.querySelector(".skeleton");
   loading.remove();
 
   dataArr.forEach((product) => {
@@ -114,4 +105,39 @@ function pageNation(pageNumber) {
     pageNation.appendChild(pageNationBtn);
   }
   return pageNation;
+}
+
+function handleLoading(isFirst = true) {
+  const loadingEl = document.createElement("div");
+  loadingEl.classList.add("skeleton");
+  if (isFirst) {
+    loadingEl.innerHTML = `
+   <div class="skeleton__header"></div>
+   <div class="skeleton__body">
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div>
+    <div class="content"></div> 
+   </div>
+  `;
+  } else {
+    loadingEl.innerHTML = `
+   <div class="skeleton__body">
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div> 
+    <div class="content"></div>
+    <div class="content"></div> 
+   </div>
+  `;
+  }
+
+  return loadingEl;
 }

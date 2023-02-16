@@ -158,6 +158,7 @@ dist
 *.css.map
 *.sass.map
 *.scss.map
+*.css
 
 # webstorm
 .idea
