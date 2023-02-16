@@ -5,7 +5,6 @@ import {
   getCurrentAccount,
   logIn,
   userLogOut,
-  userToken,
 } from "./utilities/userapi";
 import {
   deleteMasterProduct,
