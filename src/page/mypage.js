@@ -101,9 +101,11 @@ async function renderBuyList(contentEl, buyList) {
       btnsEl.className = "buyItemLi__summary__btns";
 
       const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.setAttribute('type', 'button');
       isCanceledBtnEl.textContent = '주문취소';
       isCanceledBtnEl.classList.add('red-btn');
       const doneBtnEl = document.createElement('button');
+      doneBtnEl.setAttribute('type', 'button');
       doneBtnEl.textContent = '구매확정';
       doneBtnEl.classList.add('darken-btn');
 
@@ -112,6 +114,7 @@ async function renderBuyList(contentEl, buyList) {
       summaryEl.append(btnsEl);
     } else {
       const repurchaseBtnEl = document.createElement("button");
+      repurchaseBtnEl.setAttribute('type', 'button');
       repurchaseBtnEl.textContent = "재구매";
       repurchaseBtnEl.classList.add("common-btn");
 
@@ -211,9 +214,11 @@ export async function renderOrderDetail(detailId) {
       btnsEl.className = "productInfo__button__btns";
 
       const isCanceledBtnEl = document.createElement('button');
+      isCanceledBtnEl.setAttribute('type', 'button');
       isCanceledBtnEl.textContent = '주문취소';
       isCanceledBtnEl.classList.add('red-btn');
       const doneBtnEl = document.createElement('button');
+      doneBtnEl.setAttribute('type', 'button');
       doneBtnEl.textContent = '구매확정';
       doneBtnEl.classList.add('darken-btn');
 
@@ -222,6 +227,7 @@ export async function renderOrderDetail(detailId) {
       productInfoBtns.append(btnsEl);
     } else {
       const repurchaseBtnEl = document.createElement("button");
+      repurchaseBtnEl.setAttribute('type', 'button');
       repurchaseBtnEl.textContent = "재구매";
       repurchaseBtnEl.classList.add("common-btn");
 
