@@ -302,3 +302,25 @@ body {
     }
   }
 }
+
+.skeleton.master-sold-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .skeleton-title {
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    @include skeleton;
+    margin-bottom: 30px;
+  }
+  .skeleton-content {
+    width: 80%;
+    height: 50px;
+    border-radius: 10px;
+    @include skeleton;
+  }
+}

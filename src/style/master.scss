@@ -109,31 +109,29 @@
     }
   }
 }
-#app {
-  .skeleton {
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    .skeleton__header {
-      width: 50%;
-      height: 50px;
+.skeleton.master-page-loading {
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  .skeleton__header {
+    width: 50%;
+    height: 50px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    @include skeleton;
+  }
+  .skeleton__body {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 0 20px;
+    .content {
       border-radius: 5px;
-      margin-bottom: 20px;
       @include skeleton;
-    }
-    .skeleton__body {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      max-width: $max-width;
-      margin: 0 auto;
-      padding: 0 20px;
-      .content {
-        border-radius: 5px;
-        @include skeleton;
-      }
     }
   }
 }

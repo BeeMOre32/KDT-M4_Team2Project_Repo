@@ -7,10 +7,7 @@ export async function renderSoldProduct() {
   let page = 1;
   app.innerHTML = "";
 
-  const loading = document.createElement("span");
-  loading.classList.add("loading");
-  loading.innerText = "loading...";
-  app.appendChild(loading);
+  app.appendChild(handleLoading());
 
   const soldProductPage = document.createElement("div");
 
@@ -60,7 +57,7 @@ async function renderSoldList(data, page, isFirst = true, parentNode, $, $$) {
     parentNode.append(renderPageNationBtn(pageNumber));
   } else soldList.innerHTML = "";
 
-  document.querySelector(".loading")?.remove();
+  document.querySelector(".skeleton")?.remove();
 
   dataArr.forEach((product) => {
     const soldProduct = document.createElement("div");
@@ -260,4 +257,24 @@ async function renderSoldDetail(detailId, data, $, $$) {
       });
     }
   });
+}
+
+function handleLoading() {
+  const loading = document.createElement("div");
+  loading.classList.add("skeleton");
+  loading.classList.add("master-sold-loading");
+
+  loading.innerHTML = `
+    <div class="skeleton-title"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+    <div class="skeleton-content"></div>
+   `;
+
+  return loading;
 }

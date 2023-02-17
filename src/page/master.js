@@ -110,6 +110,7 @@ function pageNation(pageNumber) {
 function handleLoading(isFirst = true) {
   const loadingEl = document.createElement("div");
   loadingEl.classList.add("skeleton");
+  loadingEl.classList.add("master-page-loading");
   if (isFirst) {
     loadingEl.innerHTML = `
    <div class="skeleton__header"></div>
