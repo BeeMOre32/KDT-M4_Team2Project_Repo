@@ -10,8 +10,10 @@ export async function renderSoldProduct() {
   app.appendChild(handleLoading());
 
   const soldProductPage = document.createElement("div");
-
   soldProductPage.classList.add("sold-product-page");
+  const soldProductPageContainer = document.createElement("div");
+  soldProductPageContainer.classList.add("sold-product-page-container");
+
   const soldProductPageTitle = document.createElement("h1");
   soldProductPageTitle.innerText = "팔린 상품 목록";
   const soldProductDetail = document.createElement("div");
@@ -19,12 +21,15 @@ export async function renderSoldProduct() {
 
   const data = await getMasterAllSoldList();
 
-  soldProductPage.append(
+  soldProductPageContainer.append(
     soldProductPageTitle,
     soldProductDetail,
     renderSoldTitle(),
-    await renderSoldList(data, page, true, soldProductPage, $, $$)
+    await renderSoldList(data, page, true, soldProductPageContainer, $, $$)
   );
+
+  soldProductPage.appendChild(soldProductPageContainer);
+
   app.appendChild(soldProductPage);
 
   $$(".page-nation-btn").forEach((btn) => {
@@ -34,9 +39,16 @@ export async function renderSoldProduct() {
         btn.classList.remove("active");
       });
       e.target.classList.add("active");
-      soldProductPage.replaceChild(
-        await renderSoldList(data, page, false, soldProductPage, $, $$),
-        $$(".sold-list")[0]
+      soldProductPageContainer.replaceChild(
+        await renderSoldList(
+          data,
+          page,
+          false,
+          soldProductPageContainer,
+          $,
+          $$
+        ),
+        $(".sold-list")
       );
     });
   });
@@ -50,7 +62,6 @@ async function renderSoldList(data, page, isFirst = true, parentNode, $, $$) {
 
   const soldList = document.createElement("div");
   soldList.classList.add("sold-list");
-
   const pageNumber = Math.ceil(data.length / 8);
 
   if (isFirst) {

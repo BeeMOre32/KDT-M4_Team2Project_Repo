@@ -8,18 +8,30 @@ body {
 .sold-product-page {
   width: 100%;
   height: 100%;
-  padding: 20px 10%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  .page-nation {
-    bottom: 70px;
+  .sold-product-page-container {
+    width: 100%;
+    height: 100%;
+    max-width: 1420px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    .page-nation {
+      position: absolute;
+      bottom: -8%;
+      left: 3%;
+    }
   }
   h1 {
     @include title-font;
     text-align: center;
   }
   .sold-title {
+    width: 100%;
     padding: 10px;
     gap: 10px;
     display: grid;
@@ -124,10 +136,10 @@ body {
   flex-direction: column;
   gap: 10px;
   z-index: 3;
-  transform: translateX(100%);
+  transform: translateX(140%);
   transition: 0.3s ease;
   &.active {
-    transform: translateX(0);
+    transform: translateX(20%);
   }
   .detail-title {
     display: flex;
