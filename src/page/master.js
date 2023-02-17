@@ -9,10 +9,15 @@ export async function renderMasterPage() {
   const $ = (selector) => app.querySelector(selector);
   const $$ = (selector) => app.querySelectorAll(selector);
 
+  const masterPageContainer = document.createElement("div");
+  masterPageContainer.classList.add("master-page-container");
+
   const masterPage = document.createElement("div");
   masterPage.classList.add("master-page");
   const masterPageTitle = document.createElement("h1");
   masterPageTitle.innerText = "현재 팔고 있는 상품 목록";
+  const masterFooter = document.createElement("div");
+  masterFooter.classList.add("master-footer");
 
   const addProductBtn = document.createElement("button");
   addProductBtn.classList.add("add-product-btn");
@@ -30,14 +35,21 @@ export async function renderMasterPage() {
     router.navigate("/master/sold");
   });
 
+  const btnContainer = document.createElement("div");
+  btnContainer.classList.add("btn-container");
+
+  btnContainer.append(addProductBtn, soldProductBtn);
+  masterFooter.append(btnContainer);
+
   app.append(handleLoading());
 
-  masterPage.append(
+  masterPageContainer.append(
     masterPageTitle,
-    await renderProductList(page, true, masterPage),
-    addProductBtn,
-    soldProductBtn
+    await renderProductList(page, true, masterFooter),
+    masterFooter
   );
+
+  masterPage.append(masterPageContainer);
   app.appendChild(masterPage);
 
   $$(".page-nation-btn").forEach((pageNationBtn) => {
@@ -49,7 +61,9 @@ export async function renderMasterPage() {
       page = pageNationBtn.innerText;
       masterPage.replaceChild(handleLoading(false), $$(".product-list")[0]);
 
-      masterPage.appendChild(await renderProductList(page, false, masterPage));
+      masterPage.appendChild(
+        await renderProductList(page, false, masterFooter)
+      );
       productClickHandle($$);
     });
   });

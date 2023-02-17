@@ -9,9 +9,24 @@
 
 .master-page {
   width: 100%;
+  gap: 30px;
   min-height: 100%;
   margin-bottom: 80px;
   padding: 10px;
+  .master-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative;
+    gap: 10px;
+  }
   h1 {
     @include title-font;
     font-size: 30px;
@@ -71,22 +86,19 @@
   }
 }
 
-.add-product-btn {
-  position: absolute;
-  bottom: -50px;
-  right: 160px;
-}
-
-.sold-product-btn {
-  position: absolute;
-  bottom: -50px;
-  right: 280px;
+.master-footer {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  .btn-container {
+    display: flex;
+    gap: 20px;
+  }
 }
 
 .page-nation {
-  position: absolute;
-  bottom: -50px;
-  left: 10%;
   display: flex;
   gap: 20px;
   .page-nation-btn {
