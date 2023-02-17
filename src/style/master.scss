@@ -87,8 +87,11 @@
 }
 
 .master-footer {
+  position: absolute;
+  bottom: -16%;
+  left: 0;
+  padding: 20px;
   width: 100%;
-  padding: 10px 20px;
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -121,7 +124,9 @@
     }
   }
 }
+
 .skeleton.master-page-loading {
+  display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;

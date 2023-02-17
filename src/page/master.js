@@ -59,9 +59,12 @@ export async function renderMasterPage() {
       });
       pageNationBtn.classList.add("active");
       page = pageNationBtn.innerText;
-      masterPage.replaceChild(handleLoading(false), $$(".product-list")[0]);
+      masterPageContainer.replaceChild(
+        handleLoading(false),
+        $(".product-list")
+      );
 
-      masterPage.appendChild(
+      masterPageContainer.appendChild(
         await renderProductList(page, false, masterFooter)
       );
       productClickHandle($$);
