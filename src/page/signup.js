@@ -110,6 +110,7 @@ userToken.token = res.accessToken
 console.log(res)
 })
 
+// CONFIRM PASSWORD
 testPw = function () {
   
   if(pwEl.length < 6) {
@@ -125,6 +126,4 @@ testPw = function () {
         return true;
       }
 }
-
-
 }
