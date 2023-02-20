@@ -76,7 +76,7 @@ export function renderSignUp(){
           <span>E</span>
         </label>   
       </div>
-        <button class="btn" id="signUpBtn" type="button" onclick="testPw()">Continue</button>
+        <button class="btn" id="signUpBtn" type="button" onclick="checkingIdPw()">Continue</button>
       </form>
     </div>
   `
@@ -110,8 +110,21 @@ userToken.token = res.accessToken
 console.log(res)
 })
 
-// CONFIRM PASSWORD
-testPw = function () {
+// CHECKING ID, PASSWORD
+checkingIdPw = function () {
+
+  if (!emailEl.value) {             
+		alert("이메일을 입력하세요!")
+		emailEl.focus()
+		return
+	}              
+	else   {          
+		if(!CheckEmail(emailEl.value))	{
+			alert("이메일 형식이 잘못되었습니다")
+			emailEl.focus()
+			return;
+		}                
+	}    
   
   if(pwEl.length < 6) {
           alert('입력한 글자가 6글자 이상이어야 합니다.');
@@ -126,4 +139,22 @@ testPw = function () {
         return true;
       }
 }
+
+// 이메일 유효성 검사 함수
+checkTheEmail = function ()                
+  {                                           
+	const emailEl = document.querySelector("#email")
+                  
+}    
+
+// CHECK EMAIL FORM
+function CheckEmail(str){ 
+  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
+  if(!reg_email.test(str)) {                            
+    return false         
+  }                            
+  else {                       
+    return true         
+  }                            
+} 
 }

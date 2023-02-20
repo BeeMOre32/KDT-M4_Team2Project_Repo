@@ -9,7 +9,8 @@ export function renderLoginPage() {
   const app = document.querySelector("#app")
   app.innerHTML = /* html */ `
   <div class="login-container">
-    <div class="left">    
+    <div class="left">
+      <div class="img-text">WELCOME TO NEXT_FURNITURE</div>
     </div>
       <div class="right">
       <h3>Sign In to your account</h3>
