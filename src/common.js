@@ -1,4 +1,4 @@
-import { afterLoadUserAuth } from "./utilities/userAuth";
+import { afterLoadUserAuth, userToken } from "./utilities/userAuth";
 import { userLogOut } from "./utilities/userapi";
 import { router } from "./route";
 
@@ -8,8 +8,8 @@ export async function CommonFn() {
   const loginEl = document.querySelector('header .login');
   const loginIconEl = document.querySelector('header .login .icon');
   const loginTextEl = document.querySelector('header .login .login--text');
-  const contextEl = document.querySelector('header .login .login--context');
-  const logoutEl = document.querySelector('header .login .login--context .logout');
+  const dropdownEl = document.querySelector('header .login .login--dropdown');
+  const logoutEl = document.querySelector('header .login .login--dropdown .logout');
   const cartCountEl =  document.querySelector('header .cart .cart-count');
   
   let userAuth = await afterLoadUserAuth();
@@ -21,7 +21,7 @@ export async function CommonFn() {
     router.navigate(`/search/${inputEl.value}`);
   });
   
-  contextEl.addEventListener('click', event => {
+  dropdownEl.addEventListener('click', event => {
     router.navigate(event.target.dataset.href);
   });
 
@@ -31,11 +31,11 @@ export async function CommonFn() {
       return;
     }
     
-    contextEl.classList.toggle('hidden');
+    dropdownEl.classList.toggle('hidden');
   });
 
   logoutEl.addEventListener('click', async () => {
-    const res = await userLogOut(localStorage.getItem('userToken'));
+    const res = await userLogOut(userToken);
 
     if(res) {
       loginIconEl.classList.remove('profile');
@@ -47,10 +47,9 @@ export async function CommonFn() {
   });
 
   document.addEventListener('click', (e) => {
-    console.log(e.target.closest('.login'))
     if(e.target.closest('.login')) return;
 
-    contextEl.classList.add('hidden');
+    dropdownEl.classList.add('hidden');
   })
 
   ;(function() {

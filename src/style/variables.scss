@@ -9,6 +9,7 @@ $primary-color: #8083a3;
 $light-gray: #e4e6e8;
 $blue-white: #f5f5fa;
 $soft-red: #ed544e;
+$soft-green: #2ecc71;
 
 //폰트크기
 @mixin title-font {
@@ -115,7 +116,7 @@ button {
     border-bottom: 1px solid $light-gray;
     z-index: 10;
 
-    .container {
+    .container.header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -202,9 +203,12 @@ button {
         .login {
           display: flex;
           align-items: center;
-
+          position: relative;
+          
           .login--text {
-            margin-left: 3px;
+            display: flex;
+            align-items: center;
+            margin-left: 6px;
             font-size: 16px;
           }
 
@@ -225,10 +229,38 @@ button {
               background-size: cover;
             }
           }
-        }
-      }
-    } //.container
-  } //header
+
+          .login--dropdown {
+            position: absolute;
+            top: 32px;
+            left: 0px;
+            background-color: #fff;
+            border: 1px solid $light-gray;
+            box-shadow: 1px 1px 10px rgba(0,0,0,0.07);
+            border-radius: 4px;
+            
+            li {
+              padding: 10px 28px;
+              white-space: nowrap;
+              border-bottom: 1px solid $light-gray;
+              transition: background-color .2s;
+              cursor: pointer;
+              
+              &.logout {
+                color: $soft-red;
+                border-bottom: none;
+              }
+              
+              &:hover {
+                background-color: $blue-white;
+              }
+            }
+          }
+        }//.login
+      }//.side
+    }//.container
+  }//header
+
 
   footer {
     padding: 40px;

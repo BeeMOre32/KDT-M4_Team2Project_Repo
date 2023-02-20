@@ -28,11 +28,9 @@ export async function renderOrderHisory() {
     sectionEl.className = "myPage";
     const articleEl = document.createElement("article");
 
-    const profile = await userAuth(userToken._token);
     const buyList = await getBuyList(userToken._token);
-    const accountList = await getCurrentAccount(userToken._token);
 
-    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
+    await renderSideMenu(sectionEl, articleEl);
 
     const titleEl = document.createElement("h1");
     titleEl.textContent = "나의 주문";
@@ -51,9 +49,10 @@ export async function renderOrderHisory() {
     app.append(sectionEl);
 
     const loading = document.querySelector(".skeleton");
-    loading.remove();
+    loading?.remove();
   }
 }
+
 async function renderBuyList(contentEl, buyList) {
   const buyItemEl = buyList.map((item) => {
     const buyItemLiEl = document.createElement("a");
@@ -155,10 +154,8 @@ export async function renderOrderDetail(detailId) {
     const articleEl = document.createElement("article");
     
     const profile = await userAuth(userToken._token);
-    const buyList = await getBuyList(userToken._token);
-    const accountList = await getCurrentAccount(userToken._token);
 
-    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
+    await renderSideMenu(sectionEl, articleEl);
 
     const orderDetail = await getBuyDetail(userToken._token, detailId);
     const localTime = new Date(orderDetail.timePaid);
@@ -274,11 +271,9 @@ export async function renderMyAccount() {
     sectionEl.className = "myPage";
     const articleEl = document.createElement("article");
 
-    const profile = await userAuth(userToken._token);
-    const buyList = await getBuyList(userToken._token);
     const accountList = await getCurrentAccount(userToken._token);
 
-    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
+    await renderSideMenu(sectionEl, articleEl);
 
     const titleEl = document.createElement("h1");
     titleEl.textContent = "나의 계좌";
@@ -538,7 +533,136 @@ async function renderAccountList(contentEl, accountList) {
   contentEl.append(...accountEl);
 }
 
-async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountList) {
+export async function renderMyProfile() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  const app = document.querySelector("#app");
+  app.innerHTML = "";
+
+  app.append(handlingLoading(true));
+
+  let loginState; 
+  try {
+    loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
+  } catch (err) {
+    console.log(err.message);
+  }
+  if (!loginState) {
+    const loading = document.querySelector(".skeleton");
+    loading.remove();
+
+    const loginMessageEl = document.createElement("div");
+    loginMessageEl.className = "loginMessage";
+    loginMessageEl.innerText = "로그인이 필요합니다!";
+
+    app.append(loginMessageEl);
+    return
+  }
+
+  const profile = await userAuth(userToken._token);
+  const sectionEl = document.createElement("section");
+  const articleEl = document.createElement("article");
+  
+  sectionEl.className = "myPage";
+
+  app.append(sectionEl);  
+
+  await renderSideMenu(sectionEl, articleEl);
+  
+  
+  articleEl.innerHTML = /* html */`
+    <h2>나의 정보</h2>
+    <p>이름, 비밀번호, 프로필 이미지를 확인하고 수정할 수 있습니다.</p>
+
+    <div class="my-profile">
+      <div class="edit-image">
+        <div class="profile-image"></div>
+      </div>
+      <div class="edit-image--btns">
+        <label>
+          <input type="file" accept="image/gif,image/jpeg,image/png" />
+          <span class="edit-btn edit">이미지 변경</span>
+        </label>
+        <span class="edit-btn del">이미지 삭제</span>
+      </div>
+      <div class="edit-name">
+        <div class="info">
+          <div class="info--display-name">${profile.displayName}</div>
+          <div class="info--email">${profile.email}</div>
+        </div>
+        <div class="edit-name--btn">
+          <span>이름변경</span>
+          <span class="material-symbols-outlined icon">
+            edit
+          </span>
+        </div>
+      </div>
+    </div>
+    <form class="edit-password">
+      <h3>비밀번호 변경</h3>
+
+      <div class="edit-password--input">
+        <div class="input-password origin">
+          <label>
+            <span>현재 비밀번호</span>
+            <input type="password" />
+          </label>
+          <span class="message">기존의 비밀번호를 입력해주세요</span>
+        </div>
+        <div class="input-password new">
+          <label>
+            <span>새 비밀번호</span>
+            <input type="password" />
+          </label>
+          <span class="message">새 비밀번호를 입력해주세요 (8자 이상)</span>
+        </div>
+        <div class="input-password check">
+          <label>
+            <span>비밀번호 확인</span>
+            <input type="password" />
+          </label>
+          <span class="message">새 비밀번호를 한번 더 입력해주세요</span>
+        </div>
+      </div>
+      <div class="submit-password-btns">
+        <button type="reset" class="common-btn">취소<button>
+        <button class="darken-btn submit-password">비밀번호 변경<button>
+      </div>
+    </form>
+  `;
+
+
+  const profileImgEl = document.querySelector('.my-profile .edit-image');
+  const inputImgEl = document.querySelector('.my-profile .edit-image--btns input[type="file"]');
+  const delImgEl = document.querySelector('.my-profile .edit-image--btns .edit-btn.del');
+  const editNameEl = document.querySelector('.my-profile .edit-name .edit-name--btn');
+  const originPwInputEl = document.querySelector('.edit-password .input-password.origin input');
+  const newPwInputEl = document.querySelector('.edit-password .input-password.new input');
+  const chkPwInputEl = document.querySelector('.edit-password .input-password.check input');
+  const originPwMsgEl = document.querySelector('.edit-password .input-password.origin .message');
+  const newPwMsgEl = document.querySelector('.edit-password .input-password.new .message');
+  const chkPwMsgEl = document.querySelector('.edit-password .input-password.check .message');
+  const submitPwEl = document.querySelector('.edit-password .submit-password-btns .submit-password');
+
+  if(profile.profileImg) {
+    profileImgEl.style.backgroundImage = `url(${profile.profileImg})`;
+  } else {
+    profileImgEl.style.backgroundImage = 'url(https://www.tutor-guru.com/assets/images/tasker/noprofile.png)';
+  }
+
+  inputImgEl.addEventListener('change', () => {
+    console.log('change');
+  })
+
+  const loading = document.querySelector(".skeleton");
+  loading.remove();
+}
+
+async function renderSideMenu(sectionEl, articleEl) {
+
+  const profile = await userAuth(userToken._token);
+  const buyList = await getBuyList(userToken._token);
+  const accountList = await getCurrentAccount(userToken._token);
+
   // 화면 왼쪽 사이드 메뉴 생성(프로필, 주문•배송, 잔액, 주문, 계좌, 정보)
   const leftSideMenuEl = document.createElement("nav");
   leftSideMenuEl.className = "leftSideMenu";
