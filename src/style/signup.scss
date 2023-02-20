@@ -1,19 +1,9 @@
 @import "./common", "./variables";
 
 #app {
-  
-.container {
+.signup-container {
+	padding: 5%;
 	display: grid;
-	grid-template-columns: 80% 0;
-  .left {
-    img {
-    background-image: url("../images/main_visual1.jpg");
-		background-size: cover;
-		border-radius: 5px;
-    width: 80%;
-    height: 500px;
-  }//img
-  }//left
 .right {
 	display: grid;
 	grid-template-rows: 0.5fr auto;
@@ -22,13 +12,14 @@
 	// margin: 50px 0 0 0;
 	h3 {
 		text-align: center;
-	}//h3
+		padding: 10px;
+	}
 	h5 {
 		color: #E4E6E8;
 		text-align: center;
 		font-size: 10px;
 		margin-bottom: 40px;
-	}//h5
+	}
 	a {
 		text-decoration: none;
 		color: #E4E6E8;
@@ -46,15 +37,14 @@
 	border-radius: 5px;
 	&:focus {
 		outline: 0;
-	}//focus
+	}
 	&:active {
 		transform: scale(0.98);
-	}//active
-}//btn
+	}
+}
 .text {
 	margin-top: 30px;
-}//text
-
+}
 .form-control {
 	position: relative;
 	margin: 20px 0 20px 0;
@@ -67,7 +57,7 @@
 		padding: 10px 20px;
 		font-size: 15px;
 		color: black;
-	}//input
+	}
 	
 	label {
 		color: #E4E6E8;

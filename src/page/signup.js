@@ -4,7 +4,7 @@ import { signIn } from "../utilities/userapi"
 export function renderSignUp(){
   const app = document.querySelector("#app")
   app.innerHTML= /* html */`
-  <div class="container">
+  <div class="signup-container">
     <div class="left">    
     </div>
       <div class="right">
@@ -76,15 +76,10 @@ export function renderSignUp(){
           <span>E</span>
         </label>   
       </div>
-        <button class="btn" id="signUpBtn" type="button">Continue</button>
+        <button class="btn" id="signUpBtn" type="button" onclick="testPw()">Continue</button>
       </form>
     </div>
   `
-
-// ADD IMAGE
-const leftEl = document.querySelector('.left')
-const imgEl = document.createElement('img')
-leftEl.append(imgEl)
 
 // INPUT ANIMATION
 const labels = document.querySelectorAll('.form-control label')
@@ -103,7 +98,6 @@ const pwEl =document.querySelector("#password")
 const confirmPwEl = document.querySelector("#confirm-pw")
 const pwValid = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[~,!,@,#,$,*,(,),=,+,_,.,|]).*$/
 
-
 signUpBtnEl.addEventListener('click', async () => {
 
 const email = emailEl.value
@@ -115,6 +109,22 @@ const res = await signIn(data)
 userToken.token = res.accessToken
 console.log(res)
 })
+
+testPw = function () {
+  
+  if(pwEl.length < 6) {
+          alert('입력한 글자가 6글자 이상이어야 합니다.');
+          return false;
+      }
+      
+      if( pwEl != confirmPwEl ) {
+        alert("비밀번호불일치");
+        return false;
+      } else{
+        alert("비밀번호가 일치합니다");
+        return true;
+      }
+}
 
 
 }
