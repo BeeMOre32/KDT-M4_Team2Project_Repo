@@ -581,7 +581,7 @@ export async function renderMyProfile() {
           <input type="file" accept="image/gif,image/jpeg,image/png" />
           <span class="edit-btn edit">이미지 변경</span>
         </label>
-        <span class="edit-btn del">이미지 삭제</span>
+        <!-- <span class="edit-btn del">이미지 삭제</span> -->
       </div>
       <div class="edit-name">
         <div class="info">
@@ -656,7 +656,7 @@ export async function renderMyProfile() {
 
   const profileImgEl = document.querySelector('.my-profile .profile-image');
   const inputImgEl = document.querySelector('.my-profile .edit-image--btns input[type="file"]');
-  const delImgEl = document.querySelector('.my-profile .edit-image--btns .edit-btn.del');
+  // const delImgEl = document.querySelector('.my-profile .edit-image--btns .edit-btn.del');
   const displayNameEl = document.querySelector('.my-profile .edit-name .info .info--display-name');
   const cancelEditNameEl = document.querySelector('.my-profile .edit-name .edit-cancel--btn');
   const editNameEl = document.querySelector('.my-profile .edit-name .edit-name--btn');
@@ -678,13 +678,11 @@ export async function renderMyProfile() {
   const sideDisplayNameEl = document.querySelector('.myPage .leftSideMenu .profile .profile__list .profile__list--displayName');
 
   let newPassword = "";
+  let userName = profile.displayName;
 
   let data = {
     userToken : userToken._token,
-    user : {
-      "displayName" : profile.displayName,
-      "profileImgBase64" : profile.profileImg
-    },
+    user : {},
   }
 
   if(profile.profileImg) {
@@ -713,22 +711,27 @@ export async function renderMyProfile() {
   })
 
   // 이미지 삭제
-  delImgEl.addEventListener('click', async () => {    
-    data.user.profileImgBase64 = null;
-    await userInfoEdit(data);
+  // delImgEl.addEventListener('click', async () => {    
+  //   data.user.profileImgBase64 = "";
+  //   console.log(data)
+  //   const res = await userInfoEdit(data);
+  //   console.log(res)
 
-    profileImgEl.style.backgroundImage = 'url(https://www.tutor-guru.com/assets/images/tasker/noprofile.png)';
-    sideProfileImgEl.style.backgroundImage = '';
-    headerProfileImgEl.style.backgroundImage = '';
-    headerProfileImgEl.classList.remove('profile')
-  })
+  //   profileImgEl.style.backgroundImage = 'url(https://www.tutor-guru.com/assets/images/tasker/noprofile.png)';
+  //   sideProfileImgEl.style.backgroundImage = '';
+  //   headerProfileImgEl.style.backgroundImage = '';
+  //   headerProfileImgEl.classList.remove('profile')
+  // })
 
   editNameEl.addEventListener('click', async () => {
     //이름변경완료
     if (editNameEl.classList.contains('confirm')) {
       data.user.displayName = displayNameEl.textContent;
+      console.log(data)
       await userInfoEdit(data);
       
+      userName = displayNameEl.textContent;
+
       displayNameEl.removeAttribute("contenteditable");
       editNameEl.classList.remove('confirm');
       cancelEditNameEl.classList.add('hidden');  
@@ -762,7 +765,7 @@ export async function renderMyProfile() {
     cancelEditNameEl.classList.add('hidden');  
     editNameEl.firstElementChild.textContent = "이름변경";
 
-    displayNameEl.textContent = data.user.displayName;
+    displayNameEl.textContent = userName;
   })
 
   // 이름길이 제한

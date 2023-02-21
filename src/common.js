@@ -36,12 +36,14 @@ export async function CommonFn() {
 
   logoutEl.addEventListener('click', async () => {
     const res = await userLogOut(userToken);
+    console.log(res)
 
     if(res) {
       loginIconEl.classList.remove('profile');
       loginTextEl.textContent = "Login";
       loginIconEl.style.backgroundImage = "";
 
+      window.location.reload()
       userAuth = await afterLoadUserAuth();
     }
   });
