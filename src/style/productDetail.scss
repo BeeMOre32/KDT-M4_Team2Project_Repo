@@ -2,8 +2,8 @@
 @import "./variables.scss";
 
 #app {
-  min-height: 100vh;
-
+  min-height: calc(100vh - 70px - 165px);
+  
   .container.product-detail-page {
     display: grid;
     grid-template-columns: 1fr 400px;
@@ -223,7 +223,7 @@
     }//.swiper
   } //.recommend
 
-  .modal-bg {
+  .modal-bg.add-cart-modal {
     display: none;
     justify-content: center;
     align-items: center;

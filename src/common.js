@@ -40,7 +40,7 @@ export async function CommonFn() {
     if(res) {
       loginIconEl.classList.remove('profile');
       loginTextEl.textContent = "Login";
-      loginIconEl.backgroungImage = "";
+      loginIconEl.style.backgroundImage = "";
 
       userAuth = await afterLoadUserAuth();
     }
@@ -54,7 +54,7 @@ export async function CommonFn() {
 
   ;(function() {
     //로그인 시 헤더에 이름 노출
-    if(userAuth && typeof userAuth !== "string") {
+    if(userAuth) {
       loginTextEl.innerHTML = /* html */`
         ${userAuth.displayName} 님!
         <span class="material-symbols-outlined">
@@ -68,8 +68,8 @@ export async function CommonFn() {
 
     //로그인 시 헤더에 프로필이미지 노출
     if(userAuth && userAuth.profileImg) {
-      loginIconEl.classList.add('profile')
-      loginIconEl.backgroungImage = `url(${userAuth.profileImg})`
+      loginIconEl.classList.add('profile');
+      loginIconEl.style.backgroundImage = `url(${userAuth.profileImg})`;
     } else {
       loginIconEl.classList.remove('profile')
     }

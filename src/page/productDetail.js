@@ -75,7 +75,7 @@ export async function renderDetailPage(params) {
       </div>
     </div>
 
-    <div class="modal-bg">
+    <div class="modal-bg add-cart-modal">
       <div class="modal">
         <div class="icon">
           <span class="material-symbols-outlined cart-icon">
