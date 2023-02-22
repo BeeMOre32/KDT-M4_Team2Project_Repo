@@ -1041,6 +1041,9 @@ async function renderSideMenu(sectionEl, articleEl) {
   myInfoBtnEl.className = 'myPageBtns__link';
   myInfoBtnEl.innerHTML = 
   '<span class="material-symbols-outlined">person</span> 나의 정보';
+  myInfoBtnEl.addEventListener('click', () => {
+    router.navigate('/mypage');
+  })
 
   myPageBtnsEl.append(
     myPageSummaryEl,
