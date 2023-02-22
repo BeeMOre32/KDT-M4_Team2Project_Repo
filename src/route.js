@@ -10,7 +10,12 @@ import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 
 import { renderLoginPage } from "./page/login";
 import { renderSignUp } from "./page/signup";
-import { renderOrderHisory, renderMyAccount, renderOrderDetail, renderMyProfile } from "./page/mypage";
+import {
+  renderOrderHisory,
+  renderMyAccount,
+  renderOrderDetail,
+  renderMyProfile,
+} from "./page/mypage";
 
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
@@ -59,10 +64,10 @@ router.on("/product/checkout", function () {
   renderCash();
 });
 
-router.on("/mypage", function() {
+router.on("/mypage", function () {
   CommonFn();
   renderMyProfile();
-})
+});
 
 router.on("/mypage/order", function (params) {
   CommonFn();
@@ -80,13 +85,14 @@ router.on("/mypage/account", function (params) {
 });
 
 router.on("/login", function () {
+  console.log("login");
   CommonFn();
-  renderLoginPage()
+  renderLoginPage();
 });
 
 router.on("/signup", function () {
   CommonFn();
-  renderSignUp()
+  renderSignUp();
 });
 
 router.on("/master", function () {
