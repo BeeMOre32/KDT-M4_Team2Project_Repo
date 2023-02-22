@@ -358,16 +358,11 @@ export async function renderAccountAdd(){
     `
 
     app.append(sectionEl);
+
     const bankAccount = await getBankAccount(userToken._token);
     const bankSelectEl = document.querySelector(".accountAdd__bank__list");
-    let currentCheckedBank;
-    let currentCheckedBankCode;
-    let currentCheckedBankdigits;
-    await renderAccountListOptionAdd(bankSelectEl, bankAccount, currentCheckedBank, currentCheckedBankCode, currentCheckedBankdigits, profile);
-
-    console.log(currentCheckedBank);
-    console.log(currentCheckedBankCode);
-    console.log(currentCheckedBankdigits);
+    
+    await renderAccountListOptionAdd(bankSelectEl, bankAccount, profile);
 
     // 이미 개설된 은행은 선택 비활성화
     for(let i = 0; i < Object.keys(bankAccount).length; i++) {
@@ -381,7 +376,7 @@ export async function renderAccountAdd(){
   }
 }
 
-async function renderAccountListOptionAdd(bankSelectEl, bankAccount, currentCheckedBank, currentCheckedBankCode, currentCheckedBankdigits, profile){
+async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
   
   const logoList = [
     ['KB국민은행', '<svg width="32" height="23" viewBox="0 0 32 23"><path fill="#FBAF17" fill-rule="evenodd" d="M31.206 11.625c-.943-.95-2.257-1.362-4.015-1.259-1.463.09-2.623.676-3.509 1.22l-.001-.04c0-.463.052-.964.103-1.451.05-.495.104-.999.104-1.475 0-.486-.054-.947-.22-1.341-.042-.101-.135-.161-.252-.161-.472.01-1.395.337-1.619.534l-.122.27c-.007.528-.123 2.002-.24 2.181.005-.007-.061.178-.061.178-.2 2.105-.203 3.957-.02 5.547.021.158.325.397.559.484.257.095 1.06-.122 1.524-.298-.006.002.174-.028.174-.028.146-.016.232-.14.226-.309-.002-.003.011-.457.011-.457.335-1.372 1.688-3.01 3.29-3.255.906-.145 1.621.09 2.186.71.076.112.24 1.1-.356 2.234-.444.84-1.332 1.548-2.501 1.99-1.107.425-2.323.595-3.827.544-.063-.041-1.407-.96-1.407-.96-1.193-.845-2.674-1.896-4.017-2.41-.236-.092-.658-.445-.913-.658l-.139-.114c-.774-.627-2.248-1.619-3.431-2.413 0 0-.534-.362-.638-.431l.001-.136c.035-.038.78-.488.78-.488 1.04-.614 1.521-.915 1.624-1.071-.022.025.137-.083.137-.083.01-.004 2.582-1.473 2.582-1.473 2.478-1.373 5.285-2.933 6.759-4.473.002-.002.072-.236.072-.236l.032-.209c.099-.33.104-.581.021-.875-.021-.083-.097-.18-.2-.198-1.151-.116-2.635.58-3.987 1.86-.305.288-.561.43-.832.578l-.207.116c-1.49.855-4.846 2.957-6.605 4.091.116-1.906.465-4.618.896-6.88L13.12.71 12.938.37l-.137-.245-.039-.01c-.35-.18-.637-.106-.848-.054l-.35.131-.47.172c-.092.018-.157.076-.192.166-.84 2.047-1.54 5.413-1.706 8.106C7.52 7.56 5.97 6.785 5.208 6.411l-.02-.012-.09-.02c-.275-.035-.608-.238-.928-.434-.034-.02-.639-.417-.639-.417l-.974-.63c.007.006-.257-.06-.257-.06-.419.073-1.222.618-1.46.99-.032.05-.045.102-.045.158 0 .078.025.157.044.233l.043.2.046.12c.467.484 1.646 1.289 2.802 1.916l1.34.716 2.05 1.13c0 .01.35.28.35.28l.241.14s.029.017.044.028c-.546.37-3.73 2.514-3.73 2.514l-1.962 1.311c-.185.128-.96.478-1.13.547-.425.175-.747.443-.88.734L0 15.969l.053.076.15.115c-.007 0 .2.132.2.132l.217.15.204.032c.345.014.856-.185 1.81-.607.878-.391 3.26-1.842 4.279-2.46l.434-.263c.18.014.376-.139.554-.273.204-.164.648-.44.919-.56.008-.003.162-.09.309-.172l-.003.118c.046 3.144.224 5.429.565 7.19l.005.03.033.071c.168.249.358.994.528 1.65l.388 1.313c.008.015.109.122.109.122.221.152.897.414 1.347.36l.112-.014.072-.16c.038-.196.051-.389.051-.601 0-.24-.017-.503-.038-.827l-.03-.473c-.143-2.195-.286-5.363-.286-7.47v-.167c.37.233 1.986 1.261 1.986 1.261 2.751 1.8 6.906 4.52 9.418 5.24.13.04.268.009.364-.084.004-.005.386-.25.386-.25l.073-.03c.144-.07.24-.314.257-.58 2.116-.107 5.068-.93 6.648-2.933.612-.778.886-1.729.886-2.542 0-.668-.183-1.244-.517-1.56l-.277-.178z"></path></svg>'],
@@ -401,64 +396,70 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, currentChec
       <label for="${bankName}">${bankImg}${bankName}</label>
     `;
 
+    let currentCheckedBank;
+    let currentCheckedBankCode;
+    let currentCheckedBankdigits;
+
     bankSelectOptionEl.addEventListener('click', () => {
+      // 같은 name 속성을 가진 라디오 버튼들을 가져오고, 그 길이를 구한다.
       const bankListLength = document.getElementsByName('bankList').length;
+      // 그 중 checked된 요소의 value값을 currentCheckedBank 변수에 저장한다.
       for(let i = 0; i<bankListLength; i++){
         if (document.getElementsByName('bankList')[i].checked){
           currentCheckedBank = document.getElementsByName('bankList')[i].value;
         }
       }
+      // 전체 은행 목록 중 현제 체크된 은행을 찾아 해당 은행의 코드와 계좌번호 양식을 저장한다.
       for(let i = 0; i < Object.keys(bankAccount).length; i++) {
         if(bankAccount[Object.keys(bankAccount)[i]].name === currentCheckedBank){
           currentCheckedBankCode = bankAccount[Object.keys(bankAccount)[i]].code;
           currentCheckedBankdigits = bankAccount[Object.keys(bankAccount)[i]].digits;
         }
       }
-  
-      console.log(currentCheckedBankCode);
-      console.log(currentCheckedBankdigits);
+    })
+    // 계좌번호, 이름, 전화번호의 input 요소를 변수에 저장
+    const accountNumberInputEl = document.querySelector('.accountAdd__accountNumber__input');
+    const nameInputEl = document.querySelector('.accountAdd__name__input');
+    const phoneNumberInputEl = document.querySelector('.accountAdd__phoneNumber__input');
 
-      const accountNumberInputEl = document.querySelector('.accountAdd__accountNumber__input');
-      const nameInputEl = document.querySelector('.accountAdd__name__input');
-      const phoneNumberInputEl = document.querySelector('.accountAdd__phoneNumber__input');
+    // 앞의 input 요소의 value값을 저장할 변수들
+    let accountNumber;
+    let phoneNumber;
+    let signature;
 
-      let accountNumber;
-      let phoneNumber;
-      let signature;
+    accountNumberInputEl.addEventListener('input', () => {
+      accountNumber = accountNumberInputEl.value;
+      console.log(isNaN(Number(accountNumber)));
+      console.log(accountNumber)
+      console.log(typeof(accountNumber));
+    })
 
-      accountNumberInputEl.addEventListener('input', () => {
-        accountNumber = accountNumberInputEl.value;
-        console.log(accountNumber)
-      })
+    nameInputEl.addEventListener('input', () => {
+      if(profile.displayName === nameInputEl.value){
+        signature = true;
+      }
+      else { signature = false; }
+      console.log(signature);
+    })
 
-      nameInputEl.addEventListener('input', () => {
-        if(profile.displayName === nameInputEl.value){
-          signature = true;
+    phoneNumberInputEl.addEventListener('input', () => {
+      phoneNumber = phoneNumberInputEl.value;
+      console.log(phoneNumber);
+    })
+    
+    const doneButtonEl = document.querySelector('.doneButton');
+    doneButtonEl.addEventListener('click', async () => {
+      const addAccountData = {
+        userToken: userToken._token,
+        account: {
+          bankCode: currentCheckedBankCode,
+          accountNumber,
+          phoneNumber,
+          signature
         }
-        else { signature = false; }
-        console.log(signature);
-      })
-
-      phoneNumberInputEl.addEventListener('input', () => {
-        phoneNumber = phoneNumberInputEl.value;
-        console.log(phoneNumber);
-      })
-      
-      const doneButtonEl = document.querySelector('.doneButton');
-      doneButtonEl.addEventListener('click', async () => {
-        const addAccountData = {
-          userToken: userToken._token,
-          account: {
-            bankCode: currentCheckedBankCode,
-            accountNumber,
-            phoneNumber,
-            signature
-          }
-        };
-        console.log(addAccountData);
-        await addBankAccount(addAccountData);
-        router.navigate("/mypage/account");
-      })
+      };
+      await addBankAccount(addAccountData);
+      router.navigate("/mypage/account");
     })
 
     return bankSelectOptionEl;
