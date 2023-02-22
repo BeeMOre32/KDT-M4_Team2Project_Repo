@@ -581,7 +581,6 @@ export async function renderMyProfile() {
           <input type="file" accept="image/gif,image/jpeg,image/png" />
           <span class="edit-btn edit">이미지 변경</span>
         </label>
-        <!-- <span class="edit-btn del">이미지 삭제</span> -->
       </div>
       <div class="edit-name">
         <div class="info">
@@ -651,12 +650,17 @@ export async function renderMyProfile() {
         <button class="common-btn back hidden">확인</button>
       </div>
     </div>
-  `;
 
+    <div class="loader-bg hidden">
+      <div class="loader-box">
+        <span class="loading"></span>
+        <span class="loading-text">loading...</span>
+      </div>
+    </div>
+  `;
 
   const profileImgEl = document.querySelector('.my-profile .profile-image');
   const inputImgEl = document.querySelector('.my-profile .edit-image--btns input[type="file"]');
-  // const delImgEl = document.querySelector('.my-profile .edit-image--btns .edit-btn.del');
   const displayNameEl = document.querySelector('.my-profile .edit-name .info .info--display-name');
   const cancelEditNameEl = document.querySelector('.my-profile .edit-name .edit-cancel--btn');
   const editNameEl = document.querySelector('.my-profile .edit-name .edit-name--btn');
@@ -671,6 +675,7 @@ export async function renderMyProfile() {
   const modalIconEl = modalBgEl.querySelector(".icon");
   const modalH2El = modalBgEl.querySelector("h2");
   const modalBtn = modalBgEl.querySelector(".common-btn.back");
+  const loaderBg = document.querySelector('.loader-bg');
 
   const headerProfileImgEl = document.querySelector('header .side .login .icon');
   const headerDisplayNameEl = document.querySelector('header .side .login .login--text');
@@ -696,6 +701,8 @@ export async function renderMyProfile() {
 
   // 이미지 변경
   inputImgEl.addEventListener('change', (e) => {
+    loaderBg.classList.remove('hidden');
+
     const file = e.target.files[0]
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -707,25 +714,15 @@ export async function renderMyProfile() {
       profileImgEl.style.backgroundImage = `url(${evt.target.result})`;
       headerProfileImgEl.style.backgroundImage = `url(${evt.target.result})`;
       sideProfileImgEl.style.backgroundImage = `url(${evt.target.result})`;
+      loaderBg.classList.add('hidden');
     })
   })
-
-  // 이미지 삭제
-  // delImgEl.addEventListener('click', async () => {    
-  //   data.user.profileImgBase64 = "";
-  //   console.log(data)
-  //   const res = await userInfoEdit(data);
-  //   console.log(res)
-
-  //   profileImgEl.style.backgroundImage = 'url(https://www.tutor-guru.com/assets/images/tasker/noprofile.png)';
-  //   sideProfileImgEl.style.backgroundImage = '';
-  //   headerProfileImgEl.style.backgroundImage = '';
-  //   headerProfileImgEl.classList.remove('profile')
-  // })
 
   editNameEl.addEventListener('click', async () => {
     //이름변경완료
     if (editNameEl.classList.contains('confirm')) {
+      loaderBg.classList.remove('hidden');
+
       data.user.displayName = displayNameEl.textContent;
       console.log(data)
       await userInfoEdit(data);
@@ -745,6 +742,7 @@ export async function renderMyProfile() {
         </span>
         `;
       
+      loaderBg.classList.add('hidden');
       return;
     }
     

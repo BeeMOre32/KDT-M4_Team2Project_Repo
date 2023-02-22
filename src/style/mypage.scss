@@ -594,5 +594,33 @@ $gap: 10px;
     }//.modal
   }//.modal-bg
 
+  .loader-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(3px);
+    z-index: 5;
+
+    .loader-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      padding: 20px;
+      width: 140px;
+      height: 140px;
+      text-align: center;
+      background-color: #fff;
+      border-radius: 50%;
+      box-shadow: 1px 1px 10px rgba(0,0,0,0.07);
+    }
+  }//.loader-bg
+
   }//article
 }//.mypage

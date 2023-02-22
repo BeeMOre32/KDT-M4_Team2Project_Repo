@@ -25,8 +25,13 @@ export async function CommonFn() {
     router.navigate(event.target.dataset.href);
   });
 
-  loginEl.addEventListener('click', (e) => {
+  loginEl.addEventListener('click', async () => {
     if(userAuth === null) {
+      // const data = {
+      //   email : "test@test.com",
+      //   password : "12341234",
+      //   displayName : "user",
+      // }
       router.navigate('/login');
       return;
     }

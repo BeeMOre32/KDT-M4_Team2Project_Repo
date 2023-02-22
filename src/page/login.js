@@ -69,7 +69,7 @@ labels.forEach(label => {
 const loginBtnEl = document.querySelector("#loginBtn")
 loginBtnEl.addEventListener("click", async () => {
   const email = "abc@gmail.com"
-  const password = "123456789"
+  const password = "12341234"
 
   const data = { email, password }
 
