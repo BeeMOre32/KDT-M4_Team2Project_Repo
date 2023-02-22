@@ -334,27 +334,29 @@ export async function renderAccountAdd(){
     articleEl.innerHTML = /*html*/`
       <h1>계좌 연결</h1>
         <div class="accountAdd">
-          <div class="accountAdd__bank">
-            <div class="accountAdd__bank__title">은행 선택</div>
+          <div class="accountAdd__bank accountAdd--box">
+            <div class="accountAdd__bank__title accountAdd--box--header">은행 선택</div>
             <div class="accountAdd__bank__list">
 
             </div>
           </div>
-          <div class="accountAdd__accountNumber">
-            <div class="accountAdd__accountNumber__title">계좌번호</div>
+          <div class="accountAdd__accountNumber accountAdd--box">
+            <div class="accountAdd__accountNumber__title accountAdd--box--header">계좌번호</div>
             <input type="text" class="accountAdd__accountNumber__input" placeholder="공백 없이 '-'을 제외하고 입력해 주세요!">
           </div>
-          <div class="accountAdd__name">
-            <div class="accountAdd__name__title">이름</div>
-            <input type="text" class="accountAdd__name__input">
+          <div class="accountAdd__name accountAdd--box">
+            <div class="accountAdd__name__title accountAdd--box--header">이름</div>
+            <input type="text" class="accountAdd__name__input" placeholder="공백없이 입력해 주세요.">
           </div>
-          <div class="accountAdd__phoneNumber">
-            <div class="accountAdd__phoneNumber__title">전화번호</div>
+          <div class="accountAdd__phoneNumber accountAdd--box">
+            <div class="accountAdd__phoneNumber__title accountAdd--box--header">전화번호</div>
             <input type="text" class="accountAdd__phoneNumber__input" placeholder="공백 없이 '-'을 제외하고 입력해 주세요!">
           </div>
+          <div class="accountAdd__btns">
+            <button type="button" class="red-btn cancelButton">취소</button>
+            <button type="button" class="darken-btn doneButton">완료</button>
+          </div>
         </div>
-        <button type="button" class="red-btn cancelButton">취소</button>
-        <button type="button" class="darken-btn doneButton">완료</button>
     `
 
     app.append(sectionEl);
@@ -426,7 +428,7 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
         }
       }
       console.log(currentCheckedBankCode);
-
+      // 확인버튼을 클릭했을 때
       const doneButtonEl = document.querySelector('.doneButton');
       doneButtonEl.addEventListener('click', async () => {
         if(preventDoubleClickB) return
@@ -508,7 +510,7 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
       phoneNumber = phoneNumberInputEl.value;
       console.log(phoneNumber);
     })
-    
+
     return bankSelectOptionEl;
   })
 
