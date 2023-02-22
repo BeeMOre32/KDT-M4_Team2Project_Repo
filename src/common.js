@@ -39,12 +39,13 @@ export async function CommonFn() {
     console.log(res)
 
     if(res) {
+      localStorage.removeItem('userToken');
       loginIconEl.classList.remove('profile');
       loginTextEl.textContent = "Login";
       loginIconEl.style.backgroundImage = "";
 
-      window.location.reload()
       userAuth = await afterLoadUserAuth();
+      window.location.reload()
     }
   });
 
