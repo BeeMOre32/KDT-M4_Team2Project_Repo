@@ -1,51 +1,64 @@
 @import "./common.scss";
 @import "./variables.scss";
+#app {
+  .title {
+    @include title-font();
+    text-align: center;
+    margin: 40px 0;
+  }
 
-.cart-container {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid red;
-  .item-container {
-    border: 1px solid red;
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid red;
-      margin: 10px;
-      img {
-        height: 100px;
-        width: 100px;
-        margin: 5px;
+  .cart-container {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid $dark-gray;
+    font-size: 16px;
+    .item-container {
+      margin: 0 30px;
+      width: 70%;
+
+      .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        margin: 10px;
+        img {
+          height: 100px;
+          width: 100px;
+          margin: 10px;
+        }
+        div {
+          margin: 10px;
+          padding: 10px;
+        }
+        .delete {
+          margin: 10px;
+          padding: 10px;
+          background-color: pink;
+          border-radius: 5px;
+        }
       }
+    }
+    .price-container {
+      background-color: #fafafa;
+      padding: 20px;
+      margin: 0 30px;
+      text-align: center;
       div {
-        margin: 5px;
-        border: 1px solid red;
+        display: flex;
+        justify-content: space-between;
+
+        padding: 10px;
+        &.total-price {
+          border-top: 1px solid #ddd;
+        }
       }
-      button {
-        margin: 5px;
-        background-color: pink;
+      .order {
+        display: flex;
+        justify-content: center;
+        background-color: $primary-color;
         border-radius: 5px;
       }
-    }
-  }
-  .price-container {
-    width: 200px;
-    height: 180px;
-    border: 1px solid red;
-    margin: 15px;
-    text-align: center;
-    div {
-      display: flex;
-      justify-content: space-between;
-      //border: 1px solid red;
-      padding: 5px;
-    }
-    .order-button {
-      border: 1px solid red;
-      display: flex;
-      justify-content: center;
-      background-color: rgb(120, 79, 159);
     }
   }
 }

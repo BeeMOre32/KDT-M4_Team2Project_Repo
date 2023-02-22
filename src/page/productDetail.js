@@ -130,7 +130,8 @@ export async function renderDetailPage(params) {
     if (typeof userAuth === "string") {
       return router.navigate("/login");
     }
-    ProductCartIn(params.data.productId);
+    const { id, price, thumbnail, title } = product;
+    ProductCartIn(id, price, thumbnail, title);
   });
 
   modalCartBtnEl.addEventListener("click", () => {
@@ -229,15 +230,15 @@ export async function renderDetailPage(params) {
     loadingEl.remove();
   }
 
-  function ProductCartIn(id) {
+  function ProductCartIn(id, price, thumbnail, title) {
     const savedCart = getItems("cart");
     console.log(savedCart);
-    if (savedCart.includes(id)) {
+    if (savedCart.find((item) => item.id === id)) {
       showModal(true);
       return;
     }
 
-    savedCart.push(id);
+    savedCart.push({ id, price, thumbnail, title, num: 1 });
     setItems("cart", savedCart);
 
     const cartCountEl = document.querySelector(".cart-count");

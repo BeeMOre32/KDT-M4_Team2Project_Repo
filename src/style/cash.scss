@@ -4,75 +4,91 @@
 .cash-container {
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
+  border-top: 1px solid $dark-gray;
+  font-size: 16px;
   .info-container {
-    border: 1px solid red;
+    margin: 0 30px;
+
     .item-container {
-      border: 1px solid red;
+      border: 1px solid #ddd;
+      padding: 10px;
+      .tag {
+        margin: 12px;
+      }
       .item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border: 1px solid red;
         margin: 10px;
         img {
           height: 100px;
           width: 100px;
-          margin: 5px;
+          margin: 10px;
         }
         div {
-          margin: 5px;
-          border: 1px solid red;
+          margin: 10px;
+          padding: 10px;
         }
       }
     }
     .userInfo-container {
-      border: 1px solid red;
-      h2 {
-        text-align: center;
-        border: 1px solid red;
+      padding: 10px;
+      border: 1px solid #ddd;
+      div {
+        display: flex;
+        justify-content: space-between;
+        margin: 6px;
+      }
+      .tag {
+        margin: 12px;
       }
     }
     .card-container {
-      border: 1px solid red;
-      text-align: center;
+      border: 1px solid #ddd;
+      padding: 10px;
+      .tag {
+        margin: 12px;
+      }
       .swiper {
-        margin: 10px;
-        border: 1px solid red;
+        margin: 20px;
+        border: 1px solid #ddd;
         .swiper-wrapper {
           display: flex;
           justify-content: space-between;
-          //border: 1px solid red;
           margin: 10px;
           .swiper-slide {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid red;
+            border: 1px solid #ddd;
             padding: 10px;
+            div {
+              padding: 5px;
+            }
           }
         }
       }
     }
   }
   .price-container {
-    width: 200px;
-    height: 180px;
-    border: 1px solid red;
-    margin: 15px;
+    background-color: #fafafa;
+    padding: 18px;
+    margin: 0 20px;
     text-align: center;
     div {
       display: flex;
       justify-content: space-between;
-      //border: 1px solid red;
-      padding: 5px;
+      padding: 10px;
+      &.total-price {
+        border-top: 1px solid #ddd;
+      }
     }
     .cash-button {
-      border: 1px solid red;
       display: flex;
       justify-content: center;
-      background-color: rgb(120, 79, 159);
+      background-color: $primary-color;
+      border-radius: 5px;
     }
   }
 }

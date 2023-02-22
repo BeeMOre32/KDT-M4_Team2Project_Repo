@@ -1,51 +1,61 @@
 import "../style/cart.scss";
-import { getProductDetail } from "../utilities/productapi";
 import { router } from "../route";
+
+import { getProductDetail } from "../utilities/productapi";
 import { getItems, setItems } from "../utilities/local";
 
 export function renderCart() {
   const app = document.querySelector("#app");
-  app.innerHTML = ``;
-  const element = document.createElement("div");
-  element.setAttribute("class", "cart-container");
   let state = getItems("cart");
-
+  console.log(state);
   const render = async function () {
-    const items = document.createElement("ul");
-    items.setAttribute("class", "item-container");
-    const totalPrice = document.createElement("div");
-    totalPrice.setAttribute("class", "price-container");
+    app.classList.add("loading");
+    app.innerHTML = /*HTML*/ `
+      <div class="title">장바구니</div>
+      <div class="cart-container">
+        <ul class="item-container"></ul>
+        <div class="price-container"></div>
+      </div>
+    `;
+
     let sum = 0;
-    let itemArr = await Promise.all(
-      state.map(async (cartId) => {
-        let cart = await getProductDetail(cartId);
-        sum += cart.price;
-        let item = document.createElement("li");
-        item.setAttribute("class", "item");
-        item.setAttribute("id", `${cart.id}`);
-        item.innerHTML = /*HTML*/ `
-              <img src=${cart.thumbnail}>
-              <div class="name">${cart.title}</div>
-              <div class="count">${"1"}개</div>
-              <div class="price">${cart.price}원</div>
+    let itemArr = state.map(({ id, price, thumbnail, title, num }, idx) => {
+      sum += price * num;
+      let item = document.createElement("li");
+      item.setAttribute("class", "item");
+      item.setAttribute("id", `${id}`);
+      item.innerHTML = /*HTML*/ `
+              <img src=${thumbnail} alt=${thumbnail}>
+              <div class="name">${title}</div>
+              <div class="count">
+                <button class="minus">-<button>
+                <div>${num}</div>
+                <button class="plus">+</button>
+              </div>
+              <div class="price">${price}원</div>
               <button class="delete">취소</button>
             `;
-        const deleteButton = item.querySelector(".delete");
-        deleteButton.addEventListener("click", (e) => {
-          const id = e.target.closest("li").getAttribute("id");
-          const idx = state.findIndex((cartId) => cartId === id);
+      item.addEventListener("click", (e) => {
+        if (e.target.classList.contains("minus")) {
+          if (state[idx].num <= 1) return;
+          state[idx].num--;
+          console.log(state);
+        } else if (e.target.classList.contains("plus")) {
+          state[idx].num++;
+        } else if (e.target.classList.contains("delete")) {
           state.splice(idx, 1);
-          setState(state);
-        });
+        }
+        setState(state);
+      });
 
-        return item;
-      })
-    );
-    items.innerHTML = "";
+      return item;
+    });
+
+    const items = document.querySelector(".item-container");
     items.append(...itemArr);
-
+    const totalPrice = document.querySelector(".price-container");
     totalPrice.innerHTML = /*HTML*/ `
-      <div class="price">
+      <div class="order-price">
         <div>총 주문 금액:</div>
         <div>${sum}원</div>
       </div>
@@ -57,11 +67,11 @@ export function renderCart() {
         <div>배송비:</div>
         <div>0원</div>
       </div>
-      <div class="price">
+      <div class="total-price">
         <div>총 결제 금액:</div>
         <div>${sum}원</div>
       </div>
-      <div class="order-button">
+      <div class="order">
         <button class="cart-button">주문하기</button>
       </div>
       
@@ -70,11 +80,9 @@ export function renderCart() {
     cartButton.addEventListener("click", () => {
       router.navigate("/product/checkout");
     });
-
-    element.innerHTML = "";
-    element.append(items, totalPrice);
-    app.append(element);
+    app.classList.remove("loading");
   };
+
   render();
 
   const setState = function (nextState) {
