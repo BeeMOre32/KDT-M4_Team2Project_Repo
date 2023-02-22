@@ -1,9 +1,8 @@
 import "../style/login.scss"
 import { logIn } from "../utilities/userapi"
+import { userToken } from "../utilities/userAuth"
+import { router } from "../../src/route"
 
-// 초기세팅
-// const loginTemplate = <div id="login"></div>
-// document.querySelector('.app').innerHTML = loginTemplate
 
 export function renderLoginPage() {
   const app = document.querySelector("#app")
@@ -28,7 +27,7 @@ export function renderLoginPage() {
         </div>
 
         <div class="form-control">
-          <input type="PASSWORD" required>
+          <input type="PASSWORD" id="password" required>
         <label>
           <span>P</span>
           <span>A</span>
@@ -41,7 +40,7 @@ export function renderLoginPage() {
         </label>   
       </div>
 
-        <button type ="button" id="loginBtn" class="btn" onclick="checkTheEmail()">Login</button>
+        <button type ="button" id="loginBtn" class="btn" >Login</button>
           
         <p class="text">Don't have an account? <a data-navigo href="/signup">Resister</a></p>
       </form>
@@ -53,10 +52,6 @@ const leftEl = document.querySelector('.left')
 const imgEl = document.createElement('img')
 leftEl.append(imgEl)
 
-// // LOGO
-// const rightEl = document.querySelector('.right')
-// rightEl.prepend(imgEl)
-
 // INPUT ANIMATION
 const labels = document.querySelectorAll('.form-control label')
 labels.forEach(label => {
@@ -67,34 +62,39 @@ labels.forEach(label => {
 })
 
 // LOGIN API
+const emailEl  = document.querySelector('#email')
+const pwEl = document.querySelector('#password')
 const loginBtnEl = document.querySelector("#loginBtn")
 loginBtnEl.addEventListener("click", async () => {
-  const email = "abc@gmail.com"
-  const password = "123456789"
-
+  const email = emailEl.value
+  const password = pwEl.value
   const data = { email, password }
-
-  const res = await logIn(data)
-  userToken.token = res.accessToken
-  console.log(res)
+  const res = await logIn(data)  
+  
+  if(res.accessToken) {
+    userToken.token = res.accessToken
+    router.navigate('/')
+    return
+  } else if (!res.accessToken) {
+    const message = "이메일과 비밀번호를 확인해주세요"
+    window.alert(message)
+  } else {
+    checkTheEmail()
+  }
 });
 
-// 이메일 유효성 검사 함수
-checkTheEmail = function ()                
-  {                                           
-	const emailEl = document.querySelector("#email")
+// 이메일 유효성 검사
+function checkTheEmail()  {                                 
 	if (!emailEl.value) {             
 		alert("이메일을 입력하세요!")
-		emailEl.focus()
-		return
-	}              
-	else   {          
-		if(!CheckEmail(emailEl.value))	{
+		return emailEl.focus()
+		
+	}else if (!CheckEmail(emailEl.value) ) {       
 			alert("이메일 형식이 잘못되었습니다")
-			emailEl.focus()
-			return;
-		}                
-	}                      
+			return emailEl.focus()
+	} else {
+    return
+  }                      
 }    
 
 // CHECK EMAIL FORM
@@ -106,8 +106,5 @@ function CheckEmail(str){
   else {                       
     return true         
   }                            
-} 
-
-
 }
-
+}

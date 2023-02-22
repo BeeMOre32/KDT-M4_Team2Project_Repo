@@ -3,25 +3,23 @@
 #app {
 		.login-container {
 			display: grid;
-			// align-items: center;
 			justify-content: center;
-			position: relative;
-			grid-template-columns: 75% 0;
+			grid-template-columns: 1300px 0;
 			padding: 5%;
 			.left {
+				position: relative;
 				img {
 					background-image: url("../images/main_visual1.jpg");
 					background-size: cover;
-				
 					border-radius: 5px;
 					width: 80%;
 					height: 500px;
 				}
 				.img-text {
 					position: absolute;
-					top: 73%;
-					left: 28%;
-					width: 100%;
+					top: 75%;
+					left: 10%;
+					width: auto;
 					color: #E4E6E8;
 					font-weight: bold;
 					font-size: 50px;

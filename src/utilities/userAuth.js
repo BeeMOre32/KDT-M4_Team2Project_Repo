@@ -49,6 +49,7 @@ export async function afterLoadUserAuth() {
  */
 function checkUserAuth(authResult) {
   if (typeof authResult === "object") {
+    console.log(authResult)
     return authResult;
   } else {
     return null; //"유효하지 않은 토큰입니다. 로그인을 해주세요.";

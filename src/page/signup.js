@@ -89,6 +89,7 @@ labels.forEach(label => {
         .map((letter, index)=> `<span style="transition-delay:${index * 50}ms"> ${letter} </span>`)
         .join('')
 })
+
 // SIGNUP API
 const emailEl = document.querySelector("#email")
 const passwordEl = document.querySelector("#password")
