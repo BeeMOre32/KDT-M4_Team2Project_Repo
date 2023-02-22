@@ -371,6 +371,11 @@ export async function renderAccountAdd(){
       }
     }
 
+    const cancelButtonEl = document.querySelector('.cancelButton');
+    cancelButtonEl.addEventListener('click', () => {
+      router.navigate("/mypage/account");
+    })
+
     const loading = document.querySelector(".skeleton");
     loading.remove();
   }
@@ -400,23 +405,80 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
     let currentCheckedBankCode;
     let currentCheckedBankdigits;
 
+    let preventDoubleClickA = false;
+    let preventDoubleClickB = false;
     bankSelectOptionEl.addEventListener('click', () => {
+      if(preventDoubleClickA) return
+      preventDoubleClickA = true;
       // 같은 name 속성을 가진 라디오 버튼들을 가져오고, 그 길이를 구한다.
       const bankListLength = document.getElementsByName('bankList').length;
       // 그 중 checked된 요소의 value값을 currentCheckedBank 변수에 저장한다.
-      for(let i = 0; i<bankListLength; i++){
+        for(let i = 0; i<bankListLength; i++){
         if (document.getElementsByName('bankList')[i].checked){
           currentCheckedBank = document.getElementsByName('bankList')[i].value;
         }
       }
       // 전체 은행 목록 중 현제 체크된 은행을 찾아 해당 은행의 코드와 계좌번호 양식을 저장한다.
-      for(let i = 0; i < Object.keys(bankAccount).length; i++) {
+        for(let i = 0; i < Object.keys(bankAccount).length; i++) {
         if(bankAccount[Object.keys(bankAccount)[i]].name === currentCheckedBank){
           currentCheckedBankCode = bankAccount[Object.keys(bankAccount)[i]].code;
           currentCheckedBankdigits = bankAccount[Object.keys(bankAccount)[i]].digits;
         }
       }
+      console.log(currentCheckedBankCode);
+
+      const doneButtonEl = document.querySelector('.doneButton');
+      doneButtonEl.addEventListener('click', async () => {
+        if(preventDoubleClickB) return
+        preventDoubleClickB = true;
+        if((!currentCheckedBankCode) || (!accountNumber) || (!phoneNumber) || (!nameInputValue)){
+          console.log(currentCheckedBankCode)
+          console.log(accountNumber)
+          console.log(phoneNumber)
+          console.log(nameInputValue)
+          window.alert('내용을 모두 입력해 주세요!');
+          preventDoubleClickB = false;
+        }
+        else{
+          accountNumber = accountNumber.replace(/(\s*)/g, "");
+          phoneNumber = phoneNumber.replace(/(\s*)/g, "");
+          if((isNaN(Number(accountNumber))) || (isNaN(Number(phoneNumber))) || !signature){
+            window.alert('내용을 다시 검토해 주세요!');
+            preventDoubleClickB = false;
+          }
+          else{
+            const accountLength = currentCheckedBankdigits.reduce((acc, cur) => acc + cur);
+            const phoneNumberLength = 3+4+4;
+            console.log(accountLength);
+            console.log(phoneNumberLength);
+            console.log(accountNumber.length);
+            console.log(phoneNumber.length);
+            if((accountNumber.length !== accountLength) || (phoneNumber.length !== phoneNumberLength)){
+              window.alert('길이가 맞지 않습니다.')
+              preventDoubleClickB = false;
+            }
+            else {
+              window.alert('계좌가 등록되었습니다!')
+              const addAccountData = {
+                userToken: userToken._token,
+                account: {
+                  bankCode: currentCheckedBankCode,
+                  accountNumber,
+                  phoneNumber,
+                  signature
+                }
+              };
+              console.log(addAccountData);
+              await addBankAccount(addAccountData);
+              router.navigate("/mypage/account");
+              preventDoubleClickB = false;
+            }
+          }
+        }
+      })
+      preventDoubleClickA = false;
     })
+
     // 계좌번호, 이름, 전화번호의 input 요소를 변수에 저장
     const accountNumberInputEl = document.querySelector('.accountAdd__accountNumber__input');
     const nameInputEl = document.querySelector('.accountAdd__name__input');
@@ -429,13 +491,13 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
 
     accountNumberInputEl.addEventListener('input', () => {
       accountNumber = accountNumberInputEl.value;
-      console.log(isNaN(Number(accountNumber)));
-      console.log(accountNumber)
-      console.log(typeof(accountNumber));
+      console.log(accountNumber);
     })
 
+    let nameInputValue;
     nameInputEl.addEventListener('input', () => {
-      if(profile.displayName === nameInputEl.value){
+      nameInputValue = nameInputEl.value;
+      if(profile.displayName === nameInputValue){
         signature = true;
       }
       else { signature = false; }
@@ -447,21 +509,6 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
       console.log(phoneNumber);
     })
     
-    const doneButtonEl = document.querySelector('.doneButton');
-    doneButtonEl.addEventListener('click', async () => {
-      const addAccountData = {
-        userToken: userToken._token,
-        account: {
-          bankCode: currentCheckedBankCode,
-          accountNumber,
-          phoneNumber,
-          signature
-        }
-      };
-      await addBankAccount(addAccountData);
-      router.navigate("/mypage/account");
-    })
-
     return bankSelectOptionEl;
   })
 
