@@ -1,5 +1,7 @@
 import "../style/signup.scss"
 import { signIn } from "../utilities/userapi"
+import { userToken } from "../utilities/userAuth"
+import { router } from "../../src/route"
 
 export function renderSignUp(){
   const app = document.querySelector("#app")
@@ -11,15 +13,6 @@ export function renderSignUp(){
       <h3>Tell us about yourself</h3>
       <h5>Enter your details to proceed futher</h5>
       <form>
-      <!-- PROFILE IMAGE -->
-      <!-- <div class="button">
-        <label for="chooseFile">
-            👉 CLICK HERE! 👈
-        </label>
-    </div> -->
-    <!-- <input type="file" id="chooseFile" name="chooseFile" accept="image/*" > -->
-
-      <!-- DETAIL -->
         <div class="form-control">
           <input type="text" id="email" required>
           <label>
@@ -33,6 +26,7 @@ export function renderSignUp(){
 
         <div class="form-control">
           <input type="PASSWORD" id="password" required>
+          
         <label>
           <span>P</span>
           <span>A</span>
@@ -42,12 +36,12 @@ export function renderSignUp(){
           <span>O</span>
           <span>R</span>
           <span>D</span>
-          
-        </label>   
+        </label>
+        <div class="pwtext">At least 8 characters</div>   
       </div>
 
       <div class="form-control">
-          <input type="PASSWORD" id="confirm-pw"required>
+          <input type="PASSWORD" id="confirm-pw" required>
         <label>
           <span>C</span>
           <span>o</span>
@@ -64,7 +58,8 @@ export function renderSignUp(){
           <span>o</span>
           <span>r</span>
           <span>d</span>
-        </label>   
+        </label>
+        <div class="confirm-pwtext">Password is different</div>
       </div>
 
       <div class="form-control">
@@ -76,7 +71,7 @@ export function renderSignUp(){
           <span>E</span>
         </label>   
       </div>
-        <button class="btn" id="signUpBtn" type="button" onclick="checkingIdPw()">Continue</button>
+        <button class="btn" id="signUpBtn" type="button" >Continue</button>
       </form>
     </div>
   `
@@ -93,69 +88,50 @@ labels.forEach(label => {
 // SIGNUP API
 const emailEl = document.querySelector("#email")
 const passwordEl = document.querySelector("#password")
+const confirmPwEl = document.querySelector("#confirm-pw")
 const displayNamesEl = document.querySelector("#displayNames")
 const signUpBtnEl = document.querySelector("#signUpBtn")
-const pwEl =document.querySelector("#password")
-const confirmPwEl = document.querySelector("#confirm-pw")
-const pwValid = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[~,!,@,#,$,*,(,),=,+,_,.,|]).*$/
+const characterLengthEl = document.querySelector(".pwtext")
+const comparePasswordEl = document.querySelector(".confirm-pwtext")
+
 
 signUpBtnEl.addEventListener('click', async () => {
+  const email = emailEl.value
+  const password = passwordEl.value
+ 
+  const username = displayNamesEl.value
+  const data ={ email: email, password: password, displayName:username}
+  const res = await signIn(data)
+  
+  console.log(data)
 
-const email = emailEl.value
-const password = passwordEl.value
-const username = displayNamesEl.value
-const data ={ email: email, password: password, displayNames: username}
-console.log(email,password,username)
-const res = await signIn(data)
-userToken.token = res.accessToken
-console.log(res)
+  if(res.accessToken) {
+    userToken.token = res.accessToken
+    return router.navigate('/')
+    
+  } else if (!res.accessToken) {
+    
+    return window.alert(`${res}`)
+  } 
 })
 
-// CHECKING ID, PASSWORD
-checkingIdPw = function () {
+// AT LEAST 8 CHARACTERS
+passwordEl.addEventListener('input', (event)=>{
+  const pw = event.target.value
+  const isValidCaracterLength = (pw) => {
+    return pw.length >= 8
+  }
+  isValidCaracterLength(pw) ? characterLengthEl.classList.add('active') : characterLengthEl.classList.remove('active')
+})
 
-  if (!emailEl.value) {             
-		alert("이메일을 입력하세요!")
-		emailEl.focus()
-		return
-	}              
-	else   {          
-		if(!CheckEmail(emailEl.value))	{
-			alert("이메일 형식이 잘못되었습니다")
-			emailEl.focus()
-			return;
-		}                
-	}    
-  
-  if(pwEl.length < 6) {
-          alert('입력한 글자가 6글자 이상이어야 합니다.');
-          return false;
-      }
-      
-      if( pwEl != confirmPwEl ) {
-        alert("비밀번호불일치");
-        return false;
-      } else{
-        alert("비밀번호가 일치합니다");
-        return true;
-      }
-}
-
-// 이메일 유효성 검사 함수
-checkTheEmail = function ()                
-  {                                           
-	const emailEl = document.querySelector("#email")
-                  
-}    
-
-// CHECK EMAIL FORM
-function CheckEmail(str){ 
-  const reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/
-  if(!reg_email.test(str)) {                            
-    return false         
-  }                            
-  else {                       
-    return true         
-  }                            
-} 
+// PASSWORD IS DIFFERENT
+confirmPwEl.addEventListener('input', ()=>{
+  const password = passwordEl.value
+  const confirmPw = confirmPwEl.value
+  if (password !== confirmPw){
+    return comparePasswordEl.classList.add('active')
+  }else {
+    return  comparePasswordEl.classList.remove('active')
+  }
+})
 }

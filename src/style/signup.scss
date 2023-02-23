@@ -2,28 +2,25 @@
 
 #app {
 .signup-container {
-	padding: 5%;
-	display: grid;
 .right {
 	display: grid;
 	grid-template-rows: 0.5fr auto;
+	gap: 5%;
 	align-items: center;
 	justify-content: center;
-	// margin: 50px 0 0 0;
 	h3 {
 		text-align: center;
-		padding: 10px;
+		padding-top: 50px;
 	}
 	h5 {
 		color: #E4E6E8;
 		text-align: center;
 		font-size: 10px;
-		margin-bottom: 40px;
 	}
 	a {
 		text-decoration: none;
 		color: #E4E6E8;
-	}//a
+	}
 
 .btn {
 	cursor: pointer;
@@ -45,6 +42,29 @@
 .text {
 	margin-top: 30px;
 }
+
+.pwtext {
+	color: #E4E6E8;
+	font-size: 13px;
+	font-weight: bold;
+}
+.pwtext.active {
+		color: #52E037;
+	}
+.confirm-pwtext {
+	color: #E4E6E8;
+	font-size: 13px;
+	font-weight: bold;
+}
+.confirm-pwtext.success {
+	color: #52E037;
+}
+.confirm-pwtext.active {
+	color:red;
+}
+
+
+
 .form-control {
 	position: relative;
 	margin: 20px 0 20px 0;
@@ -58,7 +78,6 @@
 		font-size: 15px;
 		color: black;
 	}
-	
 	label {
 		color: #E4E6E8;
 		position: absolute;
@@ -69,13 +88,11 @@
 			font-size: 12px;
 			min-width: 2px;
 			transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-				}//span
-			}//label
-		}//form-control
+				}
+			}
+		}
 	}
-}//container
-
-
+}
 .form-control input:focus,
 .form-control input:valid {
 	outline: 0;
