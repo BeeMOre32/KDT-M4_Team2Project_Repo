@@ -114,6 +114,7 @@ button {
 }
 
 /* 헤더, 푸터 */
+
 #wrap {
   font-family: "Pretendard-Regular";
   padding-top: 70px;
@@ -364,4 +365,9 @@ button {
   to {
     background-position-x: -20%;
   }
+}
+
+
+#app {
+  // min-height: calc(100vh - 202px);
 }

@@ -15,7 +15,7 @@ export async function renderSearchPage(params) {
       
       <div class="search--result">
         <div class="sort--toggle">
-          <span class="option title">이름순</span>
+          <span class="option title--sort">이름순</span>
           <span class="material-symbols-outlined">
             arrow_drop_down
           </span>
@@ -37,12 +37,12 @@ export async function renderSearchPage(params) {
   renderMatchItems(searchText, matchItems);
 
   sortEl.addEventListener('click',() => {
-    if(sortEl.classList.contains('title')) {
-      sortEl.classList.remove('title')
+    if(sortEl.classList.contains('title--sort')) {
+      sortEl.classList.remove('title--sort')
       sortEl.textContent = '가격순';
       sortOption = 'price';
     } else {
-      sortEl.classList.add('title');
+      sortEl.classList.add('title--sort');
       sortEl.textContent = '이름순';
       sortOption = 'title';
     }
@@ -104,7 +104,9 @@ function renderMatchItems(searchText, matchItems) {
     })
   })
 
-  loadingEl.remove();
+  if(loadingEl){
+    loadingEl.remove();
+  }
 }
 
 function CategoryToKorean(category) {

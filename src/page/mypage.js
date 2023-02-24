@@ -566,12 +566,8 @@ export async function renderMyProfile() {
 
   app.append(handlingLoading(true));
 
-  let loginState; 
-  try {
-    loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
-  } catch (err) {
-    console.log(err.message);
-  }
+  let loginState = await afterLoadUserAuth(); // 토큰 유무/유효 검증
+
   if (!loginState) {
     const loading = document.querySelector(".skeleton");
     loading.remove();
@@ -739,6 +735,7 @@ export async function renderMyProfile() {
       profileImgEl.style.backgroundImage = `url(${evt.target.result})`;
       headerProfileImgEl.style.backgroundImage = `url(${evt.target.result})`;
       sideProfileImgEl.style.backgroundImage = `url(${evt.target.result})`;
+      headerProfileImgEl.classList.add('profile');
       loaderBg.classList.add('hidden');
     })
   })
@@ -791,8 +788,15 @@ export async function renderMyProfile() {
     displayNameEl.textContent = userName;
   })
 
-  // 이름길이 제한
-  displayNameEl.addEventListener('input', () => {
+  // 이름길이 제한, 기타동작방지
+  displayNameEl.addEventListener('input', e => {
+    if(!e.data && e.inputType === 'insertText' || e.inputType === 'insertParagraph') {
+      e.target.innerHTML = e.target.innerHTML.replaceAll(/<.+>/g,'');
+    }
+    if(e.data = ' ') {
+      e.target.innerHTML = e.target.innerHTML.replaceAll(/&.+;/g,'');
+    }
+
     if(displayNameEl.textContent.length >= 20) {
       displayNameEl.textContent = displayNameEl.textContent.slice(0,-1);
 
