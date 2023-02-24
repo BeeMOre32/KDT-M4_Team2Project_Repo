@@ -1,117 +1,120 @@
 @import "./common", "./variables";
 
 #app {
-		.login-container {
-			display: grid;
-			justify-content: center;
-			grid-template-columns: 1300px 0;
-			padding: 5%;
-			.left {
-				position: relative;
-				img {
-					background-image: url("../images/main_visual1.jpg");
-					background-size: cover;
-					border-radius: 5px;
-					width: 80%;
-					height: 500px;
-				}
-				.img-text {
-					position: absolute;
-					top: 75%;
-					left: 10%;
-					width: auto;
-					color: #E4E6E8;
-					font-weight: bold;
-					font-size: 50px;
-				}
-			}
-			.right {
-				display: grid;
-				grid-template-rows: 0.5fr 0.1fr;
-				align-items: center;
-				justify-content: center;
-				transform:translateX(-30px); 
-				h3 {
-					text-align: center;
-				}
+  .login-container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1300px 0;
+    padding: 5%;
+    .left {
+      .img {
+        background-image: url("../images/main_visual1.jpg");
+        background-size: cover;
+        border-radius: 5px;
+        width: 80%;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+      .img-text {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+        width: 100%;
+        height: fit-content;
+        color: #e4e6e8;
+        font-weight: bold;
+        font-size: 50px;
+      }
+    }
+    .right {
+      display: grid;
+      grid-template-rows: 0.5fr 0.1fr;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(-30px);
+      h3 {
+        text-align: center;
+      }
 
-				h5 {
-					color: #E4E6E8;
-					text-align: center;
-					font-size: 10px;
-					margin-bottom: 40px;
-				}
+      h5 {
+        color: #e4e6e8;
+        text-align: center;
+        font-size: 10px;
+        margin-bottom: 40px;
+      }
 
-				a {
-					text-decoration: none;
-					color: #E4E6E8;
-				}
+      a {
+        text-decoration: none;
+        color: #e4e6e8;
+      }
 
-				.btn {
-					cursor: pointer;
-					display: inline-block;
-					width: 100%;
-					background: #E4E6E8;
-					border: 0;
-					padding: 15px;
-					font-family: inherit;
-					font-size: 16px;
-					border-radius: 5px;
+      .btn {
+        cursor: pointer;
+        display: inline-block;
+        width: 100%;
+        background: #e4e6e8;
+        border: 0;
+        padding: 15px;
+        font-family: inherit;
+        font-size: 16px;
+        border-radius: 5px;
 
-					&:focus {
-						outline: 0;
-					}
+        &:focus {
+          outline: 0;
+        }
 
-					&:active {
-						transform: scale(0.98);
-					}
-				}
+        &:active {
+          transform: scale(0.98);
+        }
+      }
 
-				.text {
-					margin-top: 30px;
-				}
+      .text {
+        margin-top: 30px;
+      }
 
-				.form-control {
-					position: relative;
-					margin: 20px 0 20px 0;
-					width: 300px;
+      .form-control {
+        position: relative;
+        margin: 20px 0 20px 0;
+        width: 300px;
 
-					input {
-						background-color: transparent;
-						border: 2px #E4E6E8 solid;
-						display: block;
-						width: 100%;
-						padding: 10px 20px;
-						font-size: 15px;
-						color: black;
-					}
+        input {
+          background-color: transparent;
+          border: 2px #e4e6e8 solid;
+          display: block;
+          width: 100%;
+          padding: 10px 20px;
+          font-size: 15px;
+          color: black;
+        }
 
-					label {
-						color: #E4E6E8;
-						position: absolute;
-						top: 15px;
-						left: 20px;
+        label {
+          color: #e4e6e8;
+          position: absolute;
+          top: 15px;
+          left: 20px;
 
-						span {
-							display: inline-block;
-							font-size: 12px;
-							min-width: 2px;
-							transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-						}
-					}
-				}
-			}
-		}
+          span {
+            display: inline-block;
+            font-size: 12px;
+            min-width: 2px;
+            transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          }
+        }
+      }
+    }
+  }
 
-		.form-control input:focus,
-		.form-control input:valid {
-			outline: 0;
-			border-bottom-color: #E4E6E8;
-		}
+  .form-control input:focus,
+  .form-control input:valid {
+    outline: 0;
+    border-bottom-color: #e4e6e8;
+  }
 
-		.form-control input:focus + label span,
-		.form-control input:valid + label span {
-			color: #E4E6E8;
-			transform: translateY(-30px);
-			}
-		}
+  .form-control input:focus + label span,
+  .form-control input:valid + label span {
+    color: #e4e6e8;
+    transform: translateY(-30px);
+  }
+}
