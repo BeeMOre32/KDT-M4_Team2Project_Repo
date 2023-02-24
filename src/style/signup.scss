@@ -4,18 +4,20 @@
 .signup-container {
 .right {
 	display: grid;
-	grid-template-rows: 0.5fr auto;
-	gap: 5%;
+	grid-template-rows: 100px 30px 400px; 
+	
 	align-items: center;
 	justify-content: center;
+	
 	h3 {
 		text-align: center;
 		padding-top: 50px;
+		font-size: 25px;
 	}
 	h5 {
 		color: #E4E6E8;
 		text-align: center;
-		font-size: 10px;
+		font-size: 15px;
 	}
 	a {
 		text-decoration: none;
@@ -44,7 +46,7 @@
 }
 .pwtext {
 	color: #E4E6E8;
-	font-size: 13px;
+	font-size: 15px;
 	font-weight: bold;
 }
 .pwtext.active {
@@ -52,7 +54,7 @@
 	}
 .confirm-pwtext {
 	color: #E4E6E8;
-	font-size: 13px;
+	font-size: 15px;
 	font-weight: bold;
 }
 
