@@ -42,7 +42,6 @@
 .text {
 	margin-top: 30px;
 }
-
 .pwtext {
 	color: #E4E6E8;
 	font-size: 13px;
@@ -56,15 +55,10 @@
 	font-size: 13px;
 	font-weight: bold;
 }
-.confirm-pwtext.success {
-	color: #52E037;
-}
+
 .confirm-pwtext.active {
 	color:red;
 }
-
-
-
 .form-control {
 	position: relative;
 	margin: 20px 0 20px 0;
