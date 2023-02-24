@@ -48,7 +48,12 @@ export async function getBuyList(access) {
     method: "GET",
     headers: { authorization: access },
   });
-  return await res.json();
+  const data = await res.json();
+  if (typeof data === "string") {
+    return [];
+  } else {
+    return data;
+  }
 }
 
 /**
