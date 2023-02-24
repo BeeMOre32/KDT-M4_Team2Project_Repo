@@ -42,6 +42,11 @@ $soft-green: #2ecc71;
   }
 }
 
+*::selection {
+  background-color: $light-gray;
+  color: $dark-gray;
+}
+
 body {
   @include scroll-custom();
 }
@@ -209,7 +214,7 @@ button {
           display: flex;
           align-items: center;
           position: relative;
-          
+
           .login--text {
             display: flex;
             align-items: center;
@@ -225,7 +230,7 @@ button {
             font-size: 26px;
             border-radius: 50%;
             // border: 1px solid #000;
-            
+
             &.profile {
               width: 29px;
               height: 29px;
@@ -242,57 +247,56 @@ button {
             left: 0px;
             background-color: #fff;
             border: 1px solid $light-gray;
-            box-shadow: 1px 1px 10px rgba(0,0,0,0.07);
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.07);
             border-radius: 4px;
-            
+
             li {
               padding: 10px 28px;
               white-space: nowrap;
               border-bottom: 1px solid $light-gray;
-              transition: background-color .2s;
+              transition: background-color 0.2s;
               cursor: pointer;
-              
+
               &.logout {
                 color: $soft-red;
                 border-bottom: none;
               }
-              
+
               &:hover {
                 background-color: $blue-white;
               }
             }
           }
-        }//.login
-      }//.side
-    }//.container
-  }//header
-
+        } //.login
+      } //.side
+    } //.container
+  } //header
 
   footer {
     background-color: $blue-white;
     border-top: 1px solid $light-gray;
-    
+
     .footer--container {
       display: flex;
       justify-content: space-between;
       margin: 0 auto;
       padding: 40px 80px;
       width: $max-width;
-  
+
       .footer--left {
         .logo {
           @include flex-center();
           font-size: 20px;
           font-weight: 600;
           text-align: center;
-    
+
           img {
             display: block;
             width: 50px;
             height: 50px;
           }
-        }    
-      }//.footer--left
+        }
+      } //.footer--left
 
       address {
         @include flex-center();
@@ -308,10 +312,10 @@ button {
         .team-repo {
           @include flex-center();
 
-          a {            
+          a {
             @include flex-center();
             gap: 5px;
-  
+
             svg {
               width: 24px;
               height: 24px;
@@ -322,8 +326,8 @@ button {
         .master {
           @include flex-center();
         }
-      }//.footer-right
-    }//.footer--container
+      } //.footer-right
+    } //.footer--container
   } //footer
 } //#app
 // 숨김 처리 할때
