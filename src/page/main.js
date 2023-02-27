@@ -133,7 +133,9 @@ export function renderMainPage() {
       });
     });
   
-    loadingEl.remove();
+    if(loadingEl) {
+      loadingEl.remove();
+    }
   }
   
   async function renderRecommendItems(item, isReverse) {

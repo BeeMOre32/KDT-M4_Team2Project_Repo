@@ -9,7 +9,7 @@ import {
   getCurrentAccount,
   addBankAccount
 } from "../utilities/userapi";
-import { getBuyList, getBuyDetail, getProductDetail } from "../utilities/productapi";
+import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
 
 export async function renderOrderHisory() {
   const app = document.querySelector("#app");
@@ -55,7 +55,7 @@ export async function renderOrderHisory() {
 }
 
 async function renderBuyList(contentEl, buyList) {
-  const buyItemEl = buyList.map((item) => {
+  const buyItemEl = buyList.map( (item) => {
     const buyItemLiEl = document.createElement("a");
     buyItemLiEl.className = "buyItemLi";
 
@@ -113,6 +113,9 @@ async function renderBuyList(contentEl, buyList) {
       btnsEl.append(isCanceledBtnEl, doneBtnEl);
 
       summaryEl.append(btnsEl);
+
+      cancelDoneBtns(isCanceledBtnEl, doneBtnEl, item.detailId);
+
     } else {
       const repurchaseBtnEl = document.createElement("button");
       repurchaseBtnEl.setAttribute('type', 'button');
@@ -132,6 +135,18 @@ async function renderBuyList(contentEl, buyList) {
     return buyItemLiEl;
   });
   contentEl.append(...buyItemEl);
+}
+
+// 주문취소, 구매확정 버튼 이벤트 함수
+async function cancelDoneBtns(isCanceledBtnEl, doneBtnEl, detailId) {
+  isCanceledBtnEl.addEventListener('click', async () => {
+    await cancelBuy(userToken._token, detailId);
+    location.reload();
+  })
+  doneBtnEl.addEventListener('click', async () => {
+    await confirmBuy(userToken._token, detailId);
+    location.reload();
+  })
 }
 
 export async function renderOrderDetail(detailId) {
@@ -224,6 +239,8 @@ export async function renderOrderDetail(detailId) {
       btnsEl.append(isCanceledBtnEl, doneBtnEl);
 
       productInfoBtns.append(btnsEl);
+
+      cancelDoneBtns(isCanceledBtnEl, doneBtnEl, orderDetail.detailId);
     } else {
       const repurchaseBtnEl = document.createElement("button");
       repurchaseBtnEl.setAttribute('type', 'button');
@@ -245,6 +262,10 @@ export async function renderOrderDetail(detailId) {
         router.navigate(`/product/detail/${productInfoEl.id}`);
       }
     });
+
+    productInfoBtns.addEventListener('click', (event) => {
+      event.stopPropagation();
+    })
 
     const loading = document.querySelector(".skeleton");
     loading.remove();
@@ -300,7 +321,9 @@ export async function renderMyAccount() {
     app.append(sectionEl);
 
     const loading = document.querySelector(".skeleton");
-    loading.remove();
+    if(loading) {
+      loading.remove();
+    }
   }
 }
 
@@ -396,11 +419,11 @@ async function renderAccountListOptionAdd(bankSelectEl, bankAccount, profile){
   ];
 
   const bankListArr = logoList.map( ([bankName, bankImg]) => {
-    const bankSelectOptionEl = document.createElement('div');
+    const bankSelectOptionEl = document.createElement('label');
     bankSelectOptionEl.className = `bankSelectOption`;
     bankSelectOptionEl.innerHTML = /*html*/`
       <input type="radio" id="${bankName}" name="bankList" value="${bankName}">
-      <label for="${bankName}">${bankImg}${bankName}</label>
+      <span>${bankImg}${bankName}</span>
     `;
 
     let currentCheckedBank;
