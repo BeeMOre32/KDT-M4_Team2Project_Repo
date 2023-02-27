@@ -194,8 +194,8 @@ function renderAddProductForm() {
             <div class="tags__show"></div>
           </div>
           <div class="form-input-category">
-            <h3>제품의 종류를 선택해주세요</h3>
             <select  class="tags__type">
+              <option value="" disabled selected>가구 종류</option>
               <option value="chair">의자</option>
               <option value="bed">침대</option>
               <option value="table">테이블</option>
