@@ -97,11 +97,27 @@ async function renderAccountList(contentEl, accountList) {
     accountNumberEl.className = "accountLi__accountNumber";
     accountNumberEl.innerText = item.accountNumber;
 
-    const balanceEl = document.createElement("div");
-    balanceEl.className = "accountLi__balance";
+    const accountMenuBtnEl = document.createElement("div");
+    accountMenuBtnEl.className = "accountLi__menuBtn";
+    accountMenuBtnEl.innerHTML = /*html*/`
+    <span class="material-symbols-outlined">
+      more_vert
+    </span>`
+
+    const accountTagBalanceEl = document.createElement("div");
+    accountTagBalanceEl.className = "accountLi__box";
+
+    const accountTagEl = document.createElement("span");
+    accountTagEl.className = "accountLi__box__tag";
+    accountTagEl.innerText = "간편결제";
+
+    const balanceEl = document.createElement("span");
+    balanceEl.className = "accountLi__box__balance";
     balanceEl.innerText = `${item.balance.toLocaleString()} 원`;
 
-    accountLiEl.append(logoEl, bankNameEl, accountNumberEl, balanceEl);
+    accountTagBalanceEl.append(accountTagEl, balanceEl);
+
+    accountLiEl.append(logoEl, bankNameEl, accountNumberEl, accountMenuBtnEl, accountTagBalanceEl);
 
     return accountLiEl;
   });
