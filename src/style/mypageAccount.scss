@@ -32,11 +32,24 @@
     }
     &__menuBtn {
       grid-column: 3 / 4;
-      grid-row: 1 / 3;
+      grid-row: 1 / 2;
       display: grid;
       justify-self: end;
       align-self: start;
       cursor: pointer;
+    }
+    &__deleteBtn {
+      grid-column: 3 / 4;
+      grid-row: 2 / 3;
+      visibility: hidden;
+      display: grid;
+      justify-self: end;
+      align-self: start;
+      cursor: pointer;
+      border: 1px solid $light-gray;
+      padding: 3px;
+      border-radius: 3px;
+      background-color: $light-gray;
     }
     &__box {
       padding-top: 5px;

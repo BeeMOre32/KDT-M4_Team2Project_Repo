@@ -8,7 +8,8 @@ import {
   userInfoEdit,
   getBankAccount,
   getCurrentAccount,
-  addBankAccount
+  addBankAccount,
+  deleteBankAccount
 } from "../utilities/userapi";
 import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
 import { renderSideMenu, handlingLoading } from "../page/mypageCommon";
@@ -102,7 +103,33 @@ async function renderAccountList(contentEl, accountList) {
     accountMenuBtnEl.innerHTML = /*html*/`
     <span class="material-symbols-outlined">
       more_vert
-    </span>`
+    </span>`;
+
+    const accountDeleteBtnEl = document.createElement("div");
+    accountDeleteBtnEl.className = "accountLi__deleteBtn";
+    accountDeleteBtnEl.innerText = "삭제하기";
+
+    accountMenuBtnEl.addEventListener('click', () => {
+      if(accountDeleteBtnEl.style.visibility === "hidden"){
+        accountDeleteBtnEl.style.visibility = "visible";
+      }
+      else {
+        accountDeleteBtnEl.style.visibility = "hidden";
+      }
+    })
+
+    accountDeleteBtnEl.addEventListener('click', async () => {
+      const data = {
+        userToken: userToken._token,
+        account : {
+          accountId: item.id,
+          signature: true
+        }
+      }
+      const result = await deleteBankAccount(data);
+      console.log(result);
+      location.reload();
+    })
 
     const accountTagBalanceEl = document.createElement("div");
     accountTagBalanceEl.className = "accountLi__box";
@@ -117,7 +144,7 @@ async function renderAccountList(contentEl, accountList) {
 
     accountTagBalanceEl.append(accountTagEl, balanceEl);
 
-    accountLiEl.append(logoEl, bankNameEl, accountNumberEl, accountMenuBtnEl, accountTagBalanceEl);
+    accountLiEl.append(logoEl, bankNameEl, accountNumberEl, accountMenuBtnEl, accountDeleteBtnEl, accountTagBalanceEl);
 
     return accountLiEl;
   });
