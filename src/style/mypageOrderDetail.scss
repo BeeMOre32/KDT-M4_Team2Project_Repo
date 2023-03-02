@@ -1,0 +1,111 @@
+@import "common";
+@import "variables.scss";
+@import "mypageCommon.scss";
+
+.header {
+  border-bottom: 1px solid black;
+  font-size: 20px;
+  padding-bottom: $padding;
+}
+.info {
+  margin: $margin;
+}
+.productInfo {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: $productInfoheight repeat(4, calc($productInfoheight/4*3));
+  padding: $padding;
+  align-items: center;
+  @include liStyle;
+  font-size: 16px;
+  gap: $gap;
+  cursor: pointer;
+  .header {
+    grid-column: 1 / 3;
+    height: min-content;
+  }
+  .backgroundimg {
+    @include backgroundImgCenter;
+    background-image: url('../images/product_alternate_img.svg');
+    border-radius: 3px;
+    background-color: #fff;
+  }
+  &__img {
+    grid-row: 2 / 6;
+    display: grid;
+    justify-content: center;
+    height: calc($productInfoheight*3 + $gap*3);
+    width: auto;
+    border-radius: 3px;
+  }
+  &__state {
+    font-weight: 900;
+    color: $primary-color;
+  }
+  &__title {
+    font-weight: 900;
+  }
+  &__price {
+    font-weight: 900;
+  }
+  &__button {
+    display: grid;
+    grid-template-columns: 1fr;
+    &__btns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  }
+}
+.ordererInfo {
+  @include liStyle;
+  padding: $padding;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  span {
+    margin-right: 30px;
+    color: $primary-color;
+  }
+}
+.paymentInfo {
+  @include liStyle;
+  padding: $padding;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 2fr repeat(3, 1fr);
+  align-items: center;
+  gap: 3px;
+  .header {
+    grid-column: 1 / 3;
+    margin-bottom: 10px;
+  }
+  &__way {
+    grid-column: 1 / 3;
+    //margin-bottom: 10px;
+  }
+  &__timePaid {
+    //margin-bottom: 10px;
+    display: grid;
+    align-self: start;
+    color: $primary-color;
+  }
+  &__bankName {
+    display: grid;
+    align-self: end;
+    font-weight: 900;
+  }
+  &__accountNumber {
+    display: grid;
+    align-self: start;
+    color: $primary-color;
+  }
+  &__price {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    display: grid;
+    align-self: end;
+    font-weight: 900;
+  }
+}

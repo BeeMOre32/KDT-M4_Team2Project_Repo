@@ -1,0 +1,130 @@
+@import "common";
+@import "variables.scss";
+
+$img: 100px;
+$profileHeight: 130px;
+$padding: 20px;
+$margin: 5px;
+$productInfoheight: 41px;
+$gap: 10px;
+@mixin backgroundImgCenter {
+  background-color: $light-gray;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+};
+@mixin liStyle {
+  box-shadow: 1px 1px 15px 3px $light-gray;
+  border-radius: 5px;
+  margin-bottom: 20px;
+};
+
+.myPage {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+
+  .leftSideMenu {
+    width: calc($max-width/5);
+    display: flex;
+    flex-direction: column;
+    gap: 180px;
+    padding: $padding;
+    border-right: 1px solid $light-gray;
+    .profile{
+      width: calc($max-width/5 - $padding*2);
+      height: $profileHeight;
+      background-color: $primary-color;
+      border-radius: 5px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &__list{
+        position: absolute;
+        z-index: 1;
+        top: calc($profileHeight - $img/2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        &--img{
+          width: $img;
+          height: $img;
+          border-radius: 50%;
+          background-image: url('../images/profile_alternate_img.svg');
+          @include backgroundImgCenter;
+        }
+        &--displayName{
+          font-size: 24px;
+          font-weight: 900;
+        }
+      }
+    }
+    .myPageBtns {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      .myPageSummary {
+        display: flex;
+        gap: 10px;
+        &__btns {
+          border: 1px solid $light-gray;
+          border-radius: 5px;
+          padding: 10px 15px;
+          width: calc(($max-width/5 - $padding*2 - 10px)/2);
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          font-size: 14px;
+          &__name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          &__value {
+            display: flex;
+            justify-content: end;
+            font-weight: 900;
+            cursor: pointer;
+          }
+        }
+      }
+      &__link {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        &:hover{
+          background-color: $light-gray;
+        }
+      }
+    }
+  }
+  article{
+    padding: $padding;
+    h1 {
+      display: flex;
+      align-items: center;
+      padding: $padding;
+      height: $profileHeight;
+      font-weight: 900;
+      font-size: 32px;
+    }
+
+    >h2 {
+      padding-top: 20px;
+      font-weight: 900;
+      font-size: 32px;
+      text-indent: 20px;
+    }
+    >p {
+      padding: $padding;
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }//article
+}//.mypage

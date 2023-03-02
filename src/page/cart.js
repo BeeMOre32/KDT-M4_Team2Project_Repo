@@ -1,19 +1,20 @@
 import "../style/cart.scss";
 import { router } from "../route";
 
-import { getProductDetail } from "../utilities/productapi";
 import { getItems, setItems } from "../utilities/local";
 
 export function renderCart() {
   const app = document.querySelector("#app");
   let state = getItems("cart");
-  console.log(state);
+
   const render = async function () {
     app.classList.add("loading");
     app.innerHTML = /*HTML*/ `
       <div class="title">장바구니</div>
       <div class="cart-container">
-        <ul class="item-container"></ul>
+        <ul class="item-container">
+          <div class="cart-empty">장바구니가 비어 있습니다.</div>
+        </ul>
         <div class="price-container"></div>
       </div>
     `;
@@ -32,7 +33,7 @@ export function renderCart() {
                 <div>${num}</div>
                 <button class="plus">+</button>
               </div>
-              <div class="price">${price}원</div>
+              <div class="price">${price.toLocaleString()}원</div>
               <button class="delete">취소</button>
             `;
       item.addEventListener("click", (e) => {
@@ -52,12 +53,14 @@ export function renderCart() {
     });
 
     const items = document.querySelector(".item-container");
+    const empty = items.querySelector(".cart-empty");
+    if (!itemArr.length) empty.style.display = "block";
     items.append(...itemArr);
     const totalPrice = document.querySelector(".price-container");
     totalPrice.innerHTML = /*HTML*/ `
       <div class="order-price">
         <div>총 주문 금액:</div>
-        <div>${sum}원</div>
+        <div>${sum.toLocaleString()}원</div>
       </div>
       <div class="discount">
         <div>할인 금액:</div>
@@ -69,7 +72,7 @@ export function renderCart() {
       </div>
       <div class="total-price">
         <div>총 결제 금액:</div>
-        <div>${sum}원</div>
+        <div>${sum.toLocaleString()}원</div>
       </div>
       <div class="order">
         <button class="cart-button">주문하기</button>
@@ -78,7 +81,17 @@ export function renderCart() {
     `;
     const cartButton = totalPrice.querySelector(".cart-button");
     cartButton.addEventListener("click", () => {
-      router.navigate("/product/checkout");
+      if (!state.length) {
+        cartButton.disabled = true;
+      } else {
+        let cashState = getItems("cash");
+        state.forEach((item) => {
+          cashState.push(item);
+        });
+        setItems("cash", cashState);
+        setState([]);
+        router.navigate("/product/checkout");
+      }
     });
     app.classList.remove("loading");
   };

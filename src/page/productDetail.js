@@ -122,7 +122,12 @@ export async function renderDetailPage(params) {
     if (typeof userAuth === "string") {
       return router.navigate("/login");
     } else {
-      //결제페이지로 바로이동
+      const cashState = getItems("cash");
+      const { id, price, thumbnail, title } = product;
+      cashState.push({ id, price, thumbnail, title, num: 1 });
+      setItems("cash", cashState);
+
+      router.navigate("/product/checkout");
     }
   });
 
@@ -150,15 +155,13 @@ export async function renderDetailPage(params) {
     }
   });
 
-  
   (function renderTags() {
-    
-    if(product.tags.length <= 1) {
-      const noTagEl = document.createElement('span');
-      noTagEl.classList.add('no-tag');
-      noTagEl.textContent = '포함된 태그가 없습니다'
+    if (product.tags.length <= 1) {
+      const noTagEl = document.createElement("span");
+      noTagEl.classList.add("no-tag");
+      noTagEl.textContent = "포함된 태그가 없습니다";
       tagsEl.append(noTagEl);
-      
+
       return;
     }
 

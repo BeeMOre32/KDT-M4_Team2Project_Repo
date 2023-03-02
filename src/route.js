@@ -10,7 +10,12 @@ import { renderMasterProductDetailPage } from "./page/masterproductdetail";
 
 import { renderLoginPage } from "./page/login";
 import { renderSignUp } from "./page/signup";
-import { renderOrderHisory, renderMyAccount, renderOrderDetail, renderAccountAdd, renderMyProfile } from "./page/mypage";
+
+import { renderOrderHisory } from "./page/mypageOrder";
+import { renderOrderDetail } from "./page/mypageOrderDetail";
+import { renderMyAccount } from "./page/mypageAccount";
+import { renderAccountAdd } from "./page/mypageAccountAdd";
+import { renderMyProfile } from "./page/mypageProfile";
 
 import { renderSoldProduct } from "./page/mastersoldlist";
 import { renderAllProducts } from "./page/allproducts";
