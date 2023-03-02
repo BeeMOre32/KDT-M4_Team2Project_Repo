@@ -9,19 +9,44 @@
   - ID: abc@gmail.com
   - PW: 12341234
 
+- 테스트용 마스터 페이지 가는 법
+  - `fotter`  부분에 있는 `* master page` 를 클릭하면 마스터 페이지로 이동합니다.
+
 ## 프로젝트 소개
 
 안녕하세요 저희는 2조입니다. 저희가 만든 사이트는 NEXT_FURNITURE 라는 가구 쇼핑몰을 만들었습니다.
 
-> 사이트 전체 모습
+사이트의 전체적인 모습
+> 메인 화면
+> ![example1.png](example/example1.png)
 
+> 제품상세 페이지
+> ![example2.png](example/example2.png)
+
+> 장바구니 페이지
+> ![img.png](example/example3.png)
+
+> 주문 페이지
+> ![img.png](example/example4.png)
+
+> 마이페이지
+> ![img.png](example/example5.png)
+
+> 검색 페이지
+> ![img.png](example/example6.png)
+
+> 로그인 페이지
+> ![img.png](example/example7.png)
+
+> 마스터 페이지
+> ![img.png](example/example8.png)
 ## 프로젝트 멤버 및 작업 목록
 
 |                                    최환석                                     |                                    장화현                                     |                                     조승혜                                     |                                    정윤조                                     |                                     김민기                                     |
 |:--------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|:--------------------------------------------------------------------------:|:---------------------------------------------------------------------------:|
 | <img src="https://avatars.githubusercontent.com/u/97926993?v=4" width=110> | <img src="https://avatars.githubusercontent.com/u/74212632?v=4" width=110> | <img src="https://avatars.githubusercontent.com/u/112364408?v=4" width=110> | <img src="https://avatars.githubusercontent.com/u/89414343?v=4" width=110> | <img src="https://avatars.githubusercontent.com/u/120410962?v=4" width=110> |
 |                    [최환석](https://github.com/BeeMOre32)                     |                   [장화현](https://github.com/janghwahyun/)                   |                     [조승혜](https://github.com/tmdgp0212)                     |                     [정윤조](https://github.com/jyj1111)                      |                     [김민기](https://github.com/minki-dev)                     |
-|              마스터 페이지 <br/> 서버리스 펑션 및 기본 api구조 제작 <br/> 디버깅 담당              |                                  로그인 페이지                                   |               메인페이지 <br/> 검색 페이지 및 필터링 <br/> 페이지 전체적인 레이아웃 수정               |                           장바구니 페이지 <br/> 결제 페이지                            |                            마이 페이지 <br/> 내 계좌 페이지                            |
+|              마스터 페이지 <br/> 서버리스 펑션 및 기본 api구조 제작 <br/> 디버깅 담당              |        로그인 페이지  </br> 회원가입  페이지                              |               메인페이지 <br/> 검색 페이지 및 필터링 <br/> 페이지 전체적인 레이아웃 수정 <br/> 마이 페이지/나의 정보 페이지               |                           장바구니 페이지 <br/> 결제 페이지                            |                            마이 페이지/나의 주문 페이지 <br/>마이 페이지/나의 계좌 페이지                           |
 
 ### 프로젝트의 기능구현 사항
 
@@ -38,11 +63,11 @@
 
 ### 프로젝트 기술 스택
 
-- Basic: HTML, Scss, JavaScript
-- Library: node-fetch, Parcel, Swiper, Navigo, Vercel
-- Deploy: Vercel
-- Bundler: Parcel
-- serverless function: Vercel Serverless Function
+- Basic: `HTML` `Scss` `JavaScript`
+- Library: `node-fetch` `Parcel` `Swiper` `Navigo` `Vercel`
+- Deploy: `Vercel`
+- Bundler: `Parcel`
+- serverless function: `Vercel Serverless Function`
 
 ### 프로젝트 구조
 
@@ -69,7 +94,40 @@
 
 ### 프로젝트 기능
 
-(추가 예정)
+- 회원가입 및 로그인 페이지
+  - 회원가입 페이지에서는 이메일, 비밀번호, 이름, 전화번호를 입력받아 회원가입을 할 수 있습니다.
+  - 로그인 페이지에서는 이메일과 비밀번호를 입력받아 로그인을 할 수 있습니다.
+
+- 메인 페이지
+  - 메인 페이지에서는 추천하는 혹은 새로나온 신규 상품등을 보여줍니다.
+  - 상품을 클릭하면 상품 상세 페이지로 이동합니다.
+
+- 상품 상세 페이지
+  - 상품 상세 페이지에서는 상품의 상세 정보를 보여줍니다.
+  - 상품을 선택하고 그것을 장바구니에 담을 수 있습니다.
+
+- 장바구니 페이지
+  - 장바구니 페이지에서는 장바구니에 담긴 상품들을 보여줍니다.
+  - 상품을 선택하고 그것을 주문할 수 있습니다.
+
+- 주문 페이지
+    - 주문 페이지에서는 주문할 상품들을 보여줍니다.
+    - 주문할 상품들을 선택하고 그것을 결제할 수 있습니다.
+
+- 마이 페이지
+  - 마이 페이지에서는 나의 정보, 나의 주문, 나의 계좌를 확인할 수 있습니다.
+  - 나의 정보에서는 내 정보를 수정할 수 있습니다.
+  - 나의 주문에서는 내가 주문한 내역을 확인할 수 있습니다.
+  - 나의 계좌에서는 내 계좌를 확인할 수 있습니다.
+
+- 검색 페이지
+  - 검색 페이지에서는 상품을 검색할 수 있습니다.
+  - 검색한 상품들을 필터링할 수 있습니다.
+
+- 마스터 페이지
+  - 마스터 페이지에는 직접 상품을 등록하여 상품을 추가할 수 있습니다.
+  - 마스터 페이지에는 직접 상품을 수정 및 삭제할 수 있습니다.
+  - 마스터 페이지에는 현재 거래가 완료 되거나 혹은 거래가 진행 중인 상품을 확인 할 수 있습니다.
 
 ## 프로젝트 실행 방법
 
