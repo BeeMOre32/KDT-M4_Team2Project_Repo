@@ -17,29 +17,31 @@
 안녕하세요 저희는 2조입니다. 저희가 만든 사이트는 NEXT_FURNITURE 라는 가구 쇼핑몰을 만들었습니다.
 
 사이트의 전체적인 모습
-> 메인 화면
-> ![example1.png](example/example1.png)
 
-> 제품상세 페이지
-> ![example2.png](example/example2.png)
+- 메인 화면
+![example1.png](example/example1.png)
 
-> 장바구니 페이지
-> ![img.png](example/example3.png)
+- 제품상세 페이지 
+![example2.png](example/example2.png)
 
-> 주문 페이지
-> ![img.png](example/example4.png)
+- 장바구니 페이지
+![img.png](example/example3.png)
 
-> 마이페이지
-> ![img.png](example/example5.png)
+- 주문 페이지
+ ![img.png](example/example4.png)
 
-> 검색 페이지
-> ![img.png](example/example6.png)
+- 마이페이지
+![img.png](example/example5.png)
 
-> 로그인 페이지
-> ![img.png](example/example7.png)
+- 검색 페이지
+![img.png](example/example6.png)
 
-> 마스터 페이지
-> ![img.png](example/example8.png)
+- 로그인 페이지
+![img.png](example/example7.png)
+
+- 마스터 페이지
+![img.png](example/example8.png)
+- 
 ## 프로젝트 멤버 및 작업 목록
 
 |                                    최환석                                     |                                    장화현                                     |                                     조승혜                                     |                                    정윤조                                     |                                     김민기                                     |
