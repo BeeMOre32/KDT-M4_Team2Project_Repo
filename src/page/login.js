@@ -5,6 +5,8 @@ import { router } from "../../src/route";
 
 export function renderLoginPage() {
   const app = document.querySelector("#app");
+
+  app.append()
   app.innerHTML = /* html */ `
   <div class="login-container">
     <div class="left"></div>
@@ -113,6 +115,7 @@ export function renderLoginPage() {
     } else {
       return true;
     }
-  }
+  }  
 }
+
 export { checkTheEmail, CheckEmail };

@@ -4,7 +4,7 @@ import { userToken } from "../utilities/userAuth"
 import { router } from "../../src/route"
 
 export function renderSignUp(){
-  const app = document.querySelector("#app")
+  const app = document.querySelector("#app") 
   app.innerHTML= /* html */`
   <div class="signup-container">
     <div class="left">    
@@ -98,21 +98,23 @@ const comparePasswordEl = document.querySelector(".confirm-pwtext")
 signUpBtnEl.addEventListener('click', async () => {
   const email = emailEl.value
   const password = passwordEl.value
- 
+  const confirmPw = confirmPwEl.value
   const username = displayNamesEl.value
-  const data ={ email: email, password: password, displayName:username}
+  const data ={ email: email, password: password, displayName:username }
   const res = await signIn(data)
   
   console.log(data)
-
-  if(res.accessToken) {
+  if(!res.accessToken) {
+    return window.alert(`${res}`)
+  } else if (password !== confirmPw){
+    const message = '비밀번호가 다릅니다'
+    return window.alert(message)
+  }else if (res.accessToken) {
     userToken.token = res.accessToken
     return router.navigate('/')
-    
-  } else if (!res.accessToken) {
-    
-    return window.alert(`${res}`)
-  } 
+  } else {
+    return
+  }
 })
 
 // AT LEAST 8 CHARACTERS
