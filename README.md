@@ -136,5 +136,3 @@
 - 먼저 패키지를 모두 다운로드 받습니다 `npm install`
 - 그 다음 vercel Cli를 설치합니다 `npm i -g vercel`
 - vercel Cli를 통해 설정한 후 `vercel dev` 명령어를 통해 실행합니다.
-
-## 프로젝트 작업한 목록
