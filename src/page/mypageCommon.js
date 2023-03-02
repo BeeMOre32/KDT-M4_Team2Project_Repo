@@ -7,33 +7,50 @@ import {
   userInfoEdit,
   getBankAccount,
   getCurrentAccount,
-  addBankAccount
+  addBankAccount,
 } from "../utilities/userapi";
-import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
+import {
+  getBuyList,
+  getBuyDetail,
+  getProductDetail,
+  cancelBuy,
+  confirmBuy,
+} from "../utilities/productapi";
+
+import { getItems, setItems } from "../utilities/local";
 
 // 주문취소, 구매확정 버튼 이벤트 함수
 export async function cancelDoneBtns(isCanceledBtnEl, doneBtnEl, detailId) {
-  isCanceledBtnEl.addEventListener('click', async () => {
+  isCanceledBtnEl.addEventListener("click", async () => {
     await cancelBuy(userToken._token, detailId);
     location.reload();
-  })
-  doneBtnEl.addEventListener('click', async () => {
+  });
+  doneBtnEl.addEventListener("click", async () => {
     await confirmBuy(userToken._token, detailId);
     location.reload();
-  })
+  });
 }
 
 // === 재구매 버튼 이벤트 함수 ===
-export async function repurchaseBtn(repurchaseBtnEl) {
-  repurchaseBtnEl.addEventListener('click', () => {
-    console.log('재구매 성공!');
-    router.navigate('/product/cart');
-  })
+export async function repurchaseBtn(
+  repurchaseBtnEl,
+  id,
+  price,
+  thumbnail,
+  title
+) {
+  repurchaseBtnEl.addEventListener("click", () => {
+    const savedCart = getItems("cart");
+    savedCart.push({ id, price, thumbnail, title, num: 1 });
+    setItems("cart", savedCart);
+    const cartCountEl = document.querySelector(".cart-count");
+    cartCountEl.textContent = savedCart.length;
+    router.navigate("/product/cart");
+  });
 }
 
 // 마이페이지 사이드 메뉴 렌더링 함수
 export async function renderSideMenu(sectionEl, articleEl) {
-
   const profile = await userAuth(userToken._token);
   const buyList = await getBuyList(userToken._token);
   const accountList = await getCurrentAccount(userToken._token);
@@ -97,12 +114,12 @@ export async function renderSideMenu(sectionEl, articleEl) {
   ).length;
 
   // 주문•배송 현황 값 표시
-  const orderDeliveryValueEl = document.createElement('a');
+  const orderDeliveryValueEl = document.createElement("a");
   orderDeliveryValueEl.className = "myPageSummary__btns__value";
-  orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`
-  orderDeliveryValueEl.addEventListener('click', () => {
-    router.navigate('/mypage/order');
-  })
+  orderDeliveryValueEl.innerText = `${orderDeliveryValue} 건`;
+  orderDeliveryValueEl.addEventListener("click", () => {
+    router.navigate("/mypage/order");
+  });
 
   orderDeliveryEl.append(orderDeliveryNameEl, orderDeliveryValueEl);
 
@@ -120,43 +137,43 @@ export async function renderSideMenu(sectionEl, articleEl) {
   const balanceValue = accountList.totalBalance.toLocaleString();
 
   // 나의 잔액 값 표시
-  const balanceValueEl = document.createElement('a');
+  const balanceValueEl = document.createElement("a");
   balanceValueEl.className = "myPageSummary__btns__value";
   balanceValueEl.innerText = `${balanceValue} 원`;
-  balanceValueEl.addEventListener('click', () => {
-    router.navigate('/mypage/account');
-  })
+  balanceValueEl.addEventListener("click", () => {
+    router.navigate("/mypage/account");
+  });
 
   balanceEl.append(balanceNameEl, balanceValueEl);
 
   myPageSummaryEl.append(orderDeliveryEl, balanceEl);
 
   // 나의 주문
-  const myOrderBtnEl = document.createElement('a');
-  myOrderBtnEl.className = 'myPageBtns__link';
-  myOrderBtnEl.innerHTML = 
-  '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
-  myOrderBtnEl.addEventListener('click', () => {
-    router.navigate('/mypage/order');
+  const myOrderBtnEl = document.createElement("a");
+  myOrderBtnEl.className = "myPageBtns__link";
+  myOrderBtnEl.innerHTML =
+    '<span class="material-symbols-outlined">shop_two</span> 나의 주문';
+  myOrderBtnEl.addEventListener("click", () => {
+    router.navigate("/mypage/order");
   });
 
   // 나의 계좌
-  const myAccountBtnEl = document.createElement('a');
-  myAccountBtnEl.className = 'myPageBtns__link';
-  myAccountBtnEl.innerHTML = 
-  '<span class="material-symbols-outlined">payments</span> 나의 계좌';
-  myAccountBtnEl.addEventListener('click', () => {
-    router.navigate('/mypage/account');
+  const myAccountBtnEl = document.createElement("a");
+  myAccountBtnEl.className = "myPageBtns__link";
+  myAccountBtnEl.innerHTML =
+    '<span class="material-symbols-outlined">payments</span> 나의 계좌';
+  myAccountBtnEl.addEventListener("click", () => {
+    router.navigate("/mypage/account");
   });
 
   // 나의 정보
-  const myInfoBtnEl = document.createElement('a');
-  myInfoBtnEl.className = 'myPageBtns__link';
-  myInfoBtnEl.innerHTML = 
-  '<span class="material-symbols-outlined">person</span> 나의 정보';
-  myInfoBtnEl.addEventListener('click', () => {
-    router.navigate('/mypage');
-  })
+  const myInfoBtnEl = document.createElement("a");
+  myInfoBtnEl.className = "myPageBtns__link";
+  myInfoBtnEl.innerHTML =
+    '<span class="material-symbols-outlined">person</span> 나의 정보';
+  myInfoBtnEl.addEventListener("click", () => {
+    router.navigate("/mypage");
+  });
 
   myPageBtnsEl.append(
     myPageSummaryEl,

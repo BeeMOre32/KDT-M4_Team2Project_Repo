@@ -16,6 +16,13 @@
       margin: 0 30px;
       width: 70%;
 
+      .cart-empty {
+        display: none;
+        text-align: center;
+        margin-top: 150px;
+        color: #ddd;
+        font-size: 30px;
+      }
       .item {
         display: flex;
         justify-content: space-between;

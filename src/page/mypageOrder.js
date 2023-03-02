@@ -8,10 +8,21 @@ import {
   userInfoEdit,
   getBankAccount,
   getCurrentAccount,
-  addBankAccount
+  addBankAccount,
 } from "../utilities/userapi";
-import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
-import { renderSideMenu, cancelDoneBtns, repurchaseBtn, handlingLoading } from "../page/mypageCommon";
+import {
+  getBuyList,
+  getBuyDetail,
+  getProductDetail,
+  cancelBuy,
+  confirmBuy,
+} from "../utilities/productapi";
+import {
+  renderSideMenu,
+  cancelDoneBtns,
+  repurchaseBtn,
+  handlingLoading,
+} from "../page/mypageCommon";
 
 export async function renderOrderHisory() {
   const app = document.querySelector("#app");
@@ -57,7 +68,7 @@ export async function renderOrderHisory() {
 }
 
 async function renderBuyList(contentEl, buyList) {
-  const buyItemEl = buyList.map( (item) => {
+  const buyItemEl = buyList.map((item) => {
     const buyItemLiEl = document.createElement("a");
     buyItemLiEl.className = "buyItemLi";
 
@@ -105,14 +116,14 @@ async function renderBuyList(contentEl, buyList) {
       const btnsEl = document.createElement("div");
       btnsEl.className = "buyItemLi__summary__btns";
 
-      const isCanceledBtnEl = document.createElement('button');
-      isCanceledBtnEl.setAttribute('type', 'button');
-      isCanceledBtnEl.textContent = '주문취소';
-      isCanceledBtnEl.classList.add('red-btn');
-      const doneBtnEl = document.createElement('button');
-      doneBtnEl.setAttribute('type', 'button');
-      doneBtnEl.textContent = '구매확정';
-      doneBtnEl.classList.add('darken-btn');
+      const isCanceledBtnEl = document.createElement("button");
+      isCanceledBtnEl.setAttribute("type", "button");
+      isCanceledBtnEl.textContent = "주문취소";
+      isCanceledBtnEl.classList.add("red-btn");
+      const doneBtnEl = document.createElement("button");
+      doneBtnEl.setAttribute("type", "button");
+      doneBtnEl.textContent = "구매확정";
+      doneBtnEl.classList.add("darken-btn");
 
       btnsEl.append(isCanceledBtnEl, doneBtnEl);
 
@@ -120,28 +131,29 @@ async function renderBuyList(contentEl, buyList) {
 
       // 주문취소, 구매확정 버튼 이벤트 함수
       cancelDoneBtns(isCanceledBtnEl, doneBtnEl, item.detailId);
-
     } else {
-      repurchaseBtnEl.setAttribute('type', 'button');
+      repurchaseBtnEl.setAttribute("type", "button");
       repurchaseBtnEl.textContent = "재구매";
       repurchaseBtnEl.classList.add("common-btn");
 
       summaryEl.append(repurchaseBtnEl);
 
       // === 재구매 버튼 이벤트 함수 ===
-      repurchaseBtn(repurchaseBtnEl);
+      const { product } = item;
+      const { id, price, thumbnail, title } = product;
+      repurchaseBtn(repurchaseBtnEl, id, price, thumbnail, title);
     }
 
     buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
 
-    buyItemLiEl.setAttribute('id', `${item.detailId}`);
-    buyItemLiEl.addEventListener('click', () => {
+    buyItemLiEl.setAttribute("id", `${item.detailId}`);
+    buyItemLiEl.addEventListener("click", () => {
       router.navigate(`/mypage/order/detail/${buyItemLiEl.id}`);
-    })
+    });
 
-    repurchaseBtnEl.addEventListener('click', (event) => {
+    repurchaseBtnEl.addEventListener("click", (event) => {
       event.stopPropagation();
-    })
+    });
 
     return buyItemLiEl;
   });
