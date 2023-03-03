@@ -145,7 +145,7 @@ async function renderBuyList(contentEl, buyList) {
 
     buyItemLiEl.append(stateEl, thumbnailEl, summaryEl);
 
-    // navigo를 이용해 mypage/order/detail 페이지로 이동하기 위함 
+    // navigo를 이용한 라우팅 위해 id속성 부여 
     buyItemLiEl.setAttribute("id", `${item.detailId}`);
     buyItemLiEl.addEventListener("click", () => {
       router.navigate(`/mypage/order/detail/${buyItemLiEl.id}`);
