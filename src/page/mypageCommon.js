@@ -1,21 +1,11 @@
 import "../style/mypageCommon.scss";
 import "../style/loadingmypage.scss";
+
 import { router } from "../route";
-import { userToken, afterLoadUserAuth } from "../utilities/userAuth";
-import {
-  userAuth,
-  userInfoEdit,
-  getBankAccount,
-  getCurrentAccount,
-  addBankAccount,
-} from "../utilities/userapi";
-import {
-  getBuyList,
-  getBuyDetail,
-  getProductDetail,
-  cancelBuy,
-  confirmBuy,
-} from "../utilities/productapi";
+
+import { userToken } from "../utilities/userAuth";
+import { userAuth, getCurrentAccount } from "../utilities/userapi";
+import { getBuyList, cancelBuy, confirmBuy } from "../utilities/productapi";
 
 import { getItems, setItems } from "../utilities/local";
 
@@ -31,7 +21,7 @@ export async function cancelDoneBtns(isCanceledBtnEl, doneBtnEl, detailId) {
   });
 }
 
-// === 재구매 버튼 이벤트 함수 ===
+// 재구매 버튼 이벤트 함수
 export async function repurchaseBtn(
   repurchaseBtnEl,
   id,
@@ -187,6 +177,7 @@ export async function renderSideMenu(sectionEl, articleEl) {
   sectionEl.append(leftSideMenuEl, articleEl);
 }
 
+// 스켈레톤 로딩
 export function handlingLoading(account = false) {
   const loadingEl = document.createElement("div");
 
