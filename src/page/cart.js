@@ -2,11 +2,15 @@ import "../style/cart.scss";
 import { router } from "../route";
 
 import { getItems, setItems } from "../utilities/local";
-
-export function renderCart() {
+import { afterLoadUserAuth } from "../utilities/userAuth";
+export async function renderCart() {
   const app = document.querySelector("#app");
-  let state = getItems("cart");
-
+  const userAuth = await afterLoadUserAuth();
+  if (userAuth === null) {
+    alert("로그인 해주세요.");
+    return router.navigate("/login");
+  }
+  let state = getItems("cart").filter((item) => item.email === userAuth.email);
   const render = async function () {
     app.classList.add("loading");
     app.innerHTML = /*HTML*/ `

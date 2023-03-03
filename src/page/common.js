@@ -90,7 +90,7 @@ export async function CommonFn() {
       loginIconEl.classList.remove("profile");
       loginTextEl.textContent = "Login";
       loginIconEl.style.backgroundImage = "";
-
+      cartCountEl.textContent = 0;
       userAuth = await afterLoadUserAuth();
       checkLogin(userAuth);
     }
@@ -130,6 +130,8 @@ export async function CommonFn() {
   }
 
   if (getItems("cart")) {
-    cartCountEl.textContent = getItems("cart").length;
+    cartCountEl.textContent = getItems("cart").filter(
+      (item) => item.email === userAuth.email
+    ).length;
   }
 }
