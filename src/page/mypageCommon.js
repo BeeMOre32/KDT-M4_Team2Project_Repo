@@ -1,12 +1,8 @@
 import "../style/mypageCommon.scss";
 import "../style/loadingmypage.scss";
-
 import { router } from "../route";
-
 import { userToken } from "../utilities/userAuth";
-import { userAuth, getCurrentAccount } from "../utilities/userapi";
-import { getBuyList, cancelBuy, confirmBuy } from "../utilities/productapi";
-
+import { cancelBuy, confirmBuy } from "../utilities/productapi";
 import { getItems, setItems } from "../utilities/local";
 
 // 주문취소, 구매확정 버튼 이벤트 함수
