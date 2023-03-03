@@ -92,6 +92,24 @@ export async function CommonFn() {
     dropdownEl.classList.toggle("hidden");
   });
 
+
+  logoutEl.addEventListener("click", async () => {
+    const res = await userLogOut(userToken.token);
+    console.log(res);
+
+    if (res) {
+      localStorage.removeItem("userToken");
+      loginIconEl.classList.remove("profile");
+      loginTextEl.textContent = "Login";
+      loginIconEl.style.backgroundImage = "";
+      cartCountEl.textContent = 0;
+      userAuth = await afterLoadUserAuth();
+      checkLogin(userAuth);
+    }
+  });
+
+
+
   document.addEventListener("click", (e) => {
     if (e.target.closest(".login")) return;
 
@@ -140,6 +158,8 @@ export async function CommonFn() {
   }
 
   if (getItems("cart")) {
-    cartCountEl.textContent = getItems("cart").length;
+    cartCountEl.textContent = getItems("cart").filter(
+      (item) => item.email === userAuth.email
+    ).length;
   }
 }

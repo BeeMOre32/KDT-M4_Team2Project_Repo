@@ -119,12 +119,14 @@ export async function renderDetailPage(params) {
   })();
 
   buyNowBtnEl.addEventListener("click", () => {
-    if (typeof userAuth === "string") {
+    if (userAuth === null) {
+      alert("로그인 해주세요.");
       return router.navigate("/login");
     } else {
       const cashState = getItems("cash");
+      const { email } = userAuth;
       const { id, price, thumbnail, title } = product;
-      cashState.push({ id, price, thumbnail, title, num: 1 });
+      cashState.push({ email, id, price, thumbnail, title, num: 1 });
       setItems("cash", cashState);
 
       router.navigate("/product/checkout");
@@ -132,9 +134,11 @@ export async function renderDetailPage(params) {
   });
 
   mainCartBtnEl.addEventListener("click", () => {
-    if (typeof userAuth === "string") {
+    if (userAuth === null) {
+      alert("로그인 해주세요.");
       return router.navigate("/login");
     }
+
     const { id, price, thumbnail, title } = product;
     ProductCartIn(id, price, thumbnail, title);
   });
@@ -240,12 +244,12 @@ export async function renderDetailPage(params) {
       showModal(true);
       return;
     }
-
-    savedCart.push({ id, price, thumbnail, title, num: 1 });
+    const { email } = userAuth;
+    savedCart.push({ email, id, price, thumbnail, title, num: 1 });
     setItems("cart", savedCart);
 
     const cartCountEl = document.querySelector(".cart-count");
-    cartCountEl.textContent = savedCart.length;
+    cartCountEl.textContent++;
 
     showModal();
   }
