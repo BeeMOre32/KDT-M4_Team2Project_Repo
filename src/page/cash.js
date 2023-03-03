@@ -18,9 +18,14 @@ export async function renderCash() {
   const userbanks = accountInfo.accounts;
 
   const app = document.querySelector("#app");
-  let state = getItems("cash");
 
   let selectedbankIdx = 0;
+
+  if (userAuth === null) {
+    alert("로그인 해주세요.");
+    return router.navigate("/login");
+  }
+  let state = getItems("cash").filter((item) => item.email === userAuth.email);
 
   const render = async function () {
     app.classList.add("loading");
@@ -74,6 +79,7 @@ export async function renderCash() {
       </div>
     </div>
   `;
+
     let sum = 0;
     let itemArr = await Promise.all(
       state.map(async ({ id, price, thumbnail, title, num }) => {

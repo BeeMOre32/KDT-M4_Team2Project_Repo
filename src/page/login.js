@@ -12,7 +12,7 @@ export function renderLoginPage() {
     <div class="left"></div>
       <div class="right">
       <h3>Sign In to your account</h3>
-      <h5>Enter your details to proceed futher</h5>
+      <h5>Enter your details to proceed further</h5>
       <form>
         <div class="form-control">
           <input type="text" id="email" required>
@@ -75,6 +75,7 @@ export function renderLoginPage() {
   const emailEl = document.querySelector("#email");
   const pwEl = document.querySelector("#password");
   const loginBtnEl = document.querySelector("#loginBtn");
+
   loginBtnEl.addEventListener("click", async () => {
     const email = emailEl.value;
     const password = pwEl.value;
@@ -92,6 +93,12 @@ export function renderLoginPage() {
       checkTheEmail();
     }
   });
+
+  window.addEventListener('keydown',(e) => {
+    if(e.key === 'Enter') {
+      loginBtnEl.click();
+    }
+  })
 
   // 이메일 유효성 검사
   function checkTheEmail() {
