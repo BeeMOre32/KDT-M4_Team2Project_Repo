@@ -8,7 +8,8 @@ import {
   userInfoEdit,
   getBankAccount,
   getCurrentAccount,
-  addBankAccount
+  addBankAccount,
+  deleteBankAccount
 } from "../utilities/userapi";
 import { getBuyList, getBuyDetail, getProductDetail, cancelBuy, confirmBuy } from "../utilities/productapi";
 import { renderSideMenu, handlingLoading } from "../page/mypageCommon";
@@ -97,11 +98,53 @@ async function renderAccountList(contentEl, accountList) {
     accountNumberEl.className = "accountLi__accountNumber";
     accountNumberEl.innerText = item.accountNumber;
 
-    const balanceEl = document.createElement("div");
-    balanceEl.className = "accountLi__balance";
+    const accountMenuBtnEl = document.createElement("div");
+    accountMenuBtnEl.className = "accountLi__menuBtn";
+    accountMenuBtnEl.innerHTML = /*html*/`
+    <span class="material-symbols-outlined">
+      more_vert
+    </span>`;
+
+    const accountDeleteBtnEl = document.createElement("div");
+    accountDeleteBtnEl.className = "accountLi__deleteBtn";
+    accountDeleteBtnEl.innerText = "삭제하기";
+
+    accountMenuBtnEl.addEventListener('click', () => {
+      if(accountDeleteBtnEl.style.visibility === "hidden"){
+        accountDeleteBtnEl.style.visibility = "visible";
+      }
+      else {
+        accountDeleteBtnEl.style.visibility = "hidden";
+      }
+    })
+
+    accountDeleteBtnEl.addEventListener('click', async () => {
+      const data = {
+        userToken: userToken._token,
+        account : {
+          accountId: item.id,
+          signature: true
+        }
+      }
+      const result = await deleteBankAccount(data);
+      console.log(result);
+      location.reload();
+    })
+
+    const accountTagBalanceEl = document.createElement("div");
+    accountTagBalanceEl.className = "accountLi__box";
+
+    const accountTagEl = document.createElement("span");
+    accountTagEl.className = "accountLi__box__tag";
+    accountTagEl.innerText = "간편결제";
+
+    const balanceEl = document.createElement("span");
+    balanceEl.className = "accountLi__box__balance";
     balanceEl.innerText = `${item.balance.toLocaleString()} 원`;
 
-    accountLiEl.append(logoEl, bankNameEl, accountNumberEl, balanceEl);
+    accountTagBalanceEl.append(accountTagEl, balanceEl);
+
+    accountLiEl.append(logoEl, bankNameEl, accountNumberEl, accountMenuBtnEl, accountDeleteBtnEl, accountTagBalanceEl);
 
     return accountLiEl;
   });
