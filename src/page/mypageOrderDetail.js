@@ -45,8 +45,10 @@ export async function renderOrderDetail(detailId) {
     const articleEl = document.createElement("article");
 
     const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
 
-    await renderSideMenu(sectionEl, articleEl);
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const orderDetail = await getBuyDetail(userToken._token, detailId);
     const localTime = new Date(orderDetail.timePaid);

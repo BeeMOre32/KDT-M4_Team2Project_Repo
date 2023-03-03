@@ -40,10 +40,7 @@ export async function repurchaseBtn(
 }
 
 // 마이페이지 사이드 메뉴 렌더링 함수
-export async function renderSideMenu(sectionEl, articleEl) {
-  const profile = await userAuth(userToken._token);
-  const buyList = await getBuyList(userToken._token);
-  const accountList = await getCurrentAccount(userToken._token);
+export async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountList) {
 
   // 화면 왼쪽 사이드 메뉴 생성(프로필, 주문•배송, 잔액, 주문, 계좌, 정보)
   const leftSideMenuEl = document.createElement("nav");
