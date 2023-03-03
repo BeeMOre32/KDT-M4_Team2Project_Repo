@@ -4,6 +4,11 @@
 
 .buyList {
   margin: $margin;
+  .emptyBuyList {
+    @include flex-center;
+    font-size: 32px;
+    margin-top: 200px;
+  }
   .buyItemLi {
     display: grid;
     grid-template-columns: 1fr 4fr;

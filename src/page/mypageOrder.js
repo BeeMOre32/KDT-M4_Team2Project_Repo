@@ -43,12 +43,20 @@ export async function renderOrderHisory() {
     const contentEl = document.createElement("div");
     contentEl.className = "buyList";
 
-    const buyListSort = buyList.sort(
-      (a, b) => new Date(b.timePaid) - new Date(a.timePaid)
-    );
-
-    // 나의 주문 리스트 렌더링 함수
-    await renderBuyList(contentEl, buyListSort);
+    // 주문내역이 아직 없는 경우와 있는 경우를 구분하여 화면 출력
+    if(buyList.length === 0){
+      contentEl.innerHTML = /*html*/`
+      <span class="emptyBuyList">아직 주문 내역이 없습니다!</span>
+      `
+    }
+    else{
+      const buyListSort = buyList.sort(
+        (a, b) => new Date(b.timePaid) - new Date(a.timePaid)
+      );
+  
+      // 나의 주문 리스트 렌더링 함수
+      await renderBuyList(contentEl, buyListSort);
+    }
 
     articleEl.append(titleEl, contentEl);
 
