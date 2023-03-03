@@ -45,7 +45,6 @@ export function renderMainPage() {
     </section>
   `
 
-  const ulEl = document.querySelector('nav ul');
   const visualSliderEl = document.querySelector('.visual .swiper');
   const newItemSliderEl = document.querySelector('.new-items .swiper');
   const newItemSliderWrapperEl = newItemSliderEl.querySelector('.swiper-wrapper');
@@ -60,20 +59,6 @@ export function renderMainPage() {
   }, {
     threshold: 0.35
   })
-
-  ulEl.addEventListener('mouseover', e => {
-    Array.from(ulEl.children).forEach((liEl) => {
-      liEl.firstChild.classList.add('blur');
-    });
-
-    e.target.classList.remove('blur')
-  });
-
-  ulEl.addEventListener('mouseout', () => {
-    Array.from(ulEl.children).forEach((liEl) => {
-      liEl.firstChild.classList.remove('blur');
-    });
-  });
 
   ;(
     async function () {
@@ -129,7 +114,7 @@ export function renderMainPage() {
       descEl.append(tagsEl, itemNameEl, priceEl);
 
       divEl.addEventListener('click', () => {
-        routeDetailPage(item.id)
+        router.navigate(`/product/detail/${item.id}`);
       });
     });
   
@@ -173,12 +158,8 @@ export function renderMainPage() {
     loadingEl ? loadingEl.remove() : null;
 
     seeMoreBtnEl.addEventListener('click', () => {
-      routeDetailPage(item.id)
+      router.navigate(`/product/detail/${item.id}`);
     });
-  }
-
-  function routeDetailPage(id) {
-    router.navigate(`/product/detail/${id}`);
   }
 
   new Swiper(visualSliderEl, {

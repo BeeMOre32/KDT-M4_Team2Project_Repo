@@ -25,12 +25,14 @@ export async function repurchaseBtn(
   thumbnail,
   title
 ) {
+  const Auth = await afterLoadUserAuth();
   repurchaseBtnEl.addEventListener("click", () => {
     const savedCart = getItems("cart");
-    savedCart.push({ id, price, thumbnail, title, num: 1 });
+    const { email } = Auth;
+    savedCart.push({ email, id, price, thumbnail, title, num: 1 });
     setItems("cart", savedCart);
     const cartCountEl = document.querySelector(".cart-count");
-    cartCountEl.textContent = savedCart.length;
+    cartCountEl.textContent++;
     router.navigate("/product/cart");
   });
 }
