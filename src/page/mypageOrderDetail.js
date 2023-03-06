@@ -3,19 +3,11 @@ import "../style/mypageOrderDetail.scss";
 import "../style/loadingmypage.scss";
 import { router } from "../route";
 import { userToken, afterLoadUserAuth } from "../utilities/userAuth";
-import {
-  userAuth,
-  userInfoEdit,
-  getBankAccount,
-  getCurrentAccount,
-  addBankAccount,
-} from "../utilities/userapi";
+import { userAuth, getCurrentAccount } from "../utilities/userapi";
 import {
   getBuyList,
   getBuyDetail,
-  getProductDetail,
-  cancelBuy,
-  confirmBuy,
+  getProductDetail
 } from "../utilities/productapi";
 import {
   renderSideMenu,
@@ -42,15 +34,17 @@ export async function renderOrderDetail(detailId) {
   } else {
     const sectionEl = document.createElement("section");
     sectionEl.className = "myPage";
+
     const articleEl = document.createElement("article");
 
     const profile = await userAuth(userToken._token);
+    const buyList = await getBuyList(userToken._token);
+    const accountList = await getCurrentAccount(userToken._token);
 
-    await renderSideMenu(sectionEl, articleEl);
+    await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
 
     const orderDetail = await getBuyDetail(userToken._token, detailId);
     const localTime = new Date(orderDetail.timePaid);
-    console.log(orderDetail);
 
     articleEl.innerHTML = /*html*/ `
     <h1>주문 상세</h1>
@@ -88,6 +82,7 @@ export async function renderOrderDetail(detailId) {
     `;
     app.append(sectionEl);
 
+    // 현재 주문 상태 표시
     const stateEl = document.querySelector(".productInfo__state");
     if (orderDetail.isCanceled === false && orderDetail.done === false) {
       stateEl.textContent = "[결제완료]";
@@ -99,11 +94,12 @@ export async function renderOrderDetail(detailId) {
     }
 
     const thumbnailEl = document.querySelector(".img");
-
+    // 제품 사진이 존재하지 않는 경우 해당 img태그를 제거하여 배경으로 설정해 둔 대체이미지가 나타날 수 있도록 함
     if (!orderDetail.product.thumbnail) {
       thumbnailEl.remove();
     }
 
+    // 버튼 레이아웃 용도
     const productInfoBtns = document.querySelector(".productInfo__button");
 
     if (orderDetail.isCanceled === false && orderDetail.done === false) {
@@ -114,6 +110,7 @@ export async function renderOrderDetail(detailId) {
       isCanceledBtnEl.setAttribute("type", "button");
       isCanceledBtnEl.textContent = "주문취소";
       isCanceledBtnEl.classList.add("red-btn");
+
       const doneBtnEl = document.createElement("button");
       doneBtnEl.setAttribute("type", "button");
       doneBtnEl.textContent = "구매확정";
@@ -133,7 +130,7 @@ export async function renderOrderDetail(detailId) {
 
       productInfoBtns.append(repurchaseBtnEl);
 
-      // === 재구매 버튼 이벤트 함수 ===
+      // 재구매 버튼 이벤트 함수
       const { product } = orderDetail;
       const { id, price, thumbnail, title } = product;
       repurchaseBtn(repurchaseBtnEl, id, price, thumbnail, title);
@@ -143,6 +140,8 @@ export async function renderOrderDetail(detailId) {
     const isCurrentTrue = await getProductDetail(orderDetail.product.productId);
 
     const productInfoEl = document.querySelector(".productInfo");
+
+    // navigo를 이용한 라우팅 위해 id속성 부여
     productInfoEl.setAttribute("id", `${orderDetail.product.productId}`);
     productInfoEl.addEventListener("click", () => {
       if (isCurrentTrue === "유효한 제품 정보가 아닙니다.") {
@@ -153,7 +152,7 @@ export async function renderOrderDetail(detailId) {
     });
 
     // (제품정보 페이지 이동) 이벤트 capturing 막기 위함
-    // -> 버튼은 다른 동작필요
+    // 주문취소, 구매확정, 재구매 버튼은 다른 동작필요
     productInfoBtns.addEventListener("click", (event) => {
       event.stopPropagation();
     });
