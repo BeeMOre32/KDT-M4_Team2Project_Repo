@@ -35,6 +35,9 @@ export async function renderMyProfile() {
   }
 
   const profile = await userAuth(userToken._token);
+  const buyList = await getBuyList(userToken._token);
+  const accountList = await getCurrentAccount(userToken._token);
+
   const sectionEl = document.createElement("section");
   const articleEl = document.createElement("article");
   
@@ -42,7 +45,7 @@ export async function renderMyProfile() {
 
   app.append(sectionEl);  
 
-  await renderSideMenu(sectionEl, articleEl);
+  await renderSideMenu(sectionEl, articleEl, profile, buyList, accountList);
   
   
   articleEl.innerHTML = /* html */`

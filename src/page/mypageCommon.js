@@ -1,22 +1,8 @@
 import "../style/mypageCommon.scss";
 import "../style/loadingmypage.scss";
 import { router } from "../route";
-import { userToken, afterLoadUserAuth } from "../utilities/userAuth";
-import {
-  userAuth,
-  userInfoEdit,
-  getBankAccount,
-  getCurrentAccount,
-  addBankAccount,
-} from "../utilities/userapi";
-import {
-  getBuyList,
-  getBuyDetail,
-  getProductDetail,
-  cancelBuy,
-  confirmBuy,
-} from "../utilities/productapi";
-
+import { userToken } from "../utilities/userAuth";
+import { cancelBuy, confirmBuy } from "../utilities/productapi";
 import { getItems, setItems } from "../utilities/local";
 
 // 주문취소, 구매확정 버튼 이벤트 함수
@@ -31,7 +17,7 @@ export async function cancelDoneBtns(isCanceledBtnEl, doneBtnEl, detailId) {
   });
 }
 
-// === 재구매 버튼 이벤트 함수 ===
+// 재구매 버튼 이벤트 함수
 export async function repurchaseBtn(
   repurchaseBtnEl,
   id,
@@ -52,10 +38,7 @@ export async function repurchaseBtn(
 }
 
 // 마이페이지 사이드 메뉴 렌더링 함수
-export async function renderSideMenu(sectionEl, articleEl) {
-  const profile = await userAuth(userToken._token);
-  const buyList = await getBuyList(userToken._token);
-  const accountList = await getCurrentAccount(userToken._token);
+export async function renderSideMenu(sectionEl, articleEl, profile, buyList, accountList) {
 
   // 화면 왼쪽 사이드 메뉴 생성(프로필, 주문•배송, 잔액, 주문, 계좌, 정보)
   const leftSideMenuEl = document.createElement("nav");
@@ -189,6 +172,7 @@ export async function renderSideMenu(sectionEl, articleEl) {
   sectionEl.append(leftSideMenuEl, articleEl);
 }
 
+// 스켈레톤 로딩
 export function handlingLoading(account = false) {
   const loadingEl = document.createElement("div");
 
