@@ -55,13 +55,15 @@ export async function CommonFn() {
   const dropdownEl = document.querySelector("header .login .login--dropdown");
   const cartCountEl = document.querySelector("header .cart .cart-count");
   const ulEl = document.querySelector("header nav ul");
+  const logoutEl = document.querySelector("header .logout");
 
   let userAuth = await afterLoadUserAuth();
+  if (userAuth) {
+    cartCountEl.textContent = getItems("cart").filter(
+      (item) => item.email === userAuth.email
+    ).length;
+  }
   checkLogin(userAuth);
-
-  cartCountEl.textContent = getItems("cart").filter(
-    (item) => item.email === userAuth.email
-  ).length;
 
   searchEl.addEventListener("submit", (evt) => {
     evt.preventDefault();
