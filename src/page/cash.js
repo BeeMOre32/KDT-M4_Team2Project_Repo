@@ -81,21 +81,20 @@ export async function renderCash() {
   `;
 
     let sum = 0;
-    let itemArr = await Promise.all(
-      state.map(async ({ id, price, thumbnail, title, num }) => {
-        sum += price * num;
-        let item = document.createElement("li");
-        item.setAttribute("class", "item");
-        item.setAttribute("id", `${id}`);
-        item.innerHTML = /*HTML*/ `
+    let itemArr = state.map(({ id, price, thumbnail, title, num }) => {
+      sum += price * num;
+      let item = document.createElement("li");
+      item.setAttribute("class", "item");
+      item.setAttribute("id", `${id}`);
+      item.innerHTML = /*HTML*/ `
               <img src=${thumbnail} alt=${thumbnail}>
               <div class="name">${title}</div>
               <div class="count">${num}개</div>
               <div class="price">${price.toLocaleString()}원</div>
             `;
-        return item;
-      })
-    );
+      return item;
+    });
+
     const items = document.querySelector(".item-container");
     items.append(...itemArr);
 

@@ -10,6 +10,8 @@ export async function renderCart() {
     alert("로그인 해주세요.");
     return router.navigate("/login");
   }
+  console.log(userAuth);
+  console.log(getItems("cart"));
   let state = getItems("cart").filter((item) => item.email === userAuth.email);
   const render = async function () {
     app.classList.add("loading");
